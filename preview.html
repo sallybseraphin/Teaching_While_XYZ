@@ -1,0 +1,1604 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Using AI to Assess Bias in Student Course Evaluations</title>
+  <meta name="description" content="A Step-by-Step Guide for Faculty, Administrators, and Equity Reviewers">
+  <style>
+    :root {
+      --bg: #f7f4ee;
+      --paper: #fffdf8;
+      --ink: #231f20;
+      --muted: #6a6259;
+      --line: #ded6c8;
+      --accent: #5b3f8c;
+      --accent-2: #9b5f38;
+      --accent-soft: #eee7f7;
+      --warning: #fff2ce;
+      --warning-line: #d9a63a;
+      --shadow: 0 18px 55px rgba(40, 31, 25, .12);
+      --radius: 22px;
+      --measure: 74ch;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(91, 63, 140, .16), transparent 34rem),
+        radial-gradient(circle at top right, rgba(155, 95, 56, .12), transparent 30rem),
+        var(--bg);
+      line-height: 1.65;
+    }
+
+    a { color: var(--accent); text-decoration-thickness: .08em; text-underline-offset: .18em; }
+    a:hover { color: #3d256b; }
+    .skip-link {
+      position: absolute; left: -999px; top: 1rem; z-index: 20;
+      background: var(--paper); color: var(--ink); padding: .65rem 1rem; border-radius: 999px;
+      box-shadow: var(--shadow);
+    }
+    .skip-link:focus { left: 1rem; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(14px);
+      background: rgba(247, 244, 238, .86);
+      border-bottom: 1px solid rgba(222, 214, 200, .75);
+    }
+    .topbar-inner {
+      max-width: 1240px; margin: 0 auto; padding: .75rem 1.25rem;
+      display: flex; gap: 1rem; align-items: center; justify-content: space-between;
+    }
+    .brand { font-weight: 800; letter-spacing: -.02em; color: var(--ink); }
+    .actions { display: flex; gap: .6rem; align-items: center; }
+    button, .button {
+      border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+      border-radius: 999px; padding: .55rem .85rem; font: inherit; font-weight: 700;
+      cursor: pointer; box-shadow: 0 5px 20px rgba(40,31,25,.06);
+    }
+    button:hover, .button:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero {
+      max-width: 1240px; margin: 0 auto; padding: 5rem 1.25rem 3rem;
+      display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 2rem; align-items: end;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .3rem .7rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent);
+      font-size: .88rem; font-weight: 800; letter-spacing: .03em; text-transform: uppercase;
+    }
+    h1 {
+      max-width: 950px; margin: 1rem 0 .85rem;
+      font-size: clamp(2.45rem, 6vw, 5.8rem);
+      line-height: .95; letter-spacing: -.075em;
+    }
+    .subtitle {
+      max-width: 780px; font-size: clamp(1.12rem, 2vw, 1.45rem); color: var(--muted);
+      margin: 0;
+    }
+    .hero-card {
+      background: rgba(255,253,248,.8); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 1.25rem; box-shadow: var(--shadow);
+    }
+    .hero-card strong { display: block; font-size: 2rem; line-height: 1; margin-bottom: .25rem; color: var(--accent); }
+    .hero-card span { color: var(--muted); display: block; }
+    .mini-grid { display: grid; gap: .75rem; margin-top: 1rem; }
+    .mini-card { padding: .9rem; border-radius: 16px; background: #fff; border: 1px solid var(--line); }
+
+    .layout {
+      max-width: 1240px; margin: 0 auto 4rem; padding: 0 1.25rem;
+      display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 2rem;
+      align-items: start;
+    }
+    aside { position: sticky; top: 4.8rem; align-self: start; }
+    .toc {
+      max-height: calc(100vh - 6.5rem); overflow: auto;
+      background: rgba(255,253,248,.88); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 1rem; box-shadow: 0 10px 40px rgba(40,31,25,.08);
+    }
+    .toc-title { margin: 0 0 .65rem; font-weight: 900; letter-spacing: -.02em; }
+    .toc ol { list-style: none; margin: 0; padding: 0; }
+    .toc li { margin: .15rem 0; }
+    .toc a {
+      display: block; padding: .42rem .55rem; border-radius: 10px; color: var(--muted); text-decoration: none;
+      font-size: .94rem; line-height: 1.25;
+    }
+    .toc a:hover, .toc a.active { background: var(--accent-soft); color: var(--accent); }
+    .toc-h3 a { padding-left: 1.25rem; font-size: .86rem; }
+
+    .mobile-toc { display: none; margin: 0 1.25rem 1rem; }
+    details.mobile-toc { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: .8rem 1rem; }
+    details.mobile-toc summary { cursor: pointer; font-weight: 800; }
+
+    main.content {
+      background: rgba(255,253,248,.94); border: 1px solid var(--line);
+      border-radius: 28px; box-shadow: var(--shadow);
+      padding: clamp(1.25rem, 3vw, 3rem);
+      overflow: hidden;
+    }
+    .content section { scroll-margin-top: 5.6rem; }
+    .content > section + section { margin-top: 3.5rem; }
+    .content section.level2 { border-top: 1px solid var(--line); padding-top: 2.35rem; }
+    .content section.level2:first-child { border-top: 0; padding-top: 0; }
+    .content section.level3 { margin-top: 2.1rem; }
+
+    h2, h3, h4 { line-height: 1.15; letter-spacing: -.035em; }
+    h2 {
+      margin: 0 0 1rem; font-size: clamp(1.75rem, 3vw, 2.75rem);
+      color: var(--accent);
+    }
+    h3 { margin: 1.8rem 0 .7rem; font-size: clamp(1.25rem, 2vw, 1.7rem); }
+    h4 { margin: 1.35rem 0 .5rem; font-size: 1.08rem; }
+    p, li { max-width: var(--measure); }
+    p { margin: .8rem 0; }
+    ul, ol { padding-left: 1.35rem; }
+    li + li { margin-top: .45rem; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+    .notice {
+      margin: 0 0 2rem; max-width: none;
+      border-left: 6px solid var(--warning-line); background: var(--warning);
+      border-radius: 18px; padding: 1rem 1.15rem;
+    }
+    blockquote {
+      position: relative;
+      max-width: var(--measure); margin: 1.1rem 0 1.5rem; padding: 1.1rem 1.15rem;
+      background: #f6f1ff; border-left: 5px solid var(--accent); border-radius: 18px;
+      color: #2c2440;
+    }
+    blockquote p:first-child { margin-top: 0; }
+    blockquote p:last-child { margin-bottom: 0; }
+    .copy-prompt { position: absolute; top: .7rem; right: .7rem; font-size: .78rem; padding: .3rem .55rem; background: #fff; }
+    .notice .copy-prompt { display: none; }
+    .prompt-label {
+      display: inline-block; margin-top: 1.4rem; padding: .35rem .65rem;
+      border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 900;
+    }
+
+    table {
+      width: 100%; border-collapse: collapse; margin: 1.35rem 0; display: block; overflow-x: auto;
+      border: 1px solid var(--line); border-radius: 18px;
+    }
+    th, td { padding: .8rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th { background: #f2ecdf; font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+
+    .content strong { color: #1e1a1b; }
+    .references-section p { font-size: .95rem; line-height: 1.5; color: var(--muted); padding-left: 1rem; border-left: 3px solid var(--line); }
+    .references-section a { overflow-wrap: anywhere; }
+
+    .back-to-top {
+      position: fixed; right: 1.1rem; bottom: 1.1rem; z-index: 8;
+      width: 2.8rem; height: 2.8rem; border-radius: 50%; display: grid; place-items: center;
+      background: var(--ink); color: #fff; text-decoration: none; box-shadow: var(--shadow);
+      opacity: 0; pointer-events: none; transition: opacity .2s ease;
+    }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; padding-top: 3rem; }
+      .layout { display: block; }
+      aside { display: none; }
+      .mobile-toc { display: block; }
+      main.content { border-radius: 22px; }
+    }
+    @media (max-width: 640px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .actions { width: 100%; justify-content: space-between; }
+      h1 { font-size: clamp(2.3rem, 15vw, 4rem); }
+      .hero { padding-left: 1rem; padding-right: 1rem; }
+      .layout { padding: 0 1rem; }
+      .copy-prompt { position: static; margin-bottom: .6rem; }
+    }
+    @media print {
+      body { background: #fff; }
+      .topbar, aside, .mobile-toc, .back-to-top, .copy-prompt { display: none !important; }
+      .hero, .layout { display: block; max-width: none; padding: 0; margin: 0; }
+      main.content, .hero-card { box-shadow: none; border: 0; padding: 0; }
+      a { color: inherit; }
+      .content section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar" aria-label="Page controls">
+    <div class="topbar-inner">
+      <div class="brand">SET Bias Analysis Guide</div>
+      <div class="actions">
+        <button type="button" onclick="window.print()">Print / Save PDF</button>
+        <a class="button" href="#part-vi-quick-reference-prompts-summary">Quick Reference</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div>
+      <span class="eyebrow">Decision-support resource</span>
+      <h1>Using AI to Assess Bias in Student Course Evaluations</h1>
+      <p class="subtitle">A Step-by-Step Guide for Faculty, Administrators, and Equity Reviewers</p>
+    </div>
+    <div class="hero-card" aria-label="Guide summary">
+      <strong>7</strong>
+      <span>major guide sections, including evidence gathering, AI prompt templates, privacy guidance, a glossary, and references.</span>
+      <div class="mini-grid">
+        <div class="mini-card"><b>Use case:</b> Contextualizing SET data in review processes.</div>
+        <div class="mini-card"><b>Audience:</b> Faculty, administrators, and equity reviewers.</div>
+      </div>
+    </div>
+  </section>
+
+  <details class="mobile-toc">
+    <summary>On this page</summary>
+    <nav class="toc" aria-label="Guide sections">
+<p class="toc-title">On this page</p>
+<ol>
+<li class="toc-h2"><a href="#part-i-understanding-the-problem">Part I: Understanding the Problem</a></li>
+<li class="toc-h3"><a href="#why-this-guide-exists">Why This Guide Exists</a></li>
+<li class="toc-h3"><a href="#what-the-research-establishes">What the Research Establishes</a></li>
+<li class="toc-h2"><a href="#part-ii-overview-of-bias-categories">Part II: Overview of Bias Categories</a></li>
+<li class="toc-h3"><a href="#type-1-direct-identity-bias">Type 1 — Direct Identity Bias</a></li>
+<li class="toc-h3"><a href="#type-2-proxy-bias-pedagogical-dissatisfaction">Type 2 — Proxy Bias (Pedagogical Dissatisfaction)</a></li>
+<li class="toc-h3"><a href="#type-3-stigmatized-identity-bias">Type 3 — Stigmatized Identity Bias</a></li>
+<li class="toc-h3"><a href="#type-4-deliberate-defamation">Type 4 — Deliberate Defamation</a></li>
+<li class="toc-h3"><a href="#compound-categories">Compound Categories</a></li>
+<li class="toc-h2"><a href="#part-iii-information-and-artifacts-to-gather">Part III: Information and Artifacts to Gather</a></li>
+<li class="toc-h3"><a href="#a.-your-student-evaluations-required">A. Your Student Evaluations (Required)</a></li>
+<li class="toc-h3"><a href="#b.-your-professional-and-teaching-record-required-for-credibility-inversion-analysis">B. Your Professional and Teaching Record (Required for Credibility Inversion Analysis)</a></li>
+<li class="toc-h3"><a href="#c.-course-materials-required-for-corroboration-gap-analysis">C. Course Materials (Required for Corroboration Gap Analysis)</a></li>
+<li class="toc-h3"><a href="#d.-grade-distribution-data-required-for-grade-distribution-analysis">D. Grade Distribution Data (Required for Grade Distribution Analysis)</a></li>
+<li class="toc-h3"><a href="#e.-peer-and-external-teaching-evaluations-required-for-corroboration-gap-analysis">E. Peer and External Teaching Evaluations (Required for Corroboration Gap Analysis)</a></li>
+<li class="toc-h3"><a href="#f.-comparative-data-strongly-recommended-for-differential-analysis">F. Comparative Data (Strongly Recommended for Differential Analysis)</a></li>
+<li class="toc-h3"><a href="#g.-contextual-and-temporal-information-recommended">G. Contextual and Temporal Information (Recommended)</a></li>
+<li class="toc-h3"><a href="#h.-your-demographic-and-identity-information-required-for-identity-specific-analysis">H. Your Demographic and Identity Information (Required for Identity-Specific Analysis)</a></li>
+<li class="toc-h2"><a href="#part-iv-step-by-step-instructions-for-using-ai">Part IV: Step-by-Step Instructions for Using AI</a></li>
+<li class="toc-h3"><a href="#preparation-checklist">Preparation Checklist</a></li>
+<li class="toc-h3"><a href="#step-1-open-a-new-ai-conversation-and-set-the-context">Step 1: Open a New AI Conversation and Set the Context</a></li>
+<li class="toc-h3"><a href="#step-2-share-your-professional-record">Step 2: Share Your Professional Record</a></li>
+<li class="toc-h3"><a href="#step-3-share-grade-distribution-data">Step 3: Share Grade Distribution Data</a></li>
+<li class="toc-h3"><a href="#step-4-share-quantitative-set-scores">Step 4: Share Quantitative SET Scores</a></li>
+<li class="toc-h3"><a href="#step-5-share-written-open-ended-comments">Step 5: Share Written (Open-Ended) Comments</a></li>
+<li class="toc-h3"><a href="#step-6-share-course-materials-for-corroboration-testing">Step 6: Share Course Materials for Corroboration Testing</a></li>
+<li class="toc-h3"><a href="#step-7-request-the-full-analysis-report">Step 7: Request the Full Analysis Report</a></li>
+<li class="toc-h3"><a href="#step-8-request-specific-follow-up-analyses-optional">Step 8: Request Specific Follow-Up Analyses (Optional)</a></li>
+<li class="toc-h3"><a href="#step-9-verify-review-and-document">Step 9: Verify, Review, and Document</a></li>
+<li class="toc-h2"><a href="#part-v-privacy-confidentiality-and-ethical-considerations">Part V: Privacy, Confidentiality, and Ethical Considerations</a></li>
+<li class="toc-h3"><a href="#what-to-share-with-ai">What to Share with AI</a></li>
+<li class="toc-h3"><a href="#platform-considerations">Platform Considerations</a></li>
+<li class="toc-h3"><a href="#what-ai-cannot-do">What AI Cannot Do</a></li>
+<li class="toc-h2"><a href="#part-vi-quick-reference-prompts-summary">Part VI: Quick Reference — Prompts Summary</a></li>
+<li class="toc-h2"><a href="#part-vii-glossary-of-key-terms">Part VII: Glossary of Key Terms</a></li>
+<li class="toc-h2"><a href="#references">References</a></li>
+</ol></nav>
+  </details>
+
+  <div class="layout">
+    <aside>
+      <nav class="toc" aria-label="Guide sections">
+<p class="toc-title">On this page</p>
+<ol>
+<li class="toc-h2"><a href="#part-i-understanding-the-problem">Part I: Understanding the Problem</a></li>
+<li class="toc-h3"><a href="#why-this-guide-exists">Why This Guide Exists</a></li>
+<li class="toc-h3"><a href="#what-the-research-establishes">What the Research Establishes</a></li>
+<li class="toc-h2"><a href="#part-ii-overview-of-bias-categories">Part II: Overview of Bias Categories</a></li>
+<li class="toc-h3"><a href="#type-1-direct-identity-bias">Type 1 — Direct Identity Bias</a></li>
+<li class="toc-h3"><a href="#type-2-proxy-bias-pedagogical-dissatisfaction">Type 2 — Proxy Bias (Pedagogical Dissatisfaction)</a></li>
+<li class="toc-h3"><a href="#type-3-stigmatized-identity-bias">Type 3 — Stigmatized Identity Bias</a></li>
+<li class="toc-h3"><a href="#type-4-deliberate-defamation">Type 4 — Deliberate Defamation</a></li>
+<li class="toc-h3"><a href="#compound-categories">Compound Categories</a></li>
+<li class="toc-h2"><a href="#part-iii-information-and-artifacts-to-gather">Part III: Information and Artifacts to Gather</a></li>
+<li class="toc-h3"><a href="#a.-your-student-evaluations-required">A. Your Student Evaluations (Required)</a></li>
+<li class="toc-h3"><a href="#b.-your-professional-and-teaching-record-required-for-credibility-inversion-analysis">B. Your Professional and Teaching Record (Required for Credibility Inversion Analysis)</a></li>
+<li class="toc-h3"><a href="#c.-course-materials-required-for-corroboration-gap-analysis">C. Course Materials (Required for Corroboration Gap Analysis)</a></li>
+<li class="toc-h3"><a href="#d.-grade-distribution-data-required-for-grade-distribution-analysis">D. Grade Distribution Data (Required for Grade Distribution Analysis)</a></li>
+<li class="toc-h3"><a href="#e.-peer-and-external-teaching-evaluations-required-for-corroboration-gap-analysis">E. Peer and External Teaching Evaluations (Required for Corroboration Gap Analysis)</a></li>
+<li class="toc-h3"><a href="#f.-comparative-data-strongly-recommended-for-differential-analysis">F. Comparative Data (Strongly Recommended for Differential Analysis)</a></li>
+<li class="toc-h3"><a href="#g.-contextual-and-temporal-information-recommended">G. Contextual and Temporal Information (Recommended)</a></li>
+<li class="toc-h3"><a href="#h.-your-demographic-and-identity-information-required-for-identity-specific-analysis">H. Your Demographic and Identity Information (Required for Identity-Specific Analysis)</a></li>
+<li class="toc-h2"><a href="#part-iv-step-by-step-instructions-for-using-ai">Part IV: Step-by-Step Instructions for Using AI</a></li>
+<li class="toc-h3"><a href="#preparation-checklist">Preparation Checklist</a></li>
+<li class="toc-h3"><a href="#step-1-open-a-new-ai-conversation-and-set-the-context">Step 1: Open a New AI Conversation and Set the Context</a></li>
+<li class="toc-h3"><a href="#step-2-share-your-professional-record">Step 2: Share Your Professional Record</a></li>
+<li class="toc-h3"><a href="#step-3-share-grade-distribution-data">Step 3: Share Grade Distribution Data</a></li>
+<li class="toc-h3"><a href="#step-4-share-quantitative-set-scores">Step 4: Share Quantitative SET Scores</a></li>
+<li class="toc-h3"><a href="#step-5-share-written-open-ended-comments">Step 5: Share Written (Open-Ended) Comments</a></li>
+<li class="toc-h3"><a href="#step-6-share-course-materials-for-corroboration-testing">Step 6: Share Course Materials for Corroboration Testing</a></li>
+<li class="toc-h3"><a href="#step-7-request-the-full-analysis-report">Step 7: Request the Full Analysis Report</a></li>
+<li class="toc-h3"><a href="#step-8-request-specific-follow-up-analyses-optional">Step 8: Request Specific Follow-Up Analyses (Optional)</a></li>
+<li class="toc-h3"><a href="#step-9-verify-review-and-document">Step 9: Verify, Review, and Document</a></li>
+<li class="toc-h2"><a href="#part-v-privacy-confidentiality-and-ethical-considerations">Part V: Privacy, Confidentiality, and Ethical Considerations</a></li>
+<li class="toc-h3"><a href="#what-to-share-with-ai">What to Share with AI</a></li>
+<li class="toc-h3"><a href="#platform-considerations">Platform Considerations</a></li>
+<li class="toc-h3"><a href="#what-ai-cannot-do">What AI Cannot Do</a></li>
+<li class="toc-h2"><a href="#part-vi-quick-reference-prompts-summary">Part VI: Quick Reference — Prompts Summary</a></li>
+<li class="toc-h2"><a href="#part-vii-glossary-of-key-terms">Part VII: Glossary of Key Terms</a></li>
+<li class="toc-h2"><a href="#references">References</a></li>
+</ol></nav>
+    </aside>
+    <main class="content" id="content">
+      <blockquote class="notice">
+<p><strong>Important notice:</strong> This guide is a decision-support
+tool, not a decision-making instrument. AI can flag patterns and surface
+evidence for review, but all final determinations must be made by
+qualified human reviewers with knowledge of the relevant bias literature
+and the specific institutional context. No adverse or protective
+personnel action should be based on AI analysis alone.</p>
+</blockquote>
+<hr/>
+<section class="level2" id="part-i-understanding-the-problem">
+<h2>Part I: Understanding the Problem</h2>
+<section class="level3" id="why-this-guide-exists">
+<h3>Why This Guide Exists</h3>
+<p>Student evaluations of teaching (SETs) are among the most widely used
+instruments for evaluating faculty teaching effectiveness. They
+influence hiring, tenure, promotion, merit pay, and contract renewal
+decisions at institutions worldwide. Yet a substantial and consistent
+body of research spanning more than four decades establishes that SETs
+are systematically biased against women, faculty of color, LGBTQ+
+faculty, and faculty from stigmatized ethnic and national
+backgrounds.</p>
+<p>The problem is not simply that some students hold biased attitudes.
+The problem is structural: institutions collect biased data, use it in
+high-stakes personnel decisions, and often lack any mechanism for
+detecting, flagging, or correcting for bias before career harm occurs.
+For many minoritized faculty — particularly those who are untenured,
+contingent, or early-career — negative SET data can end careers before
+anyone asks whether those evaluations accurately reflect teaching
+quality.</p>
+<p>AI tools, used carefully, can help surface patterns that human
+reviewers might miss, provide a systematic framework for contextualizing
+evaluation data, and generate written documentation that faculty and
+administrators can use in review processes. This guide shows you
+how.</p>
+</section>
+<section class="level3" id="what-the-research-establishes">
+<h3>What the Research Establishes</h3>
+<ul>
+<li><p><strong>SETs are poor measures of teaching
+effectiveness.</strong> Across six high-credibility studies using random
+instructor assignment, SET scores are positively correlated with
+concurrent student grades but negatively correlated with student
+performance in subsequent courses. The best teachers for long-term
+learning receive the worst contemporaneous ratings.</p></li>
+<li><p><strong>Identity-based bias is systematic and
+documented.</strong> Even when all course elements are held constant —
+identical content, assignments, schedules, and communications — women
+and faculty of color receive significantly lower scores than white
+men.</p></li>
+<li><p><strong>The bias is not marginal.</strong> Black faculty receive
+the lowest SET scores of any racial group. Women are penalized more
+severely for identical grading decisions. LGBTQ+ faculty face
+disclosure-triggered evaluation drops. Faculty from stigmatized national
+backgrounds face evaluation language organized around disgust rather
+than pedagogical assessment.</p></li>
+<li><p><strong>Open-ended comments carry the highest risk.</strong>
+Free-text fields produce the strongest evidence of bias — including
+sexually explicit comments, fabricated misconduct accusations,
+coordinated attacks, and deliberate misgendering — that are routinely
+included in personnel files without review.</p></li>
+<li><p><strong>The harm is compounding.</strong> For faculty with
+multiple marginalized identities, the effects are multiplicative, not
+additive. A Black Haitian woman faces anti-Black racism, anti-Haitian
+ethnic stigma, and gender bias simultaneously — a compound effect that
+existing research instruments cannot fully measure.</p></li>
+</ul>
+<hr/>
+</section>
+</section>
+<section class="level2" id="part-ii-overview-of-bias-categories">
+<h2>Part II: Overview of Bias Categories</h2>
+<p>The research identifies four types of bias in student evaluations.
+Understanding these types is essential for using AI to analyze your
+materials.</p>
+<section class="level3" id="type-1-direct-identity-bias">
+<h3>Type 1 — Direct Identity Bias</h3>
+<p>Explicit language targeting the instructor’s personality, appearance,
+authority, accent, sexual orientation, gender identity, or cultural
+background. Examples: calling a Black woman “intimidating” or “angry”;
+describing an Asian instructor as “not as deferential as I expected”;
+commenting on a woman’s appearance.</p>
+<p><strong>Categories:</strong> Personality &amp; Temperament (Cat. 1);
+Authority &amp; Competence Challenges (Cat. 2); Accent &amp; Language
+Bias (Cat. 3); Relatability &amp; Fit (Cat. 4); Gendered Language
+Patterns (Cat. 5); Racialized Language Patterns (Cat. 6); Bias Claims
+Turned Outward (Cat. 7); Structural &amp; Tonal Tropes (Cat. 11); LGBTQ+
+Discomfort as Harm (Cat. 12E); Absence of Positive Language (Cat.
+15).</p>
+</section>
+<section class="level3" id="type-2-proxy-bias-pedagogical-dissatisfaction">
+<h3>Type 2 — Proxy Bias (Pedagogical Dissatisfaction)</h3>
+<p>Complaints framed as legitimate pedagogical feedback — about grading,
+organization, feedback timing, workload, or instructional clarity — that
+research establishes are systematically more negative for minoritized
+faculty even when the pedagogy is identical to that of white male
+peers.</p>
+<p><strong>Categories:</strong> Grading &amp; Assessment (Cat. 9A);
+Feedback Timing &amp; Responsiveness (Cat. 9B); Workload &amp; Rigor
+(Cat. 9C); Syllabus &amp; Organization (Cat. 9D); Instructional Clarity
+(Cat. 9E); The Rigor Penalty (Cat. 10A); The Success Inversion (Cat.
+10B); The Double Double-Bind (Cat. 10C); Credibility Inversion (Cats.
+16A–16E); Grade Distribution Patterns (Cats. 17A–17F).</p>
+</section>
+<section class="level3" id="type-3-stigmatized-identity-bias">
+<h3>Type 3 — Stigmatized Identity Bias</h3>
+<p>Bias rooted in the specific social meanings attached to a particular
+national origin, ethnicity, sexual orientation, or gender identity that
+has been systematically stigmatized in the broader culture. Operates
+through distinct psychological mechanisms — disgust, “forever foreigner”
+framing, novelty attachment — and requires identity-specific
+analysis.</p>
+<p><strong>Categories:</strong> LGBTQ+ Credibility Challenges (Cat.
+12B); LGBTQ+ Content Distortion (Cat. 12C); Stigmatized National
+Identity — Disgust Mechanism (Cat. 13A); Disgust Language (Cat. 13B);
+“Forever Foreigner” (Cat. 13C); Political Amplification (Cat. 13D).</p>
+</section>
+<section class="level3" id="type-4-deliberate-defamation">
+<h3>Type 4 — Deliberate Defamation</h3>
+<p>Content that constitutes targeted harassment, fabricated accusation,
+unadjudicated misconduct claims, or coordinated reputational attacks.
+Requires a different institutional response than bias — not just
+documentation, but immediate protective action.</p>
+<p><strong>Categories:</strong> Anonymity Enablement (Cat. 14A);
+Contrapower Harassment/ACPH (Cat. 14B); Unadjudicated Misconduct
+Accusations (Cat. 14C); False Factual Claims (Cat. 14D); Coordinated
+Attacks (Cat. 14E); Grade Retaliation (Cat. 14F); Institutional
+Weaponization (Cat. 14G).</p>
+</section>
+<section class="level3" id="compound-categories">
+<h3>Compound Categories</h3>
+<p>Some evaluations involve multiple bias types simultaneously. LGBTQ+
+faculty of color, faculty from stigmatized national backgrounds who are
+also members of other marginalized groups, and faculty teaching
+equity-related content are especially likely to encounter compound bias.
+The compound effect is multiplicative, not additive.</p>
+<p><strong>Categories:</strong> Course Content as Proxy Bias (Cat. 8);
+LGBTQ+ Gay Agenda Trope (Cat. 12A); LGBTQ+ Intersectional Compounding
+(Cat. 12G); Cultural Content Complaints (Cat. 13E); Intersectional
+Compounding (Cat. 13F); DFW Rate Misuse (Cat. 17D); Grade Inflation Trap
+(Cat. 17F).</p>
+<hr/>
+</section>
+</section>
+<section class="level2" id="part-iii-information-and-artifacts-to-gather">
+<h2>Part III: Information and Artifacts to Gather</h2>
+<p>Before using AI to analyze your SET materials, you need to assemble a
+complete evidence package. The AI analysis is only as good as the
+contextual information you provide. Gather the following.</p>
+<section class="level3" id="a.-your-student-evaluations-required">
+<h3>A. Your Student Evaluations (Required)</h3>
+<p><strong>Quantitative SET data:</strong></p>
+<ul>
+<li><p>Numerical scores for each rated item, by course and
+semester</p></li>
+<li><p>Response rates for each course evaluation</p></li>
+<li><p>Department or institution average scores for comparison (if
+available)</p></li>
+<li><p>Your own scores over time (multi-year if possible)</p></li>
+</ul>
+<p><strong>Qualitative SET data (open-ended comments):</strong></p>
+<ul>
+<li><p>All written comments, verbatim, for each course</p></li>
+<li><p>Note which comments appear in which course and semester</p></li>
+<li><p>If comments have already been shared with administrators or
+included in personnel files, note that</p></li>
+</ul>
+<p><strong>De-identification note:</strong> Before sharing with AI
+tools, remove student names if any appear. Instructor name and course
+information may remain — the AI needs this context.</p>
+<hr/>
+</section>
+<section class="level3" id="b.-your-professional-and-teaching-record-required-for-credibility-inversion-analysis">
+<h3>B. Your Professional and Teaching Record (Required for Credibility
+Inversion Analysis)</h3>
+<p><strong>Teaching experience:</strong></p>
+<ul>
+<li><p>Number of years teaching at the college/university level</p></li>
+<li><p>Courses taught (list by name, level, and semester)</p></li>
+<li><p>Any prior institutions where you taught</p></li>
+</ul>
+<p><strong>Pedagogical expertise and scholarship:</strong></p>
+<ul>
+<li><p>Peer-reviewed publications on pedagogy, course design,
+assessment, educational innovation, or related topics</p></li>
+<li><p>Grants or awards related to teaching or pedagogical
+innovation</p></li>
+<li><p>Conference presentations on teaching methods or curriculum
+design</p></li>
+<li><p>Formal teaching-related training or certifications (e.g., ACUE,
+teaching certificate programs)</p></li>
+<li><p>Service on teaching-related committees, editorial boards for
+pedagogical journals, or peer review of teaching-related
+scholarship</p></li>
+</ul>
+<p><strong>Teaching recognition:</strong></p>
+<ul>
+<li><p>Teaching awards or nominations (including those involving peer or
+external review)</p></li>
+<li><p>Formal commendations, letters of support, or positive peer
+evaluations</p></li>
+<li><p>Alumni testimonials or unsolicited positive student feedback
+(emails, letters)</p></li>
+</ul>
+<hr/>
+</section>
+<section class="level3" id="c.-course-materials-required-for-corroboration-gap-analysis">
+<h3>C. Course Materials (Required for Corroboration Gap Analysis)</h3>
+<p>For each course under review, gather as many of the following as
+possible:</p>
+<ul>
+<li><p>Syllabi (all versions, if revised during the semester)</p></li>
+<li><p>Assignment sheets and instructions</p></li>
+<li><p>Rubrics for all graded assignments</p></li>
+<li><p>Exam blueprints or study guides</p></li>
+<li><p>Course schedule or calendar as distributed to students</p></li>
+<li><p>LMS screenshots showing when materials were posted (if
+available)</p></li>
+<li><p>Sample graded student work showing your feedback quality and
+consistency</p></li>
+<li><p>Any written communications with students about assignments,
+expectations, or grading</p></li>
+</ul>
+<hr/>
+</section>
+<section class="level3" id="d.-grade-distribution-data-required-for-grade-distribution-analysis">
+<h3>D. Grade Distribution Data (Required for Grade Distribution
+Analysis)</h3>
+<p><strong>De-identified grade data for each course:</strong></p>
+<ul>
+<li><p>Distribution of final grades by letter grade (A, B, C, D, F,
+W)</p></li>
+<li><p>Mean GPA for the course</p></li>
+<li><p>DFW rate (percentage of students receiving D, F, or
+Withdrawal)</p></li>
+<li><p>Enrollment and completion numbers</p></li>
+<li><p>When grades were submitted relative to when evaluations were
+completed</p></li>
+</ul>
+<p><strong>Comparative data (gather if available):</strong></p>
+<ul>
+<li><p>Departmental grade distribution norms for the same course taught
+by other instructors</p></li>
+<li><p>Institution-wide grade distribution averages for the same course
+level</p></li>
+<li><p>Grade distributions for the same course in prior semesters (yours
+and others’)</p></li>
+</ul>
+<p><strong>Follow-on course performance data (gather if
+available):</strong></p>
+<ul>
+<li><p>Pass rates or grade distributions for students who took your
+prerequisite in a follow-on course</p></li>
+<li><p>Any retention or continuation data for students from your
+courses</p></li>
+</ul>
+<hr/>
+</section>
+<section class="level3" id="e.-peer-and-external-teaching-evaluations-required-for-corroboration-gap-analysis">
+<h3>E. Peer and External Teaching Evaluations (Required for
+Corroboration Gap Analysis)</h3>
+<ul>
+<li><p>Formal peer observation reports (all available)</p></li>
+<li><p>Teaching portfolio reviews or formal teaching evaluations by
+senior colleagues</p></li>
+<li><p>External review letters that address teaching</p></li>
+<li><p>Mid-semester student feedback reports (if conducted)</p></li>
+<li><p>Any other non-student assessments of your teaching
+quality</p></li>
+</ul>
+<hr/>
+</section>
+<section class="level3" id="f.-comparative-data-strongly-recommended-for-differential-analysis">
+<h3>F. Comparative Data (Strongly Recommended for Differential
+Analysis)</h3>
+<p>The most powerful evidence of bias is the comparative differential —
+the difference between how your evaluations describe you versus how
+equivalent evaluations describe white male peers. Gather whatever
+comparative data your institution makes available:</p>
+<ul>
+<li><p>Anonymized or aggregated SET scores for colleagues teaching the
+same courses</p></li>
+<li><p>Anonymized or aggregated SET scores for colleagues teaching at
+the same level in your department</p></li>
+<li><p>Any departmental or institutional SET norm data</p></li>
+<li><p>Any published or available data on how your institution’s
+evaluations correlate with instructor demographics</p></li>
+</ul>
+<hr/>
+</section>
+<section class="level3" id="g.-contextual-and-temporal-information-recommended">
+<h3>G. Contextual and Temporal Information (Recommended)</h3>
+<p>This information helps the AI detect bias-consistent temporal
+patterns and political context amplification:</p>
+<ul>
+<li><p>Timeline of when evaluations were completed relative to grade
+distribution events (midterms, finals, grade appeals)</p></li>
+<li><p>Any significant events during the evaluated semester that might
+have affected student response (e.g., grade appeals, classroom
+conflicts, public controversies involving your research or
+identity)</p></li>
+<li><p>Political or media events during the evaluation period that may
+have amplified bias against your identity group (e.g., periods of
+nationally amplified anti-Haitian, anti-LGBTQ+, or other
+identity-targeting rhetoric)</p></li>
+<li><p>Any changes in your course design or teaching approach over the
+period being analyzed, with dates</p></li>
+</ul>
+<hr/>
+</section>
+<section class="level3" id="h.-your-demographic-and-identity-information-required-for-identity-specific-analysis">
+<h3>H. Your Demographic and Identity Information (Required for
+Identity-Specific Analysis)</h3>
+<p>The AI needs to know your relevant identity characteristics to
+calibrate which bias categories are applicable and at what threshold.
+Provide:</p>
+<ul>
+<li><p>Race and ethnicity</p></li>
+<li><p>Gender identity and pronouns</p></li>
+<li><p>National origin or ethnic background (if relevant to stigmatized
+identity analysis)</p></li>
+<li><p>Sexual orientation (if relevant to LGBTQ+ bias analysis)</p></li>
+<li><p>Any other identity characteristics relevant to bias analysis
+(e.g., disability status, religion, accent or language
+background)</p></li>
+<li><p>Your tenure or employment status (tenure-track, tenured,
+contingent, adjunct, lecturer, etc.)</p></li>
+<li><p>Your career stage (years in current position)</p></li>
+</ul>
+<hr/>
+</section>
+</section>
+<section class="level2" id="part-iv-step-by-step-instructions-for-using-ai">
+<h2>Part IV: Step-by-Step Instructions for Using AI</h2>
+<section class="level3" id="preparation-checklist">
+<h3>Preparation Checklist</h3>
+<p>Before opening an AI tool, complete the following:</p>
+<ul class="task-list">
+<li><p><label><input type="checkbox"/>Assemble all materials listed in
+Part III</label></p></li>
+<li><p><label><input type="checkbox"/>Organize evaluations by course
+and semester</label></p></li>
+<li><p><label><input type="checkbox"/>De-identify student names in any
+written materials</label></p></li>
+<li><p><label><input type="checkbox"/>Have your professional record (CV
+or relevant excerpts) ready to share</label></p></li>
+<li><p><label><input type="checkbox"/>Have grade distribution data
+ready for each course under review</label></p></li>
+<li><p><label><input type="checkbox"/>Identify which courses or
+semesters are most important to analyze (start with the most recent or
+the ones most likely to enter a personnel decision)</label></p></li>
+</ul>
+<hr/>
+</section>
+<section class="level3" id="step-1-open-a-new-ai-conversation-and-set-the-context">
+<h3>Step 1: Open a New AI Conversation and Set the Context</h3>
+<p>Begin every AI session by providing the context the AI needs to
+conduct an accurate, identity-calibrated analysis. Use the following
+template, filling in your specific information:</p>
+<hr/>
+<p class="prompt-label"><strong>Opening prompt template:</strong></p>
+<blockquote>
+<p>I am using AI to assess whether bias may be present in my student
+course evaluations (SETs). I need you to analyze my evaluation materials
+using the research literature on SET bias. Here is my context:</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>My identity:</strong> [Describe your relevant identity
+characteristics — race, ethnicity, gender, national origin, sexual
+orientation, and any other characteristics relevant to bias
+analysis]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>My career stage and status:</strong> [e.g., “Assistant
+professor, tenure-track, Year 4 of 6” or “Lecturer, contingent, 12-year
+appointment”]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>My teaching experience:</strong> [e.g., “20 years of
+college-level teaching. I have published [X] peer-reviewed articles on
+[pedagogical topic], which directly relates to some of the complaints I
+receive”]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>What I am asking you to do:</strong> Analyze the evaluation
+materials I provide for evidence of the four types of SET bias
+documented in the research literature: (1) Direct Identity Bias, (2)
+Proxy Bias / Pedagogical Dissatisfaction, (3) Stigmatized Identity Bias,
+and (4) Deliberate Defamation. Flag specific language patterns, identify
+probable bias categories, assess the credibility of pedagogical
+complaints against my expertise and experience, and provide a structured
+written report I can use in institutional review processes.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Important:</strong> Please flag, do not adjudicate. Your role
+is to surface patterns and provide evidence-grounded analysis, not to
+make final determinations. All findings will be reviewed by qualified
+human reviewers.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>I will now share my materials in subsequent messages. Please confirm
+you are ready to proceed.</p>
+</blockquote>
+<hr/>
+</section>
+<section class="level3" id="step-2-share-your-professional-record">
+<h3>Step 2: Share Your Professional Record</h3>
+<p>Before sharing any evaluations, give the AI your professional context
+so it can calibrate the Credibility Inversion analysis (Category
+16).</p>
+<hr/>
+<p class="prompt-label"><strong>Professional record prompt template:</strong></p>
+<blockquote>
+<p>Here is my relevant professional record for calibrating the
+Credibility Inversion analysis:</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Years of teaching experience:</strong> [Number]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Relevant pedagogical expertise and publications:</strong></p>
+</blockquote>
+<blockquote>
+<p>[List any publications, grants, awards, or formal training in
+pedagogy, course design, assessment, or educational innovation. Be
+specific — titles, journals, topics.]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Teaching awards or recognition:</strong></p>
+</blockquote>
+<blockquote>
+<p>[List any teaching awards, nominations, positive peer observation
+reports, or other formal recognition of teaching quality]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Peer observation reports:</strong></p>
+</blockquote>
+<blockquote>
+<p>[Summarize or paste relevant peer observation findings — especially
+any that address the domains being criticized in evaluations, such as
+organization, clarity, or assessment design]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>Please note this information and use it to assess whether any
+pedagogical complaints in my evaluations represent a credibility
+inversion — that is, complaints that are implausible given my documented
+expertise in the domain being criticized.</p>
+</blockquote>
+<hr/>
+</section>
+<section class="level3" id="step-3-share-grade-distribution-data">
+<h3>Step 3: Share Grade Distribution Data</h3>
+<p>Provide de-identified grade data for each course under review before
+sharing the evaluations themselves. This allows the AI to conduct
+grade-SET credibility matrix analysis (Category 17).</p>
+<hr/>
+<p class="prompt-label"><strong>Grade distribution prompt template:</strong></p>
+<blockquote>
+<p>Here is de-identified grade distribution data for the courses I am
+submitting for analysis. Please use this to assess the grade-SET
+credibility matrix — specifically, whether negative evaluations
+correlate with grade distribution patterns in ways consistent with
+grade-retaliation bias rather than genuine pedagogical feedback.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>[Course Name/Number], [Semester, Year]:</strong></p>
+</blockquote>
+<blockquote>
+<ul>
+<li>Enrollment: [N]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Final grade distribution: A: [%], B: [%], C: [%], D: [%], F: [%], W:
+[%]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Mean GPA: [X.X]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>DFW rate: [%]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Evaluations completed: [before/after/during] final grading</li>
+</ul>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>[Repeat for each course]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Comparative context (if available):</strong></p>
+</blockquote>
+<blockquote>
+<ul>
+<li>Departmental average for this course: [if known]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Institutional average for this course level: [if known]</li>
+</ul>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>Please note any patterns — particularly whether courses with
+below-average grades also have notably more negative or critical
+evaluations, and whether this pattern is more pronounced than would be
+expected for comparable instructors.</p>
+</blockquote>
+<hr/>
+</section>
+<section class="level3" id="step-4-share-quantitative-set-scores">
+<h3>Step 4: Share Quantitative SET Scores</h3>
+<p>Provide your numerical evaluation scores before the written comments.
+This establishes the quantitative baseline.</p>
+<hr/>
+<p class="prompt-label"><strong>Quantitative SET data prompt template:</strong></p>
+<blockquote>
+<p>Here are my quantitative SET scores for the courses under review.
+Please analyze these for patterns consistent with the documented bias
+literature, including whether scores are lower than departmental or
+institutional averages in domains that research identifies as
+particularly susceptible to identity-based bias (e.g., organization,
+clarity, professional behavior).</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>[Course Name/Number], [Semester, Year]:</strong></p>
+</blockquote>
+<blockquote>
+<ul>
+<li>Response rate: [%]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>[Item 1 — e.g., “Overall rating of instructor”]: [score] /
+[scale]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>[Item 2 — e.g., “Organization”]: [score] / [scale]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>[Item 3 — e.g., “Clarity of explanation”]: [score] / [scale]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>[Item 4 — e.g., “Feedback quality”]: [score] / [scale]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>[Additional items as applicable]</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Department average for comparison (if available): [scores]</li>
+</ul>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>[Repeat for each course]</p>
+</blockquote>
+<hr/>
+</section>
+<section class="level3" id="step-5-share-written-open-ended-comments">
+<h3>Step 5: Share Written (Open-Ended) Comments</h3>
+<p>This is the most critical step. Open-ended comments carry the highest
+risk of bias and defamatory content. Share them verbatim, organized by
+course and semester.</p>
+<hr/>
+<p class="prompt-label"><strong>Written comments prompt template:</strong></p>
+<blockquote>
+<p>Here are the verbatim open-ended comments from my student
+evaluations. Please analyze each comment and the overall pattern across
+all comments for:</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<ol type="1">
+<li>Direct identity bias language (Type 1) — specific words, phrases,
+and tropes</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2" type="1">
+<li>Proxy bias language (Type 2) — pedagogical complaints that may
+reflect identity bias rather than genuine pedagogical concerns</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3" type="1">
+<li>Stigmatized identity bias (Type 3) — language specific to my
+identity group’s stigma profile</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="4" type="1">
+<li>Deliberate defamation (Type 4) — false factual claims, unadjudicated
+misconduct accusations, harassment language, or coordination
+signals</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="5" type="1">
+<li>The “despite” formulation — instances where students attribute their
+own learning to themselves while denying my contribution</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="6" type="1">
+<li>Absence of positive intellectual language — compare to language
+typically used for white male peers</li>
+</ol>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>For each comment you flag, please:</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>Identify which bias category or categories it falls under</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Explain specifically what language triggered the flag and why</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Note whether the complaint is corroborated or contradicted by my
+professional record or course materials</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Assess whether it appears to be Type A (potentially genuine), Type B
+(probable bias artifact), or Type C (harassment/defamation)</li>
+</ul>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>[Course Name/Number], [Semester, Year] — Written
+Comments:</strong></p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>Comment 1: “[Paste verbatim]”</p>
+</blockquote>
+<blockquote>
+<p>Comment 2: “[Paste verbatim]”</p>
+</blockquote>
+<blockquote>
+<p>[Continue for all comments]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>[Repeat for each course]</p>
+</blockquote>
+<hr/>
+</section>
+<section class="level3" id="step-6-share-course-materials-for-corroboration-testing">
+<h3>Step 6: Share Course Materials for Corroboration Testing</h3>
+<p>Provide selected course materials so the AI can test whether specific
+complaints are corroborated or contradicted by your actual course
+design.</p>
+<hr/>
+<p class="prompt-label"><strong>Course materials prompt template:</strong></p>
+<blockquote>
+<p>I am sharing selected course materials to test whether the
+pedagogical complaints identified in my evaluations are corroborated or
+contradicted by my actual course design. For each material, please
+assess whether the complaints about [organization / clarity / rubrics /
+etc.] are consistent with what the materials show.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Syllabus — [Course Name/Number], [Semester,
+Year]:</strong></p>
+</blockquote>
+<blockquote>
+<p>[Paste syllabus text, or summarize key structural elements: learning
+objectives, assignment schedule, grading criteria, communication
+policies]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Sample rubric — [Assignment name]:</strong></p>
+</blockquote>
+<blockquote>
+<p>[Paste rubric]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Sample assignment instructions — [Assignment
+name]:</strong></p>
+</blockquote>
+<blockquote>
+<p>[Paste instructions]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Peer observation summary (if available):</strong></p>
+</blockquote>
+<blockquote>
+<p>[Paste or summarize]</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>Based on these materials, please assess:</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>Do complaints about “disorganization” hold up against the syllabus
+structure?</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Do complaints about “unclear rubrics” hold up against the actual
+rubrics?</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Do complaints about “unclear expectations” hold up against the
+assignment instructions?</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Do peer observation findings corroborate or contradict the student
+complaints?</li>
+</ul>
+</blockquote>
+<hr/>
+</section>
+<section class="level3" id="step-7-request-the-full-analysis-report">
+<h3>Step 7: Request the Full Analysis Report</h3>
+<p>Once all materials have been submitted, ask the AI to synthesize
+everything into a structured report.</p>
+<hr/>
+<p class="prompt-label"><strong>Report request prompt template:</strong></p>
+<blockquote>
+<p>Based on all the materials I have shared — my professional record,
+grade distributions, quantitative scores, written comments, and course
+materials — please generate a complete bias analysis report structured
+as follows:</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Section 1: Executive Summary</strong></p>
+</blockquote>
+<blockquote>
+<p>A brief (one paragraph) summary of the overall findings, including
+the most significant patterns identified and the overall assessment of
+bias likelihood.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Section 2: Identity-Calibrated Risk Profile</strong></p>
+</blockquote>
+<blockquote>
+<p>An assessment of which bias types and categories are most applicable
+given my specific identity position, with an explanation of the compound
+effects where applicable.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Section 3: Comment-by-Comment Analysis</strong></p>
+</blockquote>
+<blockquote>
+<p>For each flagged comment, identify the bias category, explain the
+specific language that triggered the flag, assess whether it is Type A /
+B / C, and note whether it is corroborated or contradicted by my
+professional record or course materials.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Section 4: Pattern Analysis</strong></p>
+</blockquote>
+<blockquote>
+<p>Identify recurring patterns across multiple evaluations or semesters
+— including the no-win double-bind pattern, the “despite” formulation,
+absence of positive language, temporal spikes correlated with grade
+returns, and any coordination signals.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Section 5: Grade Distribution Analysis</strong></p>
+</blockquote>
+<blockquote>
+<p>Assess the grade-SET credibility matrix for each course — identifying
+which patterns are consistent with grade-retaliation bias and which
+might represent genuine pedagogical signals.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Section 6: Credibility Inversion Assessment</strong></p>
+</blockquote>
+<blockquote>
+<p>Assess specific pedagogical complaints against my documented
+expertise and experience, identifying which complaints represent a
+credibility inversion and why.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Section 7: Comparative Differential Notes</strong></p>
+</blockquote>
+<blockquote>
+<p>Note any areas where the available comparative data (departmental or
+institutional norms) suggests my evaluations deviate from what would be
+expected for white male peers in equivalent positions.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Section 8: Recommended Administrative Actions</strong></p>
+</blockquote>
+<blockquote>
+<p>Based on the analysis, provide recommendations for how administrators
+should treat this evaluation data — including which comments should be
+excluded from personnel files, which require independent corroboration
+before being treated as actionable, and which require immediate
+escalation.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p><strong>Section 9: Key Citations</strong></p>
+</blockquote>
+<blockquote>
+<p>Cite the relevant research literature supporting the findings in this
+report.</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>Please write this report in clear, professional language suitable for
+submission to a tenure committee, department chair, dean, or faculty
+equity officer.</p>
+</blockquote>
+<hr/>
+</section>
+<section class="level3" id="step-8-request-specific-follow-up-analyses-optional">
+<h3>Step 8: Request Specific Follow-Up Analyses (Optional)</h3>
+<p>Depending on your situation, you may want to request additional
+targeted analyses:</p>
+<hr/>
+<p class="prompt-label"><strong>Optional follow-up prompts:</strong></p>
+<p><strong>For tenure or promotion review:</strong></p>
+<blockquote>
+<p>I am preparing materials for a [tenure / promotion / merit review]
+decision. Please draft a one-page summary of the bias findings from this
+analysis that I can submit as a contextualizing statement alongside my
+SET data. The statement should be written in first person, cite the
+relevant research literature, and be appropriate for submission to a
+formal review committee.</p>
+</blockquote>
+<p><strong>For a grievance or complaint:</strong></p>
+<blockquote>
+<p>Based on this analysis, please identify which findings, if any, rise
+to the level of potential legal concern — including evidence of
+deliberate defamation, coordinated harassment, or institutional misuse
+of biased data. Please cite the relevant legal and research
+frameworks.</p>
+</blockquote>
+<p><strong>For a department chair or dean:</strong></p>
+<blockquote>
+<p>Please draft a brief memo (one page) addressed to a department chair
+or dean, summarizing the bias findings and recommending specific
+procedural protections for the review of my SET data. The memo should be
+professional, evidence-based, and include specific recommended
+actions.</p>
+</blockquote>
+<p><strong>For temporal pattern analysis:</strong></p>
+<blockquote>
+<p>Please analyze the trajectory of my evaluation scores and comment
+themes across [X] semesters or years. Specifically, assess whether the
+pattern of complaints is consistent with accumulating bias rather than
+accumulating pedagogical deficiency — noting whether complaints increase
+over time despite my increasing experience, whether they spike after
+grading events, and whether they remain stable across unrelated
+courses.</p>
+</blockquote>
+<hr/>
+</section>
+<section class="level3" id="step-9-verify-review-and-document">
+<h3>Step 9: Verify, Review, and Document</h3>
+<p>After receiving the AI analysis:</p>
+<ol type="1">
+<li><p><strong>Read the analysis carefully</strong> and note any
+findings that surprise you or that you think may be inaccurate. AI
+systems can make errors, and you know your own context better than any
+AI.</p></li>
+<li><p><strong>Check the citations.</strong> The AI should cite specific
+research for each finding. If a citation seems unfamiliar or wrong,
+verify it.</p></li>
+<li><p><strong>Save the full conversation.</strong> The AI’s analysis,
+including your prompts and the AI’s responses, constitutes a document
+that may be useful in institutional review processes.</p></li>
+<li><p><strong>Share with a trusted colleague or advisor</strong> before
+submitting any AI-generated analysis in a formal context. A colleague
+familiar with the SET bias literature can review the findings for
+accuracy and appropriateness.</p></li>
+<li><p><strong>Add your own narrative.</strong> The AI analysis is
+supporting evidence, not a substitute for your own professional voice.
+Use the findings to inform a personal statement or cover memo that
+contextualizes the evaluation data in your own words.</p></li>
+</ol>
+<hr/>
+</section>
+</section>
+<section class="level2" id="part-v-privacy-confidentiality-and-ethical-considerations">
+<h2>Part V: Privacy, Confidentiality, and Ethical Considerations</h2>
+<section class="level3" id="what-to-share-with-ai">
+<h3>What to Share with AI</h3>
+<ul>
+<li><p>Your own evaluation comments and scores: <strong>Yes</strong> —
+these are your professional records.</p></li>
+<li><p>De-identified grade distribution data: <strong>Yes</strong> —
+with student names and identifiers removed.</p></li>
+<li><p>Your own course materials (syllabi, rubrics, assignments):
+<strong>Yes</strong> — these are your professional work
+products.</p></li>
+<li><p>Peer observation reports about your own teaching:
+<strong>Yes</strong> — with observer names included or removed per your
+judgment.</p></li>
+<li><p>Other faculty members’ evaluation data: <strong>No</strong> —
+without explicit consent and appropriate de-identification.</p></li>
+<li><p>Student names in any context: <strong>No</strong> — always remove
+before sharing.</p></li>
+<li><p>Any material designated confidential by your institution:
+<strong>Check your institutional policies first.</strong></p></li>
+</ul>
+</section>
+<section class="level3" id="platform-considerations">
+<h3>Platform Considerations</h3>
+<p>Different AI platforms have different data retention and privacy
+policies. Before sharing sensitive professional materials:</p>
+<ul>
+<li><p>Review the AI platform’s privacy policy and data retention
+practices.</p></li>
+<li><p>Check whether your institution has an approved AI platform for
+sensitive professional use.</p></li>
+<li><p>Consider whether using an institutional or enterprise version of
+an AI tool (which may have stronger data protections) is appropriate for
+your situation.</p></li>
+</ul>
+</section>
+<section class="level3" id="what-ai-cannot-do">
+<h3>What AI Cannot Do</h3>
+<ul>
+<li><p>AI cannot verify factual claims made in student
+evaluations.</p></li>
+<li><p>AI cannot access your institution’s database or HR
+systems.</p></li>
+<li><p>AI cannot make legally binding determinations about bias,
+discrimination, or harassment.</p></li>
+<li><p>AI analysis does not constitute expert testimony or legal
+evidence without human expert review and attestation.</p></li>
+<li><p>AI may make errors, miss context, or reflect its own training
+biases. Human review is essential.</p></li>
+</ul>
+<hr/>
+</section>
+</section>
+<section class="level2" id="part-vi-quick-reference-prompts-summary">
+<h2>Part VI: Quick Reference — Prompts Summary</h2>
+<div class="line-block">Step | What you share | What you ask the AI to
+do |</div>
+<p>|—|—|—|</p>
+<div class="line-block">1 | Your identity, career stage, and request |
+Confirm understanding and readiness |</div>
+<div class="line-block">2 | Your professional and teaching record |
+Calibrate the Credibility Inversion analysis |</div>
+<div class="line-block">3 | De-identified grade distribution data |
+Conduct grade-SET credibility matrix analysis |</div>
+<div class="line-block">4 | Quantitative SET scores | Identify
+quantitative score patterns |</div>
+<div class="line-block">5 | Verbatim open-ended comments | Analyze for
+all four bias types, comment by comment |</div>
+<div class="line-block">6 | Selected course materials | Test whether
+complaints are corroborated or contradicted |</div>
+<div class="line-block">7 | Request only | Generate full structured
+analysis report |</div>
+<div class="line-block">8 | Request only | Optional targeted follow-up
+analyses |</div>
+<div class="line-block">9 | Review | Verify, document, and prepare for
+institutional use |</div>
+<hr/>
+</section>
+<section class="level2" id="part-vii-glossary-of-key-terms">
+<h2>Part VII: Glossary of Key Terms</h2>
+<p><strong>Behavioral immune system (BIS):</strong> The psychological
+mechanism by which disgust responses, evolved to protect against
+pathogen threats, are activated by culturally stigmatized groups —
+including groups coded as disease-carrying (e.g., Haitians following the
+CDC’s wrongful 1980s AIDS designation). Relevant to Category 13.</p>
+<p><strong>Comparative differential standard:</strong> The analytical
+approach of comparing evaluation outcomes for a minoritized instructor
+against white male peers teaching equivalent courses at equivalent
+levels of rigor. A differential in outcomes when inputs are equivalent
+is evidence of bias.</p>
+<p><strong>Content substitution:</strong> The cognitive phenomenon by
+which students overestimate the proportion of LGBTQ+ or identity-related
+content in a course, remembering and evaluating a single
+identity-related example as a defining pattern. Relevant to Category
+12C.</p>
+<p><strong>Corroboration gap:</strong> The absence of independent peer
+observation or materials review to verify a student pedagogical
+complaint. A complaint that cannot be corroborated by independent
+evidence cannot be treated as an established fact about pedagogy.</p>
+<p><strong>Credibility inversion:</strong> The paradox in which negative
+pedagogical feedback is treated as an actionable signal even when it
+directly contradicts the instructor’s documented expertise, years of
+experience, and scholarly record.</p>
+<p><strong>DFW rate:</strong> The percentage of students in a course who
+receive a D grade, an F grade, or who withdraw. Frequently misused as a
+proxy for teaching effectiveness; actually confounded by student
+preparation, course type, and grading standards.</p>
+<p><strong>Double double-bind:</strong> The pattern in which an
+instructor is penalized at both extremes of every evaluative spectrum
+simultaneously — too strict and too lenient, too much work and not
+enough challenge. A no-win pattern across multiple dimensions is
+diagnostic of identity bias.</p>
+<p><strong>Disgusted-organized bias:</strong> Bias activated by the
+emotion of disgust rather than contempt or anger, associated with groups
+historically coded as disease-carrying or morally contaminating.
+Distinct from general racial bias in its psychological mechanism and
+evaluative expression.</p>
+<p><strong>Follow-on course performance:</strong> Student performance in
+courses taken after a prerequisite or gateway course. Research
+consistently shows this is the gold standard for measuring teaching
+effectiveness, and is negatively correlated with SET scores in
+high-credibility studies.</p>
+<p><strong>“Forever foreigner” trope:</strong> The pattern of marking a
+native-born, native-English-speaking faculty member as permanently
+outside the national or institutional community based on ethnic
+identity. Language fluency provides no protection when ethnic stigma is
+the operative bias.</p>
+<p><strong>Grade-retaliation bias:</strong> The pattern of lower SET
+scores in courses where grades are lower, driven by student
+dissatisfaction with grades rather than genuine pedagogical
+assessment.</p>
+<p><strong>Novelty attachment:</strong> The cognitive phenomenon by
+which students notice and register LGBTQ+-inclusive or identity-related
+course examples more prominently than equivalent heteronormative
+examples, leading to overestimation of their frequency.</p>
+<p><strong>Presumption of incompetence:</strong> The documented tendency
+of students to assume lower competence, authority, and expertise in
+faculty of color before any instruction occurs, regardless of actual
+qualifications.</p>
+<p><strong>Proxy bias:</strong> Bias expressed through ostensibly
+neutral pedagogical complaints — about grading, organization, clarity,
+or workload — that research establishes are systematically more negative
+for minoritized faculty even when the actual pedagogy is equivalent to
+that of white male peers.</p>
+<p><strong>Racial taxation:</strong> Lazos (2012)‘s term for the
+phenomenon in which the burden of students’ discomfort with
+equity-related course content is placed on the instructor rather than
+the content, expressed through evaluative accusations of bias and
+agenda-pushing.</p>
+<p><strong>Success inversion (“Despite” formulation):</strong> The
+pattern in which students acknowledge their own learning gains while
+simultaneously denying the instructor’s contribution, attributing
+success to themselves and describing it as occurring despite poor
+teaching.</p>
+<p><strong>Type 1–4 bias:</strong> The four-category classification
+system used in this guide: Type 1 (Direct Identity Bias), Type 2 (Proxy
+Bias), Type 3 (Stigmatized Identity Bias), Type 4 (Deliberate
+Defamation).</p>
+<hr/>
+</section>
+<section class="level2 references-section" id="references">
+<h2>References</h2>
+<p>Boring, A., Ottoboni, K., &amp; Stark, P. B. (2016). Student
+evaluations of teaching (mostly) do not measure teaching effectiveness.
+<em>ScienceOpen Research.</em>
+https://doi.org/10.14293/S2199-1006.1.SOR-EDU.AETBZC.v1</p>
+<p>Braga, M., Paccagnella, M., &amp; Pellizzari, M. (2014). Evaluating
+students’ evaluations of professors. <em>Economics of Education Review,
+41</em>, 71–88. https://doi.org/10.1016/j.econedurev.2014.04.002</p>
+<p>Carrell, S. E., &amp; West, J. E. (2010). Does professor quality
+matter? Evidence from random assignment of students to professors.
+<em>Journal of Political Economy, 118</em>(3), 409–432.
+https://doi.org/10.1086/653808</p>
+<p>Chávez, K., &amp; Mitchell, K. M. (2020). Exploring bias in student
+evaluations: Gender, race, and ethnicity. <em>PS: Political Science
+&amp; Politics, 53</em>(2), 270–274.</p>
+<p>Crenshaw, K. (1989). Demarginalizing the intersection of race and
+sex. <em>University of Chicago Legal Forum, 1989</em>(1), 139–167.</p>
+<p>Deo, M. E. (2015). A better tenure battle: Fighting bias in teaching
+evaluations. <em>Columbia Journal of Gender and Law, 31</em>(1).
+https://doi.org/10.7916/cjgl.v31i1.2739</p>
+<p>Esarey, J., &amp; Valdes, N. (2020). Unbiased, reliable, and valid
+student evaluations can still be unfair. <em>Assessment &amp; Evaluation
+in Higher Education, 45</em>(8), 1106–1120.</p>
+<p>Gutiérrez y Muhs, G., Niemann, Y. F., González, C. G., &amp; Harris,
+A. P. (Eds.). (2012). <em>Presumed incompetent: The intersections of
+race and class for women in academia.</em> Utah State University
+Press.</p>
+<p>Harris-Perry, M. V. (2011). <em>Sister citizen: Shame, stereotypes,
+and Black women in America.</em> Yale University Press.</p>
+<p>Heffernan, T. (2022). Sexism, racism, prejudice, and bias: A
+literature review and synthesis of research surrounding student
+evaluations of courses and teaching. <em>Assessment &amp; Evaluation in
+Higher Education, 47</em>(1), 144–154.</p>
+<p>Hochschild, A. R. (1983). <em>The managed heart: Commercialization of
+human feeling.</em> University of California Press.</p>
+<p>Hodson, G., et al. (2013). The role of intergroup disgust in
+predicting negative outgroup evaluations. <em>Journal of Experimental
+Social Psychology, 49</em>, 195–205.</p>
+<p>Inside Higher Ed. (2018, May 31). Savannah State professors object to
+new, unwritten policy linking DFW grades to teaching effectiveness.
+https://www.insidehighered.com/news/2018/05/31/savannah-state-professors-object-new-unwritten-policy-linking-dfw-grades-teaching</p>
+<p>Kogan, V., Genetin, B., Chen, J., &amp; Kalish, A. (2022). Students’
+grade satisfaction influences evaluations of teaching.
+<em>EdWorkingPaper No. 22-513.</em> Annenberg Institute at Brown
+University.</p>
+<p>Kreitzer, R. J., &amp; Sweet-Cushman, J. (2022). Evaluating student
+evaluations of teaching. <em>Journal of Academic Ethics, 20</em>,
+73–84.</p>
+<p>Lampman, C., Phelps, A., Bhatt, S., &amp; Bhatt, M. (2009).
+Contrapower harassment in academia. <em>Sex Roles, 60</em>(5–6),
+331–346.</p>
+<p>Lazos, S. R. (2012). Are student teaching evaluations holding back
+women and minorities? In G. Gutiérrez y Muhs et al. (Eds.), <em>Presumed
+incompetent</em> (pp. 164–185). Utah State University Press.</p>
+<p>MacNell, L., Driscoll, A., &amp; Hunt, A. N. (2014). What’s in a
+name: Exposing gender bias in student ratings of teaching.
+<em>Innovative Higher Education, 40</em>(4), 291–303.</p>
+<p>Motro, D., Evans, J. B., Ellis, A. P. J., &amp; Benson, L. (2022).
+Race and reactions to women’s expressions of anger at work. <em>Journal
+of Applied Psychology, 107</em>(3), 484–504.</p>
+<p>Pascal, E., Holman, A. C., &amp; Miluț, F. M. (2023). Emotional
+relevance and prejudice. <em>Frontiers in Psychology, 14</em>,
+1177263.</p>
+<p>Preprints.org. (2025). Student evaluations of teaching fail to
+predict learning: Meta-analysis of bias, grade inflation, and incentive
+distortion in higher education.
+https://www.preprints.org/manuscript/202509.1763</p>
+<p>Ripley, M., Anderson, E., McCormack, M., &amp; Rockett, B. (2012).
+Heteronormativity in the university classroom. <em>Sociology of
+Education, 85</em>(2), 119–132.</p>
+<p>Rodriguez, J. (2019). The weaponization of student evaluations of
+teaching. <em>Journal of Academic Freedom, 10.</em> AAUP.</p>
+<p>Russ, T. L., Simonds, C. J., &amp; Hunt, S. K. (2002). Coming out in
+the classroom. <em>Communication Education, 51</em>(3), 311–324.</p>
+<p>Schmidt, B. (2015). Gendered language in teacher reviews.
+http://benschmidt.org/profGender</p>
+<p>Smith, B. P., &amp; Hawkins, B. (2011). Examining student evaluations
+of Black college faculty. <em>Journal of Negro Education, 80</em>(2),
+149–162.</p>
+<p>Sprague, J., &amp; Massoni, K. (2005). Student evaluations and
+gendered expectations. <em>Sex Roles, 53</em>(11–12), 779–793.</p>
+<p>St. Olaf College IEA. (2025). <em>Bias in course evaluations.</em>
+https://wp.stolaf.edu/iea/bias-in-course-evaluations/</p>
+<p>Stroebe, W. (2020). Student evaluations of teaching encourages poor
+teaching and contributes to grade inflation. <em>Basic and Applied
+Social Psychology, 42</em>(4), 276–294.</p>
+<p>Subtirelu, N. C. (2015). “She does have an accent but…”: Race and
+language ideology in students’ evaluations of mathematics instructors on
+RateMyProfessors.com. <em>Language in Society, 44</em>(1), 35–62.</p>
+<p>UNC Charlotte ADVANCE. (2023). <em>Student teaching evaluation
+bias.</em> https://advance.charlotte.edu</p>
+<p>Uttl, B., White, C. A., &amp; Gonzalez, D. W. (2017). Meta-analysis
+of faculty’s teaching effectiveness. <em>Studies in Educational
+Evaluation, 54</em>, 22–42.</p>
+<p>West, C. M. (2008). Mammy, Jezebel, Sapphire, and their homegirls. In
+J. C. Chrisler et al. (Eds.), <em>Lectures on the psychology of
+women</em> (4th ed., pp. 286–299). McGraw-Hill.</p>
+</section>
+
+    </main>
+  </div>
+
+  <a class="back-to-top" href="#top" aria-label="Back to top">↑</a>
+
+  <script>
+    const headings = [...document.querySelectorAll('main h2, main h3')];
+    const links = [...document.querySelectorAll('.toc a')];
+    const byId = new Map(links.map(a => [a.getAttribute('href'), a]));
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        links.forEach(a => a.classList.remove('active'));
+        const section = entry.target.closest('section');
+        const id = section ? '#' + section.id : '#' + entry.target.id;
+        document.querySelectorAll(`.toc a[href="${id}"]`).forEach(a => a.classList.add('active'));
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0.01 });
+    headings.forEach(h => observer.observe(h));
+
+    document.querySelectorAll('main blockquote:not(.notice)').forEach((quote, idx) => {
+      const text = quote.innerText.trim();
+      if (text.length < 90) return;
+      const btn = document.createElement('button');
+      btn.className = 'copy-prompt';
+      btn.type = 'button';
+      btn.textContent = 'Copy prompt';
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.textContent = 'Copied';
+          setTimeout(() => btn.textContent = 'Copy prompt', 1200);
+        } catch (err) {
+          btn.textContent = 'Select text';
+        }
+      });
+      quote.prepend(btn);
+    });
+
+    const back = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', () => {
+      back.classList.toggle('visible', window.scrollY > 600);
+    }, { passive: true });
+  </script>
+</body>
+</html>
