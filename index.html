@@ -1,10 +1,2071 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Teaching Teaching_While_XYZ Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SET Bias Category Summary Table — AI Training Source Material on Bias Indicators in Student Evaluations of Minoritized Faculty. Version 3, covering 48 categories across 17 bias types.">
+<title>SET Bias Categories — Summary Reference</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Palette — high contrast light theme */
+  --clr-bg:        #ffffff;
+  --clr-bg2:       #f7f6f3;
+  --clr-bg3:       #edecea;
+  --clr-border:    #c8c5be;
+  --clr-border2:   #e0ddd7;
+  --clr-text:      #1a1916;
+  --clr-text2:     #3d3b35;
+  --clr-text3:     #6b6860;
+  --clr-accent:    #7a3b00;
+  --clr-accent2:   #b85c00;
+  --clr-link:      #1a4a7a;
+  --clr-link-vis:  #5b1f7a;
+  --clr-focus:     #005fcc;
+
+  /* Type palette */
+  --t1-c: #c0392b; --t1-bg: #fdf2f1; --t1-bd: #e8a09a;
+  --t2-c: #1a5276; --t2-bg: #eaf4fb; --t2-bd: #a9cce3;
+  --t3-c: #5b2c6f; --t3-bg: #f5eef8; --t3-bd: #c39bd3;
+  --t4-c: #784212; --t4-bg: #fef5e7; --t4-bd: #f0b27a;
+  --tc-c: #1e8449; --tc-bg: #eafaf1; --tc-bd: #a9dfbf;
+
+  --radius:   6px;
+  --radius-lg: 10px;
+  --shadow:   0 1px 4px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.07);
+
+  /* Typography */
+  --ff-body:  'Source Sans 3', system-ui, sans-serif;
+  --ff-serif: 'Source Serif 4', Georgia, serif;
+  --ff-mono:  'Source Code Pro', 'Courier New', monospace;
+  --fs-base:  16px;
+  --lh:       1.65;
+}
+
+html { font-size: var(--fs-base); scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-body);
+  font-size: 1rem;
+  line-height: var(--lh);
+  color: var(--clr-text);
+  background: var(--clr-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── FOCUS / SKIP NAV ─────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 3px solid var(--clr-focus);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -999px;
+  left: 0;
+  background: var(--clr-focus);
+  color: #fff;
+  padding: 8px 16px;
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 9999;
+  border-radius: 0 0 var(--radius) 0;
+}
+.skip-link:focus { top: 0; }
+
+/* ── HEADER ───────────────────────────────────────────────────────────────── */
+.site-header {
+  background: var(--clr-bg);
+  border-bottom: 2px solid var(--clr-border);
+  padding: 1.5rem 2rem 1.25rem;
+}
+
+.site-header h1 {
+  font-family: var(--ff-serif);
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 600;
+  color: var(--clr-text);
+  line-height: 1.3;
+  margin-bottom: .3rem;
+}
+
+.site-header .subtitle {
+  font-size: .875rem;
+  color: var(--clr-text3);
+  font-weight: 300;
+}
+
+/* ── TOOLBAR ──────────────────────────────────────────────────────────────── */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--clr-bg2);
+  border-bottom: 1px solid var(--clr-border);
+  padding: .75rem 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.toolbar-label {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--clr-text3);
+  white-space: nowrap;
+}
+
+.search-field {
+  flex: 1;
+  min-width: 200px;
+  max-width: 360px;
+  position: relative;
+}
+
+.search-field label {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+.search-field input {
+  width: 100%;
+  padding: .5rem .75rem;
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius);
+  font-family: var(--ff-body);
+  font-size: .9375rem;
+  color: var(--clr-text);
+  background: var(--clr-bg);
+  transition: border-color .15s;
+}
+
+.search-field input:focus {
+  border-color: var(--clr-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,95,204,.15);
+}
+
+.search-field input::placeholder { color: var(--clr-text3); }
+
+.filter-group {
+  display: flex;
+  gap: .375rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-btn {
+  padding: .375rem .875rem;
+  border: 1.5px solid var(--clr-border);
+  border-radius: 999px;
+  font-family: var(--ff-body);
+  font-size: .8125rem;
+  font-weight: 500;
+  color: var(--clr-text2);
+  background: var(--clr-bg);
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  border-color: var(--clr-text2);
+  color: var(--clr-text);
+  background: var(--clr-bg3);
+}
+
+.filter-btn[aria-pressed="true"],
+.filter-btn.active {
+  color: #fff;
+  border-color: transparent;
+}
+
+.filter-btn[data-type="all"][aria-pressed="true"]    { background: var(--clr-accent); }
+.filter-btn[data-type="t1"][aria-pressed="true"]     { background: var(--t1-c); }
+.filter-btn[data-type="t2"][aria-pressed="true"]     { background: var(--t2-c); }
+.filter-btn[data-type="t3"][aria-pressed="true"]     { background: var(--t3-c); }
+.filter-btn[data-type="t4"][aria-pressed="true"]     { background: var(--t4-c); }
+.filter-btn[data-type="tc"][aria-pressed="true"]     { background: var(--tc-c); }
+
+.result-count {
+  font-size: .8125rem;
+  color: var(--clr-text3);
+  font-family: var(--ff-mono);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* ── LEGEND ───────────────────────────────────────────────────────────────── */
+.legend {
+  background: var(--clr-bg2);
+  border-bottom: 1px solid var(--clr-border2);
+  padding: .625rem 2rem;
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.legend-title {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--clr-text3);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .8125rem;
+  color: var(--clr-text2);
+}
+
+.legend-swatch {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border-radius: 3px;
+  border: 1.5px solid;
+  flex-shrink: 0;
+}
+
+/* ── MAIN CONTENT ─────────────────────────────────────────────────────────── */
+main {
+  padding: 1.5rem 2rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── CARD GRID ────────────────────────────────────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.no-results {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--clr-text3);
+  font-style: italic;
+  display: none;
+}
+
+/* ── CATEGORY CARD ────────────────────────────────────────────────────────── */
+.cat-card {
+  background: var(--clr-bg);
+  border: 1.5px solid var(--clr-border2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow .2s, border-color .2s;
+}
+
+.cat-card:hover {
+  box-shadow: var(--shadow);
+  border-color: var(--clr-border);
+}
+
+.cat-card.hidden { display: none; }
+
+/* Card header strip */
+.card-header {
+  padding: .875rem 1.125rem .75rem;
+  border-bottom: 1px solid var(--clr-border2);
+  background: var(--clr-bg2);
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.cat-num {
+  font-family: var(--ff-mono);
+  font-size: .75rem;
+  font-weight: 500;
+  color: var(--clr-text3);
+  letter-spacing: .04em;
+}
+
+.cat-name {
+  font-family: var(--ff-serif);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--clr-text);
+  line-height: 1.3;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: .2rem .6rem;
+  border-radius: var(--radius);
+  border: 1px solid;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  align-self: flex-start;
+}
+
+/* Card body */
+.card-body {
+  padding: 1rem 1.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: .875rem;
+}
+
+.card-section { display: flex; flex-direction: column; gap: .3rem; }
+
+.section-label {
+  font-size: .6875rem;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--clr-text3);
+}
+
+.mechanism-text {
+  font-size: .9375rem;
+  color: var(--clr-text2);
+  line-height: 1.6;
+}
+
+.example-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.example-list li {
+  font-size: .875rem;
+  color: var(--clr-text2);
+  padding-left: 1.1rem;
+  position: relative;
+  line-height: 1.55;
+}
+
+.example-list li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--clr-accent2);
+  font-weight: 600;
+}
+
+.citation-text {
+  font-size: .8125rem;
+  color: var(--clr-text3);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ── ADMIN FRAMEWORK TABLE ────────────────────────────────────────────────── */
+.admin-section {
+  margin: 2.5rem 0;
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.admin-section h2 {
+  font-family: var(--ff-serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--clr-text);
+  padding: 1rem 1.25rem;
+  background: var(--clr-bg2);
+  border-bottom: 1.5px solid var(--clr-border);
+}
+
+.admin-table-wrap { overflow-x: auto; }
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+  min-width: 640px;
+}
+
+.admin-table thead th {
+  text-align: left;
+  padding: .625rem 1rem;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--clr-text3);
+  background: var(--clr-bg3);
+  border-bottom: 1.5px solid var(--clr-border);
+}
+
+.admin-table tbody tr { border-bottom: 1px solid var(--clr-border2); }
+.admin-table tbody tr:last-child { border-bottom: none; }
+.admin-table tbody tr:nth-child(even) { background: var(--clr-bg2); }
+.admin-table tbody tr:hover { background: #f0f4f8; }
+
+.admin-table td {
+  padding: .75rem 1rem;
+  vertical-align: top;
+  color: var(--clr-text2);
+  line-height: 1.55;
+}
+
+.admin-table td:first-child {
+  font-family: var(--ff-serif);
+  font-weight: 600;
+  color: var(--clr-text);
+  white-space: nowrap;
+}
+
+/* ── REFERENCES ───────────────────────────────────────────────────────────── */
+.ref-section {
+  margin: 2.5rem 0 0;
+  border-top: 2px solid var(--clr-border);
+  padding-top: 1.75rem;
+}
+
+.ref-section > h2 {
+  font-family: var(--ff-serif);
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--clr-text);
+  margin-bottom: .25rem;
+}
+
+.ref-meta {
+  font-size: .875rem;
+  color: var(--clr-text3);
+  margin-bottom: 1rem;
+}
+
+.ref-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding-bottom: .875rem;
+  border-bottom: 1px solid var(--clr-border2);
+}
+
+.ref-search-wrap {
+  flex: 1;
+  min-width: 180px;
+  max-width: 340px;
+  position: relative;
+}
+
+.ref-search-wrap label {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+}
+
+.ref-search-wrap input {
+  width: 100%;
+  padding: .45rem .7rem;
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius);
+  font-family: var(--ff-body);
+  font-size: .9rem;
+  color: var(--clr-text);
+  background: var(--clr-bg);
+  transition: border-color .15s;
+}
+
+.ref-search-wrap input:focus {
+  border-color: var(--clr-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,95,204,.15);
+}
+
+.ref-search-wrap input::placeholder { color: var(--clr-text3); }
+
+.ref-count {
+  font-family: var(--ff-mono);
+  font-size: .8rem;
+  color: var(--clr-text3);
+  white-space: nowrap;
+}
+
+.ref-alpha-nav {
+  display: flex;
+  gap: .25rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px solid var(--clr-border2);
+}
+
+.ref-alpha-nav a {
+  font-family: var(--ff-mono);
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--clr-link);
+  text-decoration: none;
+  padding: .2rem .5rem;
+  border-radius: 4px;
+  border: 1px solid var(--clr-border2);
+  transition: all .12s;
+}
+
+.ref-alpha-nav a:hover {
+  background: var(--clr-bg3);
+  border-color: var(--clr-border);
+  color: var(--clr-text);
+}
+
+.ref-alpha-nav a:visited { color: var(--clr-link-vis); }
+
+.ref-group { margin-bottom: 1.75rem; }
+.ref-group.ref-hidden { display: none; }
+
+.ref-letter {
+  font-family: var(--ff-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--clr-accent2);
+  margin-bottom: .625rem;
+  padding-bottom: .375rem;
+  border-bottom: 1px solid var(--clr-border2);
+}
+
+.ref-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .75rem; }
+
+.ref-item {
+  font-size: .9rem;
+  color: var(--clr-text2);
+  line-height: 1.65;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.ref-item::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--clr-text3);
+  font-family: var(--ff-mono);
+  font-size: .8rem;
+  top: .15rem;
+}
+
+.ref-item.ref-hidden { display: none; }
+
+.ref-item em { font-style: italic; color: var(--clr-text); }
+
+.ref-item a {
+  color: var(--clr-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-all;
+  font-family: var(--ff-mono);
+  font-size: .8rem;
+}
+
+.ref-item a:hover { color: var(--clr-accent); }
+.ref-item a:visited { color: var(--clr-link-vis); }
+
+.ref-no-results {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+  color: var(--clr-text3);
+  font-style: italic;
+}
+
+mark.hl {
+  background: #fff3b0;
+  color: var(--clr-text);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────────────────────── */
+.site-footer {
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--clr-border2);
+  font-size: .8125rem;
+  color: var(--clr-text3);
+  line-height: 1.7;
+  background: var(--clr-bg2);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .site-header, .toolbar, .legend, main, .site-footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .card-grid { grid-template-columns: 1fr; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .filter-group { gap: .3rem; }
+  .result-count { margin-left: 0; }
+}
+
+/* ── PRINT ────────────────────────────────────────────────────────────────── */
+@media print {
+  .toolbar, .legend, .site-footer { display: none; }
+  .cat-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+  .card-grid { display: block; }
+  .cat-card { margin-bottom: 1rem; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: .75rem; color: #555; }
+  .ref-item a::after { content: ""; }
+}
+
+/* ── DARK MODE ────────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-bg:      #141412;
+    --clr-bg2:     #1c1b18;
+    --clr-bg3:     #242320;
+    --clr-border:  #3a3832;
+    --clr-border2: #2d2b26;
+    --clr-text:    #eeebe2;
+    --clr-text2:   #b5b0a3;
+    --clr-text3:   #7a7670;
+    --clr-accent:  #e8a85a;
+    --clr-accent2: #c97e2a;
+    --clr-link:    #7ab4dc;
+    --clr-link-vis:#b08ec8;
+    --clr-focus:   #5aabf0;
+
+    --t1-c: #e88080; --t1-bg: #2a1212; --t1-bd: #6b2a2a;
+    --t2-c: #7ab4dc; --t2-bg: #0e1e2e; --t2-bd: #2a4a68;
+    --t3-c: #c39bd3; --t3-bg: #1e1030; --t3-bd: #5a3070;
+    --t4-c: #e8b880; --t4-bg: #2a1a08; --t4-bd: #6a4010;
+    --tc-c:  #80d4a0; --tc-bg: #0a2016; --tc-bd: #206840;
+  }
+  .admin-table tbody tr:hover { background: #1e2a34; }
+  .admin-table tbody tr:nth-child(even) { background: var(--clr-bg2); }
+}
+</style>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <p>This is my GitHub Pages site.</p>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header" role="banner">
+  <h1>SET Bias Category Reference</h1>
+  <p class="subtitle">
+    AI Training Source Material: Bias Indicators in Student Evaluations of Minoritized Faculty &nbsp;·&nbsp;
+    Version 3 &nbsp;·&nbsp; 48 categories &nbsp;·&nbsp; 87 sources
+  </p>
+</header>
+
+<div class="toolbar" role="search" aria-label="Filter and search categories">
+  <span class="toolbar-label" id="filter-label">Filter:</span>
+  <div class="filter-group" role="group" aria-labelledby="filter-label">
+    <button class="filter-btn" data-type="all" aria-pressed="true">All</button>
+    <button class="filter-btn" data-type="t1"  aria-pressed="false">Type 1 — Direct</button>
+    <button class="filter-btn" data-type="t2"  aria-pressed="false">Type 2 — Proxy</button>
+    <button class="filter-btn" data-type="t3"  aria-pressed="false">Type 3 — Stigmatized</button>
+    <button class="filter-btn" data-type="t4"  aria-pressed="false">Type 4 — Defamation</button>
+    <button class="filter-btn" data-type="tc"  aria-pressed="false">Compound</button>
+  </div>
+  <div class="search-field">
+    <label for="cat-search">Search categories</label>
+    <input type="search" id="cat-search"
+           placeholder="Search categories, phrases, citations…"
+           aria-controls="card-grid"
+           autocomplete="off" spellcheck="false">
+  </div>
+  <span class="result-count" id="result-count" aria-live="polite" aria-atomic="true">
+    Showing all 48 categories
+  </span>
+</div>
+
+<div class="legend" aria-label="Bias type legend">
+  <span class="legend-title">Type key:</span>
+  <span class="legend-item">
+    <span class="legend-swatch" style="background:var(--t1-bg);border-color:var(--t1-c);" aria-hidden="true"></span>
+    Type 1 — Direct Identity Bias
+  </span>
+  <span class="legend-item">
+    <span class="legend-swatch" style="background:var(--t2-bg);border-color:var(--t2-c);" aria-hidden="true"></span>
+    Type 2 — Proxy Bias
+  </span>
+  <span class="legend-item">
+    <span class="legend-swatch" style="background:var(--t3-bg);border-color:var(--t3-c);" aria-hidden="true"></span>
+    Type 3 — Stigmatized Identity
+  </span>
+  <span class="legend-item">
+    <span class="legend-swatch" style="background:var(--t4-bg);border-color:var(--t4-c);" aria-hidden="true"></span>
+    Type 4 — Deliberate Defamation
+  </span>
+  <span class="legend-item">
+    <span class="legend-swatch" style="background:var(--tc-bg);border-color:var(--tc-c);" aria-hidden="true"></span>
+    Compound (Multiple Types)
+  </span>
+</div>
+
+<main id="main-content">
+
+  <!-- Category Cards -->
+  <section aria-label="Bias categories">
+    <div class="card-grid" id="card-grid" role="list">
+      
+    <article class="cat-card" data-type="t1" data-search="1 personality & temperament affective/temperamental language replaces intellectual or pedagogical language. professional assertiveness is systematically misread as hostility, regardless of actual conduct. has a chip on their shoulder seems angry all the time went on a rant very off-putting blew up at students overreacted harlow (2003); tuitt et al. (2009); motro et al. (2022); smith & hawkins (2011)"
+             aria-label="Category 1: Personality & Temperament">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">1</span>
+        <h2 class="cat-name">Personality & Temperament</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-1">
+          <h3 class="section-label" id="mech-1">Mechanism</h3>
+          <p class="mechanism-text">Affective/temperamental language replaces intellectual or pedagogical language. Professional assertiveness is systematically misread as hostility, regardless of actual conduct.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-1">
+          <h3 class="section-label" id="ex-1">Example Phrases</h3>
+          <ul class="example-list"><li>Has a chip on their shoulder</li><li>Seems angry all the time</li><li>Went on a rant</li><li>Very off-putting</li><li>Blew up at students</li><li>Overreacted</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-1">
+          <h3 class="section-label" id="cite-1">Key Sources</h3>
+          <p class="citation-text">Harlow (2003); Tuitt et al. (2009); Motro et al. (2022); Smith & Hawkins (2011)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t1" data-search="2 authority & competence challenges presumption of incompetence: credentials and expertise denied regardless of qualifications. pre-course bias shapes assessments before any instruction occurs. doesn't know the material not qualified to teach this students knew more than the professor not a real expert how did they get this job gutiérrez y muhs et al. (2012); chávez & mitchell (2020); anderson & smith (2005); reid (2010)"
+             aria-label="Category 2: Authority & Competence Challenges">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">2</span>
+        <h2 class="cat-name">Authority & Competence Challenges</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-2">
+          <h3 class="section-label" id="mech-2">Mechanism</h3>
+          <p class="mechanism-text">Presumption of incompetence: credentials and expertise denied regardless of qualifications. Pre-course bias shapes assessments before any instruction occurs.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-2">
+          <h3 class="section-label" id="ex-2">Example Phrases</h3>
+          <ul class="example-list"><li>Doesn't know the material</li><li>Not qualified to teach this</li><li>Students knew more than the professor</li><li>Not a real expert</li><li>How did they get this job</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-2">
+          <h3 class="section-label" id="cite-2">Key Sources</h3>
+          <p class="citation-text">Gutiérrez y Muhs et al. (2012); Chávez & Mitchell (2020); Anderson & Smith (2005); Reid (2010)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t1" data-search="3 accent & language bias non-native accent conflated with incompetence; comprehension rated lower regardless of actual clarity. can operate independently of english fluency when ethnic identity is stigmatized. hard to understand because of their accent needs to work on their english the accent made it impossible to learn should not be teaching if they can't speak clearly subtirelu (2015); rubin & smith (1990); chávez & mitchell (2020); heffernan (2022)"
+             aria-label="Category 3: Accent & Language Bias">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">3</span>
+        <h2 class="cat-name">Accent & Language Bias</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-3">
+          <h3 class="section-label" id="mech-3">Mechanism</h3>
+          <p class="mechanism-text">Non-native accent conflated with incompetence; comprehension rated lower regardless of actual clarity. Can operate independently of English fluency when ethnic identity is stigmatized.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-3">
+          <h3 class="section-label" id="ex-3">Example Phrases</h3>
+          <ul class="example-list"><li>Hard to understand because of their accent</li><li>Needs to work on their English</li><li>The accent made it impossible to learn</li><li>Should not be teaching if they can't speak clearly</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-3">
+          <h3 class="section-label" id="cite-3">Key Sources</h3>
+          <p class="citation-text">Subtirelu (2015); Rubin & Smith (1990); Chávez & Mitchell (2020); Heffernan (2022)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t1" data-search="4 relatability & fit "forever foreigner" trope marks instructor as not belonging based on identity, not conduct. racialized expectations shape interpersonal assessments before any interaction occurs. doesn't fit in here not the type of professor i expected feels like they're from a different world seems out of place reid (2010); pittman (2010); anderson & smith (2005); chávez & mitchell (2020)"
+             aria-label="Category 4: Relatability & Fit">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">4</span>
+        <h2 class="cat-name">Relatability & Fit</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-4">
+          <h3 class="section-label" id="mech-4">Mechanism</h3>
+          <p class="mechanism-text">"Forever foreigner" trope marks instructor as not belonging based on identity, not conduct. Racialized expectations shape interpersonal assessments before any interaction occurs.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-4">
+          <h3 class="section-label" id="ex-4">Example Phrases</h3>
+          <ul class="example-list"><li>Doesn't fit in here</li><li>Not the type of professor I expected</li><li>Feels like they're from a different world</li><li>Seems out of place</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-4">
+          <h3 class="section-label" id="cite-4">Key Sources</h3>
+          <p class="citation-text">Reid (2010); Pittman (2010); Anderson & Smith (2005); Chávez & Mitchell (2020)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t1" data-search="5 gendered language patterns women evaluated on emotional affect and appearance rather than intellect. held to contradictory double standards of warmth and authority that do not apply to male peers. bossy should smile more let students walk all over her too aggressive for a woman came across as weak tries too hard to be liked schmidt (2015); macnell et al. (2014); boring et al. (2016); sprague & massoni (2005); mengel et al. (2019)"
+             aria-label="Category 5: Gendered Language Patterns">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">5</span>
+        <h2 class="cat-name">Gendered Language Patterns</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-5">
+          <h3 class="section-label" id="mech-5">Mechanism</h3>
+          <p class="mechanism-text">Women evaluated on emotional affect and appearance rather than intellect. Held to contradictory double standards of warmth and authority that do not apply to male peers.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-5">
+          <h3 class="section-label" id="ex-5">Example Phrases</h3>
+          <ul class="example-list"><li>Bossy</li><li>Should smile more</li><li>Let students walk all over her</li><li>Too aggressive for a woman</li><li>Came across as weak</li><li>Tries too hard to be liked</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-5">
+          <h3 class="section-label" id="cite-5">Key Sources</h3>
+          <p class="citation-text">Schmidt (2015); MacNell et al. (2014); Boring et al. (2016); Sprague & Massoni (2005); Mengel et al. (2019)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t1" data-search="6 racialized language patterns black faculty receive the lowest set scores of any racial group. explicit racial coding appears in open-ended comments; authority is challenged in ways absent from evaluations of white peers. too loud makes everything about race biased against white students plays favorites not the typical professor i felt singled out smith & hawkins (2011); pittman (2010); subtirelu (2015); harris-perry (2011); harlow (2003)"
+             aria-label="Category 6: Racialized Language Patterns">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">6</span>
+        <h2 class="cat-name">Racialized Language Patterns</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-6">
+          <h3 class="section-label" id="mech-6">Mechanism</h3>
+          <p class="mechanism-text">Black faculty receive the lowest SET scores of any racial group. Explicit racial coding appears in open-ended comments; authority is challenged in ways absent from evaluations of white peers.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-6">
+          <h3 class="section-label" id="ex-6">Example Phrases</h3>
+          <ul class="example-list"><li>Too loud</li><li>Makes everything about race</li><li>Biased against white students</li><li>Plays favorites</li><li>Not the typical professor</li><li>I felt singled out</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-6">
+          <h3 class="section-label" id="cite-6">Key Sources</h3>
+          <p class="citation-text">Smith & Hawkins (2011); Pittman (2010); Subtirelu (2015); Harris-Perry (2011); Harlow (2003)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t1" data-search="7 bias claims turned outward students attribute their own discomfort to instructor bias, accusing the instructor of the very prejudice being enacted. lazos (2012) terms this pattern "racial taxation." has a personal agenda too political silences students grades based on whether you agree with them creates a hostile environment for [majority group] students lazos (2012); pittman (2010); harlow (2003); gutiérrez y muhs et al. (2012)"
+             aria-label="Category 7: Bias Claims Turned Outward">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">7</span>
+        <h2 class="cat-name">Bias Claims Turned Outward</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-7">
+          <h3 class="section-label" id="mech-7">Mechanism</h3>
+          <p class="mechanism-text">Students attribute their own discomfort to instructor bias, accusing the instructor of the very prejudice being enacted. Lazos (2012) terms this pattern "racial taxation."</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-7">
+          <h3 class="section-label" id="ex-7">Example Phrases</h3>
+          <ul class="example-list"><li>Has a personal agenda</li><li>Too political</li><li>Silences students</li><li>Grades based on whether you agree with them</li><li>Creates a hostile environment for [majority group] students</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-7">
+          <h3 class="section-label" id="cite-7">Key Sources</h3>
+          <p class="citation-text">Lazos (2012); Pittman (2010); Harlow (2003); Gutiérrez y Muhs et al. (2012)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="tc" data-search="8 course content as proxy bias complaints about subject matter function as attacks on the instructor's identity and right to teach. evaluations of equity-related courses are significantly more negative regardless of instructional quality. this class is too political felt like propaganda turned every topic into a race issue pushed a liberal agenda the class was more about their identity than the content gutiérrez y muhs et al. (2012); lazos (2012); pittman (2010); sciencedirect (2022)"
+             aria-label="Category 8: Course Content as Proxy Bias">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">8</span>
+        <h2 class="cat-name">Course Content as Proxy Bias</h2>
+        <span class="type-badge" style="color:#1e8449;background:#eafaf1;border-color:#a9dfbf;"
+              aria-label="Bias type">Compound (Multiple Types)</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-8">
+          <h3 class="section-label" id="mech-8">Mechanism</h3>
+          <p class="mechanism-text">Complaints about subject matter function as attacks on the instructor's identity and right to teach. Evaluations of equity-related courses are significantly more negative regardless of instructional quality.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-8">
+          <h3 class="section-label" id="ex-8">Example Phrases</h3>
+          <ul class="example-list"><li>This class is too political</li><li>Felt like propaganda</li><li>Turned every topic into a race issue</li><li>Pushed a liberal agenda</li><li>The class was more about their identity than the content</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-8">
+          <h3 class="section-label" id="cite-8">Key Sources</h3>
+          <p class="citation-text">Gutiérrez y Muhs et al. (2012); Lazos (2012); Pittman (2010); ScienceDirect (2022)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="9a grading & assessment complaints grade satisfaction — not instructional quality — drives set scores (r = .45). women and faculty of color are penalized more severely for identical grading decisions than white male peers. grading is unfair rubrics are unclear exams don't reflect what we studied inconsistent grading you can't win no matter what you do kogan et al. (2022); buser et al. (2022); boring et al. (2016); st. olaf iea (2025)"
+             aria-label="Category 9A: Grading & Assessment Complaints">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">9A</span>
+        <h2 class="cat-name">Grading & Assessment Complaints</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-9A">
+          <h3 class="section-label" id="mech-9A">Mechanism</h3>
+          <p class="mechanism-text">Grade satisfaction — not instructional quality — drives SET scores (r = .45). Women and faculty of color are penalized more severely for identical grading decisions than white male peers.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-9A">
+          <h3 class="section-label" id="ex-9A">Example Phrases</h3>
+          <ul class="example-list"><li>Grading is unfair</li><li>Rubrics are unclear</li><li>Exams don't reflect what we studied</li><li>Inconsistent grading</li><li>You can't win no matter what you do</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-9A">
+          <h3 class="section-label" id="cite-9A">Key Sources</h3>
+          <p class="citation-text">Kogan et al. (2022); Buser et al. (2022); Boring et al. (2016); St. Olaf IEA (2025)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="9b feedback timing & responsiveness bias affects even putatively objective measures such as turnaround time. women and faculty of color are held to higher emotional labor and availability expectations than white male peers. takes forever to return assignments never responds to emails doesn't hold enough office hours doesn't care about student success unapproachable when you need help boring et al. (2016); inside higher ed (2019); sprague & massoni (2005); hochschild (1983)"
+             aria-label="Category 9B: Feedback Timing & Responsiveness">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">9B</span>
+        <h2 class="cat-name">Feedback Timing & Responsiveness</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-9B">
+          <h3 class="section-label" id="mech-9B">Mechanism</h3>
+          <p class="mechanism-text">Bias affects even putatively objective measures such as turnaround time. Women and faculty of color are held to higher emotional labor and availability expectations than white male peers.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-9B">
+          <h3 class="section-label" id="ex-9B">Example Phrases</h3>
+          <ul class="example-list"><li>Takes forever to return assignments</li><li>Never responds to emails</li><li>Doesn't hold enough office hours</li><li>Doesn't care about student success</li><li>Unapproachable when you need help</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-9B">
+          <h3 class="section-label" id="cite-9B">Key Sources</h3>
+          <p class="citation-text">Boring et al. (2016); Inside Higher Ed (2019); Sprague & Massoni (2005); Hochschild (1983)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="9c workload & rigor complaints academic rigor is penalized in a consumer satisfaction model. minoritized faculty are less able to reduce rigor without compounding authority challenges; rigorous instructors receive worse ratings yet produce better learning outcomes. way too much work sets students up to fail other professors don't assign this much standards are unreasonably high not worth the effort required kogan et al. (2022); marsh & roche (2000); st. olaf iea (2025); chronicle (2025)"
+             aria-label="Category 9C: Workload & Rigor Complaints">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">9C</span>
+        <h2 class="cat-name">Workload & Rigor Complaints</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-9C">
+          <h3 class="section-label" id="mech-9C">Mechanism</h3>
+          <p class="mechanism-text">Academic rigor is penalized in a consumer satisfaction model. Minoritized faculty are less able to reduce rigor without compounding authority challenges; rigorous instructors receive worse ratings yet produce better learning outcomes.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-9C">
+          <h3 class="section-label" id="ex-9C">Example Phrases</h3>
+          <ul class="example-list"><li>Way too much work</li><li>Sets students up to fail</li><li>Other professors don't assign this much</li><li>Standards are unreasonably high</li><li>Not worth the effort required</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-9C">
+          <h3 class="section-label" id="cite-9C">Key Sources</h3>
+          <p class="citation-text">Kogan et al. (2022); Marsh & Roche (2000); St. Olaf IEA (2025); Chronicle (2025)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="9d syllabus, structure & organization the same syllabus is perceived as less organized when attributed to a woman or faculty of color. women face greater scrutiny of organizational self-presentation, independent of actual course design quality. disorganized the syllabus is confusing slides are not posted on time i never know what's due no clear learning objectives boring et al. (2016); schmidt (2015); sprague & massoni (2005); unc charlotte advance (2023)"
+             aria-label="Category 9D: Syllabus, Structure & Organization">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">9D</span>
+        <h2 class="cat-name">Syllabus, Structure & Organization</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-9D">
+          <h3 class="section-label" id="mech-9D">Mechanism</h3>
+          <p class="mechanism-text">The same syllabus is perceived as less organized when attributed to a woman or faculty of color. Women face greater scrutiny of organizational self-presentation, independent of actual course design quality.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-9D">
+          <h3 class="section-label" id="ex-9D">Example Phrases</h3>
+          <ul class="example-list"><li>Disorganized</li><li>The syllabus is confusing</li><li>Slides are not posted on time</li><li>I never know what's due</li><li>No clear learning objectives</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-9D">
+          <h3 class="section-label" id="cite-9D">Key Sources</h3>
+          <p class="citation-text">Boring et al. (2016); Schmidt (2015); Sprague & Massoni (2005); UNC Charlotte ADVANCE (2023)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="9e class delivery & instructional clarity male instructors are perceived as clearer and more enthusiastic regardless of actual instructional quality. identical delivery is rated differently depending on the instructor's perceived identity. doesn't explain things clearly lectures aren't useful loses control of the class class feels unplanned doesn't command respect st. olaf iea (2025); unc charlotte advance (2023); macnell et al. (2014); boring et al. (2016)"
+             aria-label="Category 9E: Class Delivery & Instructional Clarity">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">9E</span>
+        <h2 class="cat-name">Class Delivery & Instructional Clarity</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-9E">
+          <h3 class="section-label" id="mech-9E">Mechanism</h3>
+          <p class="mechanism-text">Male instructors are perceived as clearer and more enthusiastic regardless of actual instructional quality. Identical delivery is rated differently depending on the instructor's perceived identity.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-9E">
+          <h3 class="section-label" id="ex-9E">Example Phrases</h3>
+          <ul class="example-list"><li>Doesn't explain things clearly</li><li>Lectures aren't useful</li><li>Loses control of the class</li><li>Class feels unplanned</li><li>Doesn't command respect</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-9E">
+          <h3 class="section-label" id="cite-9E">Key Sources</h3>
+          <p class="citation-text">St. Olaf IEA (2025); UNC Charlotte ADVANCE (2023); MacNell et al. (2014); Boring et al. (2016)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="10a the rigor penalty rigorous courses produce lower set scores. this penalty falls disproportionately on minoritized faculty. the most effective teachers for long-term learning receive the worst contemporaneous evaluations. too hard for no reason standards are impossibly high doesn't curve even when everyone fails penalizes students for not being perfect sets students up to fail carrell & west (2010); braga et al. (2014); uttl et al. (2017); minding the campus (2025)"
+             aria-label="Category 10A: The Rigor Penalty">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">10A</span>
+        <h2 class="cat-name">The Rigor Penalty</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-10A">
+          <h3 class="section-label" id="mech-10A">Mechanism</h3>
+          <p class="mechanism-text">Rigorous courses produce lower SET scores. This penalty falls disproportionately on minoritized faculty. The most effective teachers for long-term learning receive the worst contemporaneous evaluations.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-10A">
+          <h3 class="section-label" id="ex-10A">Example Phrases</h3>
+          <ul class="example-list"><li>Too hard for no reason</li><li>Standards are impossibly high</li><li>Doesn't curve even when everyone fails</li><li>Penalizes students for not being perfect</li><li>Sets students up to fail</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-10A">
+          <h3 class="section-label" id="cite-10A">Key Sources</h3>
+          <p class="citation-text">Carrell & West (2010); Braga et al. (2014); Uttl et al. (2017); Minding the Campus (2025)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="10b the success inversion students attribute learning gains to themselves while denying instructor credit — the "despite" formulation. self-serving attribution bias is amplified by the presumption of incompetence for minoritized faculty. i learned despite the poor instruction had to teach myself study groups saved me in this course got through it no thanks to... the book was great, the professor not so much gutiérrez y muhs et al. (2012); uttl et al. (2017); carrell & west (2010); weiner (1985)"
+             aria-label="Category 10B: The Success Inversion">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">10B</span>
+        <h2 class="cat-name">The Success Inversion</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-10B">
+          <h3 class="section-label" id="mech-10B">Mechanism</h3>
+          <p class="mechanism-text">Students attribute learning gains to themselves while denying instructor credit — the "Despite" formulation. Self-serving attribution bias is amplified by the presumption of incompetence for minoritized faculty.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-10B">
+          <h3 class="section-label" id="ex-10B">Example Phrases</h3>
+          <ul class="example-list"><li>I learned despite the poor instruction</li><li>Had to teach myself</li><li>Study groups saved me in this course</li><li>Got through it no thanks to...</li><li>The book was great, the professor not so much</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-10B">
+          <h3 class="section-label" id="cite-10B">Key Sources</h3>
+          <p class="citation-text">Gutiérrez y Muhs et al. (2012); Uttl et al. (2017); Carrell & West (2010); Weiner (1985)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="10c the double double-bind no behavioral choice is correct. the instructor is penalized at both extremes of every spectrum simultaneously. a no-win pattern appearing across multiple dimensions is diagnostic of identity bias. "too strict" and "too lenient" simultaneously "too much work" and "doesn't challenge students" "too cold" and "too emotional" "too formal" and "too casual" sprague & massoni (2005); boring et al. (2016); macnell et al. (2014); buser et al. (2022)"
+             aria-label="Category 10C: The Double Double-Bind">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">10C</span>
+        <h2 class="cat-name">The Double Double-Bind</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-10C">
+          <h3 class="section-label" id="mech-10C">Mechanism</h3>
+          <p class="mechanism-text">No behavioral choice is correct. The instructor is penalized at both extremes of every spectrum simultaneously. A no-win pattern appearing across multiple dimensions is diagnostic of identity bias.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-10C">
+          <h3 class="section-label" id="ex-10C">Example Phrases</h3>
+          <ul class="example-list"><li>"Too strict" AND "too lenient" simultaneously</li><li>"Too much work" AND "doesn't challenge students"</li><li>"Too cold" AND "too emotional"</li><li>"Too formal" AND "too casual"</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-10C">
+          <h3 class="section-label" id="cite-10C">Key Sources</h3>
+          <p class="citation-text">Sprague & Massoni (2005); Boring et al. (2016); MacNell et al. (2014); Buser et al. (2022)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t1" data-search="11 structural & tonal tropes six named tropes with distinct mechanisms: tone policing; angry black woman/sapphire; model minority inversion; authority challenge; double bind; emotional labor expectations; guilt narrative. went on a rant [sapphire trope] not as deferential as i expected [model minority inversion] made me feel bad for being white [guilt narrative] let students walk all over her [double bind] harris-perry (2011); motro et al. (2022); sprague & massoni (2005); hochschild (1983); west (2008)"
+             aria-label="Category 11: Structural & Tonal Tropes">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">11</span>
+        <h2 class="cat-name">Structural & Tonal Tropes</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-11">
+          <h3 class="section-label" id="mech-11">Mechanism</h3>
+          <p class="mechanism-text">Six named tropes with distinct mechanisms: Tone Policing; Angry Black Woman/Sapphire; Model Minority Inversion; Authority Challenge; Double Bind; Emotional Labor Expectations; Guilt Narrative.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-11">
+          <h3 class="section-label" id="ex-11">Example Phrases</h3>
+          <ul class="example-list"><li>Went on a rant [Sapphire trope]</li><li>Not as deferential as I expected [Model Minority Inversion]</li><li>Made me feel bad for being white [Guilt Narrative]</li><li>Let students walk all over her [Double Bind]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-11">
+          <h3 class="section-label" id="cite-11">Key Sources</h3>
+          <p class="citation-text">Harris-Perry (2011); Motro et al. (2022); Sprague & Massoni (2005); Hochschild (1983); West (2008)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="tc" data-search="12a lgbtq+ — 'gay agenda' trope students perceive lg faculty as more politically biased even when using identical syllabi. lgbtq+ identity is coded as inherently political; disclosure alone doubles the volume of critical evaluation remarks. has a political agenda the class felt like an lgbtq advocacy session too focused on gender/sexuality issues kept bringing up irrelevant personal information anderson & kanner (2011); ripley et al. (2012); cbe life sciences (2024)"
+             aria-label="Category 12A: LGBTQ+ — 'Gay Agenda' Trope">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">12A</span>
+        <h2 class="cat-name">LGBTQ+ — 'Gay Agenda' Trope</h2>
+        <span class="type-badge" style="color:#1e8449;background:#eafaf1;border-color:#a9dfbf;"
+              aria-label="Bias type">Compound (Multiple Types)</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-12A">
+          <h3 class="section-label" id="mech-12A">Mechanism</h3>
+          <p class="mechanism-text">Students perceive LG faculty as more politically biased even when using identical syllabi. LGBTQ+ identity is coded as inherently political; disclosure alone doubles the volume of critical evaluation remarks.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-12A">
+          <h3 class="section-label" id="ex-12A">Example Phrases</h3>
+          <ul class="example-list"><li>Has a political agenda</li><li>The class felt like an LGBTQ advocacy session</li><li>Too focused on gender/sexuality issues</li><li>Kept bringing up irrelevant personal information</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-12A">
+          <h3 class="section-label" id="cite-12A">Key Sources</h3>
+          <p class="citation-text">Anderson & Kanner (2011); Ripley et al. (2012); CBE Life Sciences (2024)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t3" data-search="12b lgbtq+ — credibility challenges identity disclosure alone produces doubling of critical remarks. instructors are perceived as less credible and effective after coming out, even when course content and quality are unchanged. not qualified to teach this topic objectively seems to only care about lgbtq issues [lower competence ratings following disclosure with no pedagogical change] russ et al. (2002); anderson & kanner (2011); frontiers in education (2024)"
+             aria-label="Category 12B: LGBTQ+ — Credibility Challenges">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">12B</span>
+        <h2 class="cat-name">LGBTQ+ — Credibility Challenges</h2>
+        <span class="type-badge" style="color:#5b2c6f;background:#f5eef8;border-color:#c39bd3;"
+              aria-label="Bias type">Type 3 — Stigmatized Identity</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-12B">
+          <h3 class="section-label" id="mech-12B">Mechanism</h3>
+          <p class="mechanism-text">Identity disclosure alone produces doubling of critical remarks. Instructors are perceived as less credible and effective after coming out, even when course content and quality are unchanged.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-12B">
+          <h3 class="section-label" id="ex-12B">Example Phrases</h3>
+          <ul class="example-list"><li>Not qualified to teach this topic objectively</li><li>Seems to only care about LGBTQ issues</li><li>[Lower competence ratings following disclosure with no pedagogical change]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-12B">
+          <h3 class="section-label" id="cite-12B">Key Sources</h3>
+          <p class="citation-text">Russ et al. (2002); Anderson & Kanner (2011); Frontiers in Education (2024)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t3" data-search="12c lgbtq+ — content distortion novelty attachment and content substitution: students overestimate lgbtq+ content proportion. a single identity-related example is remembered and evaluated as a defining pattern of the entire course. spent too much time on lgbtq examples everything was about gay/transgender people the course wasn't what i expected [after a single identity-related reference] ripley et al. (2012); anderson & kanner (2011)"
+             aria-label="Category 12C: LGBTQ+ — Content Distortion">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">12C</span>
+        <h2 class="cat-name">LGBTQ+ — Content Distortion</h2>
+        <span class="type-badge" style="color:#5b2c6f;background:#f5eef8;border-color:#c39bd3;"
+              aria-label="Bias type">Type 3 — Stigmatized Identity</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-12C">
+          <h3 class="section-label" id="mech-12C">Mechanism</h3>
+          <p class="mechanism-text">Novelty attachment and content substitution: students overestimate LGBTQ+ content proportion. A single identity-related example is remembered and evaluated as a defining pattern of the entire course.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-12C">
+          <h3 class="section-label" id="ex-12C">Example Phrases</h3>
+          <ul class="example-list"><li>Spent too much time on LGBTQ examples</li><li>Everything was about gay/transgender people</li><li>The course wasn't what I expected [after a single identity-related reference]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-12C">
+          <h3 class="section-label" id="cite-12C">Key Sources</h3>
+          <p class="citation-text">Ripley et al. (2012); Anderson & Kanner (2011)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t4" data-search="12d lgbtq+ — disclosure retaliation deliberate negative evaluations submitted after identity disclosure; documented as intentional retaliatory conduct; spike in negative scores with no corresponding change in course design or delivery. [spike in negative scores immediately post-disclosure] [deliberate use of wrong pronouns in evaluation text] made me feel unwelcome for not agreeing with the lgbtq agenda frontiers in education (2024); russ et al. (2002); de souza (2018)"
+             aria-label="Category 12D: LGBTQ+ — Disclosure Retaliation">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">12D</span>
+        <h2 class="cat-name">LGBTQ+ — Disclosure Retaliation</h2>
+        <span class="type-badge" style="color:#784212;background:#fef5e7;border-color:#f0b27a;"
+              aria-label="Bias type">Type 4 — Deliberate Defamation</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-12D">
+          <h3 class="section-label" id="mech-12D">Mechanism</h3>
+          <p class="mechanism-text">Deliberate negative evaluations submitted after identity disclosure; documented as intentional retaliatory conduct; spike in negative scores with no corresponding change in course design or delivery.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-12D">
+          <h3 class="section-label" id="ex-12D">Example Phrases</h3>
+          <ul class="example-list"><li>[Spike in negative scores immediately post-disclosure]</li><li>[Deliberate use of wrong pronouns in evaluation text]</li><li>Made me feel unwelcome for not agreeing with the LGBTQ agenda</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-12D">
+          <h3 class="section-label" id="cite-12D">Key Sources</h3>
+          <p class="citation-text">Frontiers in Education (2024); Russ et al. (2002); De Souza (2018)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t1" data-search="12e lgbtq+ — discomfort as harm students frame the instructor's authentic identity as a hostile act. the instructor's existence is coded as a threat to the classroom safety of majority students. i didn't feel comfortable in this class the professor made me feel judged for being straight/christian the classroom wasn't a safe space for my views cbe life sciences (2024); boston university sph (2024)"
+             aria-label="Category 12E: LGBTQ+ — Discomfort as Harm">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">12E</span>
+        <h2 class="cat-name">LGBTQ+ — Discomfort as Harm</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-12E">
+          <h3 class="section-label" id="mech-12E">Mechanism</h3>
+          <p class="mechanism-text">Students frame the instructor's authentic identity as a hostile act. The instructor's existence is coded as a threat to the classroom safety of majority students.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-12E">
+          <h3 class="section-label" id="ex-12E">Example Phrases</h3>
+          <ul class="example-list"><li>I didn't feel comfortable in this class</li><li>The professor made me feel judged for being straight/Christian</li><li>The classroom wasn't a safe space for my views</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-12E">
+          <h3 class="section-label" id="cite-12E">Key Sources</h3>
+          <p class="citation-text">CBE Life Sciences (2024); Boston University SPH (2024)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t4" data-search="12f lgbtq+ — transgender/nonbinary deliberate misgendering constitutes targeted harassment. gender identity is framed as a professional distraction or violation. nearly half of nonbinary workers report monthly workplace discrimination. [deliberate wrong pronouns or name used in evaluation] made class about their gender stuff unprofessional to bring up personal gender issues in class kreitzer & sweet-cushman (2021); inside higher ed (2023); cbe life sciences (2024)"
+             aria-label="Category 12F: LGBTQ+ — Transgender/Nonbinary">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">12F</span>
+        <h2 class="cat-name">LGBTQ+ — Transgender/Nonbinary</h2>
+        <span class="type-badge" style="color:#784212;background:#fef5e7;border-color:#f0b27a;"
+              aria-label="Bias type">Type 4 — Deliberate Defamation</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-12F">
+          <h3 class="section-label" id="mech-12F">Mechanism</h3>
+          <p class="mechanism-text">Deliberate misgendering constitutes targeted harassment. Gender identity is framed as a professional distraction or violation. Nearly half of nonbinary workers report monthly workplace discrimination.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-12F">
+          <h3 class="section-label" id="ex-12F">Example Phrases</h3>
+          <ul class="example-list"><li>[Deliberate wrong pronouns or name used in evaluation]</li><li>Made class about their gender stuff</li><li>Unprofessional to bring up personal gender issues in class</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-12F">
+          <h3 class="section-label" id="cite-12F">Key Sources</h3>
+          <p class="citation-text">Kreitzer & Sweet-Cushman (2021); Inside Higher Ed (2023); CBE Life Sciences (2024)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="tc" data-search="12g lgbtq+ — intersectional compounding gay faculty of color face homophobic evaluations compounded by racial bias. the compound effect is multiplicative, not additive. professional exclusion is documented alongside evaluative hostility. [homophobic language combined with racialized authority challenges in the same evaluation] [professional opinions dismissed alongside explicit evaluative hostility] misawa (2015); frontiers in education (2024); anderson & kanner (2011)"
+             aria-label="Category 12G: LGBTQ+ — Intersectional Compounding">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">12G</span>
+        <h2 class="cat-name">LGBTQ+ — Intersectional Compounding</h2>
+        <span class="type-badge" style="color:#1e8449;background:#eafaf1;border-color:#a9dfbf;"
+              aria-label="Bias type">Compound (Multiple Types)</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-12G">
+          <h3 class="section-label" id="mech-12G">Mechanism</h3>
+          <p class="mechanism-text">Gay faculty of color face homophobic evaluations compounded by racial bias. The compound effect is multiplicative, not additive. Professional exclusion is documented alongside evaluative hostility.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-12G">
+          <h3 class="section-label" id="ex-12G">Example Phrases</h3>
+          <ul class="example-list"><li>[Homophobic language combined with racialized authority challenges in the same evaluation]</li><li>[Professional opinions dismissed alongside explicit evaluative hostility]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-12G">
+          <h3 class="section-label" id="cite-12G">Key Sources</h3>
+          <p class="citation-text">Misawa (2015); Frontiers in Education (2024); Anderson & Kanner (2011)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t3" data-search="13a stigmatized identity — disgust mechanism groups historically coded as disease-carrying (e.g., haitians, following the cdc's wrongful 1980s aids designation) activate disgust via the behavioral immune system. this operates in native english speakers with no detectable accent. [language suggesting physical aversion or avoidance without pedagogical cause] [classroom described as uncomfortable with no specific incident cited] [disproportionate emotional intensity relative to the stated complaint] pascal et al. (2023); kusche & barker (2019); hodson et al. (2013); uusc (2025)"
+             aria-label="Category 13A: Stigmatized Identity — Disgust Mechanism">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">13A</span>
+        <h2 class="cat-name">Stigmatized Identity — Disgust Mechanism</h2>
+        <span class="type-badge" style="color:#5b2c6f;background:#f5eef8;border-color:#c39bd3;"
+              aria-label="Bias type">Type 3 — Stigmatized Identity</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-13A">
+          <h3 class="section-label" id="mech-13A">Mechanism</h3>
+          <p class="mechanism-text">Groups historically coded as disease-carrying (e.g., Haitians, following the CDC's wrongful 1980s AIDS designation) activate disgust via the behavioral immune system. This operates in native English speakers with no detectable accent.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-13A">
+          <h3 class="section-label" id="ex-13A">Example Phrases</h3>
+          <ul class="example-list"><li>[Language suggesting physical aversion or avoidance without pedagogical cause]</li><li>[Classroom described as uncomfortable with no specific incident cited]</li><li>[Disproportionate emotional intensity relative to the stated complaint]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-13A">
+          <h3 class="section-label" id="cite-13A">Key Sources</h3>
+          <p class="citation-text">Pascal et al. (2023); Kusche & Barker (2019); Hodson et al. (2013); UUSC (2025)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t3" data-search="13b stigmatized identity — disgust language disgust-organized language is displaced onto neutral-appearing pedagogical complaints. the evaluator processes the instructor as an aversive stimulus independent of any conduct or course quality. [language implying contamination, dirtiness, or moral taint] [complaints with emotional intensity disproportionate to their stated object] [expressed desire to minimize contact with the instructor] pascal et al. (2023); hodson et al. (2013); kusche & barker (2019)"
+             aria-label="Category 13B: Stigmatized Identity — Disgust Language">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">13B</span>
+        <h2 class="cat-name">Stigmatized Identity — Disgust Language</h2>
+        <span class="type-badge" style="color:#5b2c6f;background:#f5eef8;border-color:#c39bd3;"
+              aria-label="Bias type">Type 3 — Stigmatized Identity</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-13B">
+          <h3 class="section-label" id="mech-13B">Mechanism</h3>
+          <p class="mechanism-text">Disgust-organized language is displaced onto neutral-appearing pedagogical complaints. The evaluator processes the instructor as an aversive stimulus independent of any conduct or course quality.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-13B">
+          <h3 class="section-label" id="ex-13B">Example Phrases</h3>
+          <ul class="example-list"><li>[Language implying contamination, dirtiness, or moral taint]</li><li>[Complaints with emotional intensity disproportionate to their stated object]</li><li>[Expressed desire to minimize contact with the instructor]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-13B">
+          <h3 class="section-label" id="cite-13B">Key Sources</h3>
+          <p class="citation-text">Pascal et al. (2023); Hodson et al. (2013); Kusche & Barker (2019)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t3" data-search="13c stigmatized identity — 'forever foreigner' native-born, native-english-speaking faculty are marked as permanently outside the national or institutional community based on ethnic identity. language fluency provides no protection when ethnic stigma is the operative bias. doesn't fit in here not what i expected surprising for someone in this position [any reference to national origin in an evaluative context] vox (2024); ibw21 (2024); fan et al. (2019)"
+             aria-label="Category 13C: Stigmatized Identity — 'Forever Foreigner'">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">13C</span>
+        <h2 class="cat-name">Stigmatized Identity — 'Forever Foreigner'</h2>
+        <span class="type-badge" style="color:#5b2c6f;background:#f5eef8;border-color:#c39bd3;"
+              aria-label="Bias type">Type 3 — Stigmatized Identity</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-13C">
+          <h3 class="section-label" id="mech-13C">Mechanism</h3>
+          <p class="mechanism-text">Native-born, native-English-speaking faculty are marked as permanently outside the national or institutional community based on ethnic identity. Language fluency provides no protection when ethnic stigma is the operative bias.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-13C">
+          <h3 class="section-label" id="ex-13C">Example Phrases</h3>
+          <ul class="example-list"><li>Doesn't fit in here</li><li>Not what I expected</li><li>Surprising for someone in this position</li><li>[Any reference to national origin in an evaluative context]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-13C">
+          <h3 class="section-label" id="cite-13C">Key Sources</h3>
+          <p class="citation-text">Vox (2024); IBW21 (2024); Fan et al. (2019)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t3" data-search="13d stigmatized identity — political amplification nationally amplified ethnic rhetoric (e.g., 2024 anti-haitian campaign rhetoric) activates dormant student biases. evaluation timing relative to political events is a critical contextual variable for ai analysis. [anti-haitian political rhetoric surfacing in evaluation framing or language] [temporal correlation between politically amplified rhetoric and evaluation score spikes] harvard law review (2024); the intercept (2024); common dreams (2024)"
+             aria-label="Category 13D: Stigmatized Identity — Political Amplification">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">13D</span>
+        <h2 class="cat-name">Stigmatized Identity — Political Amplification</h2>
+        <span class="type-badge" style="color:#5b2c6f;background:#f5eef8;border-color:#c39bd3;"
+              aria-label="Bias type">Type 3 — Stigmatized Identity</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-13D">
+          <h3 class="section-label" id="mech-13D">Mechanism</h3>
+          <p class="mechanism-text">Nationally amplified ethnic rhetoric (e.g., 2024 anti-Haitian campaign rhetoric) activates dormant student biases. Evaluation timing relative to political events is a critical contextual variable for AI analysis.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-13D">
+          <h3 class="section-label" id="ex-13D">Example Phrases</h3>
+          <ul class="example-list"><li>[Anti-Haitian political rhetoric surfacing in evaluation framing or language]</li><li>[Temporal correlation between politically amplified rhetoric and evaluation score spikes]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-13D">
+          <h3 class="section-label" id="cite-13D">Key Sources</h3>
+          <p class="citation-text">Harvard Law Review (2024); The Intercept (2024); Common Dreams (2024)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="tc" data-search="13e stigmatized identity — cultural content course content related to the instructor's stigmatized national identity is dismissed as illegitimate scholarship or political indoctrination, attacking the instructor's professional right to teach their own field. too focused on [country or region] that history isn't relevant to us why are we learning about [place] in this class? [cultural practices framed as exotic or irrational] lazos (2012); gutiérrez y muhs et al. (2012); fan et al. (2019)"
+             aria-label="Category 13E: Stigmatized Identity — Cultural Content">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">13E</span>
+        <h2 class="cat-name">Stigmatized Identity — Cultural Content</h2>
+        <span class="type-badge" style="color:#1e8449;background:#eafaf1;border-color:#a9dfbf;"
+              aria-label="Bias type">Compound (Multiple Types)</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-13E">
+          <h3 class="section-label" id="mech-13E">Mechanism</h3>
+          <p class="mechanism-text">Course content related to the instructor's stigmatized national identity is dismissed as illegitimate scholarship or political indoctrination, attacking the instructor's professional right to teach their own field.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-13E">
+          <h3 class="section-label" id="ex-13E">Example Phrases</h3>
+          <ul class="example-list"><li>Too focused on [country or region]</li><li>That history isn't relevant to us</li><li>Why are we learning about [place] in this class?</li><li>[Cultural practices framed as exotic or irrational]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-13E">
+          <h3 class="section-label" id="cite-13E">Key Sources</h3>
+          <p class="citation-text">Lazos (2012); Gutiérrez y Muhs et al. (2012); Fan et al. (2019)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="tc" data-search="13f stigmatized identity — intersectional compounding race and national stigma operate simultaneously and multiplicatively. haitian faculty face anti-black racism and anti-haitian ethnic stigma. the compound effect is greater than either alone and is currently unmeasured in the literature. [anti-black language combined with ethnicity-specific disgust-organized language in the same evaluation] [racialized authority challenges combined with 'forever foreigner' framing] the conversation (2024); pascal et al. (2023); crenshaw (1989)"
+             aria-label="Category 13F: Stigmatized Identity — Intersectional Compounding">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">13F</span>
+        <h2 class="cat-name">Stigmatized Identity — Intersectional Compounding</h2>
+        <span class="type-badge" style="color:#1e8449;background:#eafaf1;border-color:#a9dfbf;"
+              aria-label="Bias type">Compound (Multiple Types)</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-13F">
+          <h3 class="section-label" id="mech-13F">Mechanism</h3>
+          <p class="mechanism-text">Race and national stigma operate simultaneously and multiplicatively. Haitian faculty face anti-Black racism AND anti-Haitian ethnic stigma. The compound effect is greater than either alone and is currently unmeasured in the literature.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-13F">
+          <h3 class="section-label" id="ex-13F">Example Phrases</h3>
+          <ul class="example-list"><li>[Anti-Black language combined with ethnicity-specific disgust-organized language in the same evaluation]</li><li>[Racialized authority challenges combined with 'forever foreigner' framing]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-13F">
+          <h3 class="section-label" id="cite-13F">Key Sources</h3>
+          <p class="citation-text">The Conversation (2024); Pascal et al. (2023); Crenshaw (1989)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t4" data-search="14a defamation — anonymity enablement 89% of americans report that anonymity enables cruelty. anonymous set platforms provide a consequence-free environment for false claims; sets are deliberately weaponized as bullying instruments against untenured and contingent faculty. [structural condition: no accountability mechanism, no named complainant, no right to respond before career harm occurs] burke & spurgeon (2020); rodriguez/aaup (2019); heffernan (2023)"
+             aria-label="Category 14A: Defamation — Anonymity Enablement">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">14A</span>
+        <h2 class="cat-name">Defamation — Anonymity Enablement</h2>
+        <span class="type-badge" style="color:#784212;background:#fef5e7;border-color:#f0b27a;"
+              aria-label="Bias type">Type 4 — Deliberate Defamation</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-14A">
+          <h3 class="section-label" id="mech-14A">Mechanism</h3>
+          <p class="mechanism-text">89% of Americans report that anonymity enables cruelty. Anonymous SET platforms provide a consequence-free environment for false claims; SETs are deliberately weaponized as bullying instruments against untenured and contingent faculty.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-14A">
+          <h3 class="section-label" id="ex-14A">Example Phrases</h3>
+          <ul class="example-list"><li>[Structural condition: no accountability mechanism, no named complainant, no right to respond before career harm occurs]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-14A">
+          <h3 class="section-label" id="cite-14A">Key Sources</h3>
+          <p class="citation-text">Burke & Spurgeon (2020); Rodriguez/AAUP (2019); Heffernan (2023)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t4" data-search="14b defamation — contrapower harassment (acph) 45% of faculty report hostile evaluations; 25% have received threatening communications. women faculty face more severe psychological outcomes including anxiety, stress-related illness, and intent to quit. [sexually explicit comments about the instructor] [explicit threats or intimidating language] i hate you / i hate everything about you [personal attacks on family, appearance, or off-campus life] lampman et al. (2009, 2012); burke & spurgeon (2020); inside higher ed (2018)"
+             aria-label="Category 14B: Defamation — Contrapower Harassment (ACPH)">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">14B</span>
+        <h2 class="cat-name">Defamation — Contrapower Harassment (ACPH)</h2>
+        <span class="type-badge" style="color:#784212;background:#fef5e7;border-color:#f0b27a;"
+              aria-label="Bias type">Type 4 — Deliberate Defamation</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-14B">
+          <h3 class="section-label" id="mech-14B">Mechanism</h3>
+          <p class="mechanism-text">45% of faculty report hostile evaluations; 25% have received threatening communications. Women faculty face more severe psychological outcomes including anxiety, stress-related illness, and intent to quit.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-14B">
+          <h3 class="section-label" id="ex-14B">Example Phrases</h3>
+          <ul class="example-list"><li>[Sexually explicit comments about the instructor]</li><li>[Explicit threats or intimidating language]</li><li>I HATE YOU / I HATE EVERYTHING ABOUT YOU</li><li>[Personal attacks on family, appearance, or off-campus life]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-14B">
+          <h3 class="section-label" id="cite-14B">Key Sources</h3>
+          <p class="citation-text">Lampman et al. (2009, 2012); Burke & Spurgeon (2020); Inside Higher Ed (2018)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t4" data-search="14c defamation — misconduct accusations false or unadjudicated misconduct claims enter personnel files without investigation. faculty have no opportunity to respond before career harm occurs; claims are treated as equivalent to verified complaints. [accusations of discrimination stated as established fact] [sexual harassment accusations without any investigation or due process] [policy violation or plagiarism claims without supporting evidence] deo (2015); nacua (n.d.); nesenoff & miltenberg llp (2020)"
+             aria-label="Category 14C: Defamation — Misconduct Accusations">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">14C</span>
+        <h2 class="cat-name">Defamation — Misconduct Accusations</h2>
+        <span class="type-badge" style="color:#784212;background:#fef5e7;border-color:#f0b27a;"
+              aria-label="Bias type">Type 4 — Deliberate Defamation</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-14C">
+          <h3 class="section-label" id="mech-14C">Mechanism</h3>
+          <p class="mechanism-text">False or unadjudicated misconduct claims enter personnel files without investigation. Faculty have no opportunity to respond before career harm occurs; claims are treated as equivalent to verified complaints.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-14C">
+          <h3 class="section-label" id="ex-14C">Example Phrases</h3>
+          <ul class="example-list"><li>[Accusations of discrimination stated as established fact]</li><li>[Sexual harassment accusations without any investigation or due process]</li><li>[Policy violation or plagiarism claims without supporting evidence]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-14C">
+          <h3 class="section-label" id="cite-14C">Key Sources</h3>
+          <p class="citation-text">Deo (2015); NACUA (n.d.); Nesenoff & Miltenberg LLP (2020)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t4" data-search="14d defamation — false factual claims fabricated accounts of in-class incidents; false claims about assignment explanations, attendance, or grading that are provably false but treated as valid pedagogical feedback in personnel review without verification. [claims assignments were never explained when lms records show they were] [claims instructor was absent when attendance records contradict this] [fabricated in-class incidents not corroborated by any other student] deo (2015); nacua (n.d.); atixa (2021)"
+             aria-label="Category 14D: Defamation — False Factual Claims">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">14D</span>
+        <h2 class="cat-name">Defamation — False Factual Claims</h2>
+        <span class="type-badge" style="color:#784212;background:#fef5e7;border-color:#f0b27a;"
+              aria-label="Bias type">Type 4 — Deliberate Defamation</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-14D">
+          <h3 class="section-label" id="mech-14D">Mechanism</h3>
+          <p class="mechanism-text">Fabricated accounts of in-class incidents; false claims about assignment explanations, attendance, or grading that are provably false but treated as valid pedagogical feedback in personnel review without verification.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-14D">
+          <h3 class="section-label" id="ex-14D">Example Phrases</h3>
+          <ul class="example-list"><li>[Claims assignments were never explained when LMS records show they were]</li><li>[Claims instructor was absent when attendance records contradict this]</li><li>[Fabricated in-class incidents not corroborated by any other student]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-14D">
+          <h3 class="section-label" id="cite-14D">Key Sources</h3>
+          <p class="citation-text">Deo (2015); NACUA (n.d.); ATIXA (2021)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t4" data-search="14e defamation — coordinated attacks harassment is coordinated on anonymous forums (4chan, reddit) with strategies shared openly. coordination signals are detectable through linguistic pattern analysis of multiple evaluations from the same term. [multiple evaluations using identical or near-identical phrasing] [sudden spike in negative evaluations after a specific triggering event] [evaluations referencing social media posts or outside-classroom content] kamenetz/npr (2018); mckay et al. (2021); rodriguez/aaup (2019)"
+             aria-label="Category 14E: Defamation — Coordinated Attacks">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">14E</span>
+        <h2 class="cat-name">Defamation — Coordinated Attacks</h2>
+        <span class="type-badge" style="color:#784212;background:#fef5e7;border-color:#f0b27a;"
+              aria-label="Bias type">Type 4 — Deliberate Defamation</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-14E">
+          <h3 class="section-label" id="mech-14E">Mechanism</h3>
+          <p class="mechanism-text">Harassment is coordinated on anonymous forums (4chan, Reddit) with strategies shared openly. Coordination signals are detectable through linguistic pattern analysis of multiple evaluations from the same term.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-14E">
+          <h3 class="section-label" id="ex-14E">Example Phrases</h3>
+          <ul class="example-list"><li>[Multiple evaluations using identical or near-identical phrasing]</li><li>[Sudden spike in negative evaluations after a specific triggering event]</li><li>[Evaluations referencing social media posts or outside-classroom content]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-14E">
+          <h3 class="section-label" id="cite-14E">Key Sources</h3>
+          <p class="citation-text">Kamenetz/NPR (2018); McKay et al. (2021); Rodriguez/AAUP (2019)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t4" data-search="14f defamation — grade retaliation deliberately negative evaluations submitted as retribution for grading decisions; instrumentally motivated rather than genuinely pedagogical. detectable by submission timing, explicit grade references, and contrast with prior evaluations. [evaluations submitted immediately after grade disputes] [explicit references to specific grades received in evaluation text] [sudden shift from previously positive evaluations correlated with a specific grading event] nesenoff & miltenberg llp (2020); burke & spurgeon (2020); kogan et al. (2022)"
+             aria-label="Category 14F: Defamation — Grade Retaliation">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">14F</span>
+        <h2 class="cat-name">Defamation — Grade Retaliation</h2>
+        <span class="type-badge" style="color:#784212;background:#fef5e7;border-color:#f0b27a;"
+              aria-label="Bias type">Type 4 — Deliberate Defamation</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-14F">
+          <h3 class="section-label" id="mech-14F">Mechanism</h3>
+          <p class="mechanism-text">Deliberately negative evaluations submitted as retribution for grading decisions; instrumentally motivated rather than genuinely pedagogical. Detectable by submission timing, explicit grade references, and contrast with prior evaluations.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-14F">
+          <h3 class="section-label" id="ex-14F">Example Phrases</h3>
+          <ul class="example-list"><li>[Evaluations submitted immediately after grade disputes]</li><li>[Explicit references to specific grades received in evaluation text]</li><li>[Sudden shift from previously positive evaluations correlated with a specific grading event]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-14F">
+          <h3 class="section-label" id="cite-14F">Key Sources</h3>
+          <p class="citation-text">Nesenoff & Miltenberg LLP (2020); Burke & Spurgeon (2020); Kogan et al. (2022)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t4" data-search="14g defamation — institutional weaponization set data is deliberately wielded by administrators and departments to disadvantage minoritized faculty. biased student data is laundered as apparently objective evidence for tenure denial, non-renewal, and salary decisions. [tenure denial citing set data while equivalent data for white male peers is ignored] [administrators citing instruments they acknowledge as flawed to justify adverse personnel actions] lawprofblawg/above the law (2018); rodriguez/aaup (2019); deo (2019)"
+             aria-label="Category 14G: Defamation — Institutional Weaponization">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">14G</span>
+        <h2 class="cat-name">Defamation — Institutional Weaponization</h2>
+        <span class="type-badge" style="color:#784212;background:#fef5e7;border-color:#f0b27a;"
+              aria-label="Bias type">Type 4 — Deliberate Defamation</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-14G">
+          <h3 class="section-label" id="mech-14G">Mechanism</h3>
+          <p class="mechanism-text">SET data is deliberately wielded by administrators and departments to disadvantage minoritized faculty. Biased student data is laundered as apparently objective evidence for tenure denial, non-renewal, and salary decisions.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-14G">
+          <h3 class="section-label" id="ex-14G">Example Phrases</h3>
+          <ul class="example-list"><li>[Tenure denial citing SET data while equivalent data for white male peers is ignored]</li><li>[Administrators citing instruments they acknowledge as flawed to justify adverse personnel actions]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-14G">
+          <h3 class="section-label" id="cite-14G">Key Sources</h3>
+          <p class="citation-text">LawProfBlawg/Above the Law (2018); Rodriguez/AAUP (2019); Deo (2019)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t1" data-search="15 absence of positive language positive intellectual descriptors (brilliant, genius, inspiring) appear significantly less often in evaluations of minoritized faculty even when performance is equivalent or superior. their systematic absence is a measurable comparative bias signal. [absent: brilliant, genius, inspiring, natural teacher, commands respect] [absent: clear, articulate, authoritative, best professor i've had] [detectable only through comparison against white male peers teaching equivalent courses] schmidt (2015); macnell et al. (2014); boring et al. (2016); chávez & mitchell (2020)"
+             aria-label="Category 15: Absence of Positive Language">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">15</span>
+        <h2 class="cat-name">Absence of Positive Language</h2>
+        <span class="type-badge" style="color:#c0392b;background:#fdf2f1;border-color:#e8a09a;"
+              aria-label="Bias type">Type 1 — Direct Identity Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-15">
+          <h3 class="section-label" id="mech-15">Mechanism</h3>
+          <p class="mechanism-text">Positive intellectual descriptors (brilliant, genius, inspiring) appear significantly less often in evaluations of minoritized faculty even when performance is equivalent or superior. Their systematic absence is a measurable comparative bias signal.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-15">
+          <h3 class="section-label" id="ex-15">Example Phrases</h3>
+          <ul class="example-list"><li>[Absent: brilliant, genius, inspiring, natural teacher, commands respect]</li><li>[Absent: clear, articulate, authoritative, best professor I've had]</li><li>[Detectable only through comparison against white male peers teaching equivalent courses]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-15">
+          <h3 class="section-label" id="cite-15">Key Sources</h3>
+          <p class="citation-text">Schmidt (2015); MacNell et al. (2014); Boring et al. (2016); Chávez & Mitchell (2020)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="16a credibility inversion — expertise paradox published sotl expertise directly contradicts the plausibility of student complaints in the same domain. peer-reviewed scholarship constitutes higher-quality evidence of pedagogical competence than anonymous student ratings. 'disorganized' complaints against a faculty member with publications on course design 'unclear rubrics' complaints against a published assessment design scholar 'hard to follow' against a faculty member with 20+ years of teaching and documented positive outcomes gutiérrez y muhs et al. (2012); inside higher ed (2022); boring et al. (2016)"
+             aria-label="Category 16A: Credibility Inversion — Expertise Paradox">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">16A</span>
+        <h2 class="cat-name">Credibility Inversion — Expertise Paradox</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-16A">
+          <h3 class="section-label" id="mech-16A">Mechanism</h3>
+          <p class="mechanism-text">Published SoTL expertise directly contradicts the plausibility of student complaints in the same domain. Peer-reviewed scholarship constitutes higher-quality evidence of pedagogical competence than anonymous student ratings.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-16A">
+          <h3 class="section-label" id="ex-16A">Example Phrases</h3>
+          <ul class="example-list"><li>'Disorganized' complaints against a faculty member with publications on course design</li><li>'Unclear rubrics' complaints against a published assessment design scholar</li><li>'Hard to follow' against a faculty member with 20+ years of teaching and documented positive outcomes</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-16A">
+          <h3 class="section-label" id="cite-16A">Key Sources</h3>
+          <p class="citation-text">Gutiérrez y Muhs et al. (2012); Inside Higher Ed (2022); Boring et al. (2016)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="16b credibility inversion — corroboration gap a pedagogical complaint cannot be treated as actionable without independent peer observation or materials review. absence of corroboration is itself a finding — it cannot be resolved by accumulating more set data. [any persistent complaint uncorroborated by peer observation, teaching portfolio, or lms records] [complaints contradicted by syllabi, marked work samples, or exam blueprints in the teaching file] esarey & valdes (2020); unc charlotte advance (2023); st. olaf iea (2025)"
+             aria-label="Category 16B: Credibility Inversion — Corroboration Gap">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">16B</span>
+        <h2 class="cat-name">Credibility Inversion — Corroboration Gap</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-16B">
+          <h3 class="section-label" id="mech-16B">Mechanism</h3>
+          <p class="mechanism-text">A pedagogical complaint cannot be treated as actionable without independent peer observation or materials review. Absence of corroboration is itself a finding — it cannot be resolved by accumulating more SET data.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-16B">
+          <h3 class="section-label" id="ex-16B">Example Phrases</h3>
+          <ul class="example-list"><li>[Any persistent complaint uncorroborated by peer observation, teaching portfolio, or LMS records]</li><li>[Complaints contradicted by syllabi, marked work samples, or exam blueprints in the teaching file]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-16B">
+          <h3 class="section-label" id="cite-16B">Key Sources</h3>
+          <p class="citation-text">Esarey & Valdes (2020); UNC Charlotte ADVANCE (2023); St. Olaf IEA (2025)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="16c credibility inversion — temporal stability complaints increasing despite accumulating teaching experience; spikes correlated with grade returns; identical complaints stable across unrelated courses. all are bias-consistent temporal patterns, not patterns of genuine pedagogical deficiency. [same complaint categories appearing in year 1 and year 20 of teaching] [complaint intensity spiking after midterm grades are returned] [identical complaints across courses with entirely different content and student populations] inside higher ed (2022); boring et al. (2016); buser et al. (2022); pascal et al. (2023)"
+             aria-label="Category 16C: Credibility Inversion — Temporal Stability">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">16C</span>
+        <h2 class="cat-name">Credibility Inversion — Temporal Stability</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-16C">
+          <h3 class="section-label" id="mech-16C">Mechanism</h3>
+          <p class="mechanism-text">Complaints increasing despite accumulating teaching experience; spikes correlated with grade returns; identical complaints stable across unrelated courses. All are bias-consistent temporal patterns, not patterns of genuine pedagogical deficiency.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-16C">
+          <h3 class="section-label" id="ex-16C">Example Phrases</h3>
+          <ul class="example-list"><li>[Same complaint categories appearing in Year 1 and Year 20 of teaching]</li><li>[Complaint intensity spiking after midterm grades are returned]</li><li>[Identical complaints across courses with entirely different content and student populations]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-16C">
+          <h3 class="section-label" id="cite-16C">Key Sources</h3>
+          <p class="citation-text">Inside Higher Ed (2022); Boring et al. (2016); Buser et al. (2022); Pascal et al. (2023)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="16d credibility inversion — signal classification three-type signal classification with identity-calibrated thresholds: type a (genuine, corroborated), type b (probable bias artifact), type c (harassment or defamation requiring immediate escalation). type a: corroborated by peer observation + specific + not contradicting documented expertise type b: uncorroborated + contradicts expertise + consistent with bias literature for this identity position type c: false factual claims + coordinated pattern + explicit harassment language deo (2015); rodriguez/aaup (2019); lampman et al. (2009); nacua (n.d.)"
+             aria-label="Category 16D: Credibility Inversion — Signal Classification">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">16D</span>
+        <h2 class="cat-name">Credibility Inversion — Signal Classification</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-16D">
+          <h3 class="section-label" id="mech-16D">Mechanism</h3>
+          <p class="mechanism-text">Three-type signal classification with identity-calibrated thresholds: Type A (genuine, corroborated), Type B (probable bias artifact), Type C (harassment or defamation requiring immediate escalation).</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-16D">
+          <h3 class="section-label" id="ex-16D">Example Phrases</h3>
+          <ul class="example-list"><li>Type A: corroborated by peer observation + specific + not contradicting documented expertise</li><li>Type B: uncorroborated + contradicts expertise + consistent with bias literature for this identity position</li><li>Type C: false factual claims + coordinated pattern + explicit harassment language</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-16D">
+          <h3 class="section-label" id="cite-16D">Key Sources</h3>
+          <p class="citation-text">Deo (2015); Rodriguez/AAUP (2019); Lampman et al. (2009); NACUA (n.d.)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="16e credibility inversion — comparative differential bias is most detectable when identical pedagogy generates positive comments for white male peers and negative comments for minoritized faculty. the differential itself is the evidence of bias, not any absolute level of complaints. 'disorganized' for a black woman instructor; 'clear and well-structured' for a white male colleague teaching an equivalent course at equivalent rigor [same grading policy produces complaints for one instructor and not the other] chávez & mitchell (2020); smith & hawkins (2011); boring et al. (2016); macnell et al. (2014)"
+             aria-label="Category 16E: Credibility Inversion — Comparative Differential">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">16E</span>
+        <h2 class="cat-name">Credibility Inversion — Comparative Differential</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-16E">
+          <h3 class="section-label" id="mech-16E">Mechanism</h3>
+          <p class="mechanism-text">Bias is most detectable when identical pedagogy generates positive comments for white male peers and negative comments for minoritized faculty. The differential itself is the evidence of bias, not any absolute level of complaints.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-16E">
+          <h3 class="section-label" id="ex-16E">Example Phrases</h3>
+          <ul class="example-list"><li>'Disorganized' for a Black woman instructor; 'clear and well-structured' for a white male colleague teaching an equivalent course at equivalent rigor</li><li>[Same grading policy produces complaints for one instructor and not the other]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-16E">
+          <h3 class="section-label" id="cite-16E">Key Sources</h3>
+          <p class="citation-text">Chávez & Mitchell (2020); Smith & Hawkins (2011); Boring et al. (2016); MacNell et al. (2014)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="17a grade distributions — grade-set relationship grade satisfaction (r = .45 with set scores) drives evaluations. a grading reputation effect penalizes rigorous instructors in subsequent courses. follow-on course performance is negatively correlated with set scores in high-credibility studies. [set scores positively correlated with concurrent grades but negatively correlated with subsequent course performance] [better teaching for long-term learning produces worse contemporaneous satisfaction ratings] carrell & west (2010); braga et al. (2014); stroebe (2020); kogan et al. (2022)"
+             aria-label="Category 17A: Grade Distributions — Grade-SET Relationship">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">17A</span>
+        <h2 class="cat-name">Grade Distributions — Grade-SET Relationship</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-17A">
+          <h3 class="section-label" id="mech-17A">Mechanism</h3>
+          <p class="mechanism-text">Grade satisfaction (r = .45 with SET scores) drives evaluations. A grading reputation effect penalizes rigorous instructors in subsequent courses. Follow-on course performance is negatively correlated with SET scores in high-credibility studies.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-17A">
+          <h3 class="section-label" id="ex-17A">Example Phrases</h3>
+          <ul class="example-list"><li>[SET scores positively correlated with concurrent grades but negatively correlated with subsequent course performance]</li><li>[Better teaching for long-term learning produces worse contemporaneous satisfaction ratings]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-17A">
+          <h3 class="section-label" id="cite-17A">Key Sources</h3>
+          <p class="citation-text">Carrell & West (2010); Braga et al. (2014); Stroebe (2020); Kogan et al. (2022)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="17b–c grade distributions — credibility matrix four-framework grade-set interpretation matrix: (1) low grades + negative sets = probable grade retaliation. (2) high grades + negative sets = probable identity bias independent of grading. both require comparison against white male peers. low mean gpa + negative sets → probable grade-retaliation bias artifact requiring independent corroboration high mean gpa + negative sets → probable identity bias — grade dissatisfaction cannot explain this pattern stroebe (2020); evans & carrell (2011); kogan et al. (2022); unc charlotte advance (2023)"
+             aria-label="Category 17B–C: Grade Distributions — Credibility Matrix">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">17B–C</span>
+        <h2 class="cat-name">Grade Distributions — Credibility Matrix</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-17B-C">
+          <h3 class="section-label" id="mech-17B-C">Mechanism</h3>
+          <p class="mechanism-text">Four-framework grade-SET interpretation matrix: (1) Low grades + negative SETs = probable grade retaliation. (2) High grades + negative SETs = probable identity bias independent of grading. Both require comparison against white male peers.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-17B-C">
+          <h3 class="section-label" id="ex-17B-C">Example Phrases</h3>
+          <ul class="example-list"><li>Low mean GPA + negative SETs → probable grade-retaliation bias artifact requiring independent corroboration</li><li>High mean GPA + negative SETs → probable identity bias — grade dissatisfaction cannot explain this pattern</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-17B-C">
+          <h3 class="section-label" id="cite-17B-C">Key Sources</h3>
+          <p class="citation-text">Stroebe (2020); Evans & Carrell (2011); Kogan et al. (2022); UNC Charlotte ADVANCE (2023)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="tc" data-search="17d grade distributions — dfw rate misuse dfw rates are confounded by student preparation, course type, and grading standards. they have been used at hbcus (savannah state case) to penalize black faculty maintaining high academic standards — with no peer-reviewed justification. [unwritten policy treating dfw rate >25% as prima facie evidence of poor teaching] [dfw-rate policy that forces grade inflation to avoid institutional sanctions — disproportionately affecting minoritized faculty] inside higher ed (2018); uttl et al. (2017); stroebe (2020); siue grade analytics (n.d.)"
+             aria-label="Category 17D: Grade Distributions — DFW Rate Misuse">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">17D</span>
+        <h2 class="cat-name">Grade Distributions — DFW Rate Misuse</h2>
+        <span class="type-badge" style="color:#1e8449;background:#eafaf1;border-color:#a9dfbf;"
+              aria-label="Bias type">Compound (Multiple Types)</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-17D">
+          <h3 class="section-label" id="mech-17D">Mechanism</h3>
+          <p class="mechanism-text">DFW rates are confounded by student preparation, course type, and grading standards. They have been used at HBCUs (Savannah State case) to penalize Black faculty maintaining high academic standards — with no peer-reviewed justification.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-17D">
+          <h3 class="section-label" id="ex-17D">Example Phrases</h3>
+          <ul class="example-list"><li>[Unwritten policy treating DFW rate >25% as prima facie evidence of poor teaching]</li><li>[DFW-rate policy that forces grade inflation to avoid institutional sanctions — disproportionately affecting minoritized faculty]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-17D">
+          <h3 class="section-label" id="cite-17D">Key Sources</h3>
+          <p class="citation-text">Inside Higher Ed (2018); Uttl et al. (2017); Stroebe (2020); SIUE Grade Analytics (n.d.)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="t2" data-search="17e grade distributions — follow-on performance student performance in subsequent courses is the gold standard for teaching effectiveness — superior to set scores, concurrent grades, and dfw rates. academic rank and experience predict follow-on performance positively but set scores negatively. [students from rigorous instructor's prerequisite sections outperform in follow-on courses despite that instructor's lower set scores] [random-assignment air force academy data confirms negative correlation between set scores and subsequent course performance] carrell & west (2010); braga et al. (2014); kornell & hausman (2016); preprints.org (2025)"
+             aria-label="Category 17E: Grade Distributions — Follow-On Performance">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">17E</span>
+        <h2 class="cat-name">Grade Distributions — Follow-On Performance</h2>
+        <span class="type-badge" style="color:#1a5276;background:#eaf4fb;border-color:#a9cce3;"
+              aria-label="Bias type">Type 2 — Proxy Bias</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-17E">
+          <h3 class="section-label" id="mech-17E">Mechanism</h3>
+          <p class="mechanism-text">Student performance in subsequent courses is the gold standard for teaching effectiveness — superior to SET scores, concurrent grades, and DFW rates. Academic rank and experience predict follow-on performance positively but SET scores negatively.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-17E">
+          <h3 class="section-label" id="ex-17E">Example Phrases</h3>
+          <ul class="example-list"><li>[Students from rigorous instructor's prerequisite sections outperform in follow-on courses despite that instructor's lower SET scores]</li><li>[Random-assignment Air Force Academy data confirms negative correlation between SET scores and subsequent course performance]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-17E">
+          <h3 class="section-label" id="cite-17E">Key Sources</h3>
+          <p class="citation-text">Carrell & West (2010); Braga et al. (2014); Kornell & Hausman (2016); Preprints.org (2025)</p>
+        </section>
+      </div>
+    </article>
+    <article class="cat-card" data-type="tc" data-search="17f grade distributions — grade inflation trap 38% of professors have made courses easier in response to set pressure. this pressure is asymmetric and more severe for minoritized faculty. grade inflation harms students' subsequent course performance and professional preparation. [instructor reduces rigor → grades rise → set scores improve → follow-on course performance declines] [dfw-policy trap: maintain standards = sanctions or inflate grades = credibility critique — neither is safe for minoritized faculty] preprints.org (2025); aaup (2018); stroebe (2020); inside higher ed (2018)"
+             aria-label="Category 17F: Grade Distributions — Grade Inflation Trap">
+      <header class="card-header">
+        <span class="cat-num" aria-label="Category number">17F</span>
+        <h2 class="cat-name">Grade Distributions — Grade Inflation Trap</h2>
+        <span class="type-badge" style="color:#1e8449;background:#eafaf1;border-color:#a9dfbf;"
+              aria-label="Bias type">Compound (Multiple Types)</span>
+      </header>
+      <div class="card-body">
+        <section class="card-section" aria-labelledby="mech-17F">
+          <h3 class="section-label" id="mech-17F">Mechanism</h3>
+          <p class="mechanism-text">38% of professors have made courses easier in response to SET pressure. This pressure is asymmetric and more severe for minoritized faculty. Grade inflation harms students' subsequent course performance and professional preparation.</p>
+        </section>
+        <section class="card-section" aria-labelledby="ex-17F">
+          <h3 class="section-label" id="ex-17F">Example Phrases</h3>
+          <ul class="example-list"><li>[Instructor reduces rigor → grades rise → SET scores improve → follow-on course performance declines]</li><li>[DFW-policy trap: maintain standards = sanctions OR inflate grades = credibility critique — neither is safe for minoritized faculty]</li></ul>
+        </section>
+        <section class="card-section" aria-labelledby="cite-17F">
+          <h3 class="section-label" id="cite-17F">Key Sources</h3>
+          <p class="citation-text">Preprints.org (2025); AAUP (2018); Stroebe (2020); Inside Higher Ed (2018)</p>
+        </section>
+      </div>
+    </article>
+      <p class="no-results" id="no-results" role="status">
+        No categories match your current filter or search. Try adjusting your criteria.
+      </p>
+    </div>
+  </section>
+
+  <!-- Administrative Decision Framework -->
+  <section class="admin-section" aria-labelledby="admin-heading">
+    <h2 id="admin-heading">Administrative Decision Framework</h2>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th scope="col">Signal Classification</th>
+            <th scope="col">Evidence Standard</th>
+            <th scope="col">Required Administrative Response</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Type A — Genuine Signal</td>
+            <td>Corroborated by peer observation AND not contradicted by documented expertise AND specific and consistent across observers</td>
+            <td>Treat as actionable; engage faculty constructively and collaboratively; combine with portfolio review</td>
+          </tr>
+          <tr>
+            <td>Type B — Probable Bias Artifact</td>
+            <td>Uncorroborated AND contradicts expertise or experience AND consistent with identity-bias literature AND not replicated for white male peers in equivalent courses</td>
+            <td>Document as bias artifact; exclude from summative personnel decisions; flag for institutional bias record; advocate for alternative evaluation instruments</td>
+          </tr>
+          <tr>
+            <td>Type C — Harassment or Defamation</td>
+            <td>Contains false factual claims, unadjudicated misconduct accusations, coordination signals, deliberate misgendering, or explicit harassment language</td>
+            <td>Immediate escalation; exclude from personnel files; initiate protective review; do not share with faculty member before protective review is complete; consider legal referral</td>
+          </tr>
+          <tr>
+            <td>Credibility Inversion</td>
+            <td>Persistent pedagogical complaints contradicted by 10 or more years of teaching experience AND/OR published scholarship in the domain being criticized</td>
+            <td>Mandatory independent corroboration before any administrative action; prior probability of bias is substantially elevated; peer observation required before any adverse action</td>
+          </tr>
+          <tr>
+            <td>Grade-Retaliation Pattern</td>
+            <td>Negative SETs spike after grade returns AND this pattern is not present for white male peers with equivalent grade distributions in equivalent courses</td>
+            <td>Flag as probable retaliation artifact; require peer observation corroboration; compare against departmental grade distribution norms; examine follow-on course performance data</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Reference List -->
+  <section class="ref-section" aria-labelledby="ref-heading">
+    <h2 id="ref-heading">References</h2>
+    <p class="ref-meta">87 sources · alphabetical · all citations from the AI Training Source Material, Version 3</p>
+
+    <div class="ref-controls">
+      <div class="ref-search-wrap">
+        <label for="ref-search">Search references</label>
+        <input type="search" id="ref-search"
+               placeholder="Search by author, title, journal, or year…"
+               aria-controls="ref-groups"
+               autocomplete="off" spellcheck="false">
+      </div>
+      <span class="ref-count" id="ref-count" aria-live="polite" aria-atomic="true">87 references</span>
+    </div>
+
+    <nav class="ref-alpha-nav" aria-label="Jump to reference letter">
+      <a href="#refletter-A" class="ref-nav-a">A</a><a href="#refletter-B" class="ref-nav-a">B</a><a href="#refletter-C" class="ref-nav-a">C</a><a href="#refletter-D" class="ref-nav-a">D</a><a href="#refletter-E" class="ref-nav-a">E</a><a href="#refletter-F" class="ref-nav-a">F</a><a href="#refletter-G" class="ref-nav-a">G</a><a href="#refletter-H" class="ref-nav-a">H</a><a href="#refletter-I" class="ref-nav-a">I</a><a href="#refletter-K" class="ref-nav-a">K</a><a href="#refletter-L" class="ref-nav-a">L</a><a href="#refletter-M" class="ref-nav-a">M</a><a href="#refletter-N" class="ref-nav-a">N</a><a href="#refletter-P" class="ref-nav-a">P</a><a href="#refletter-R" class="ref-nav-a">R</a><a href="#refletter-S" class="ref-nav-a">S</a><a href="#refletter-T" class="ref-nav-a">T</a><a href="#refletter-U" class="ref-nav-a">U</a><a href="#refletter-W" class="ref-nav-a">W</a>
+    </nav>
+
+    <div id="ref-groups">
+      
+    <div class="ref-group" id="refletter-A">
+      <h3 class="ref-letter">A</h3>
+      <ul class="ref-list"><li class="ref-item">Anderson, K. J., &amp; Kanner, M. (2011). Inventing a gay agenda: Students' perceptions of lesbian and gay professors. <em>Journal of Applied Social Psychology, 41</em>(6), 1538–1564. <a href="https://doi.org/10.1111/j.1559-1816.2011.00757.x" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1111/j.1559-1816.2011.00757.x</a></li><li class="ref-item">Anderson, K. J., &amp; Smith, G. (2005). Students' preconceptions of professors: Benefits and barriers according to ethnicity and gender. <em>Hispanic Journal of Behavioral Sciences, 27</em>(2), 184–201. <a href="https://doi.org/10.1177/0739986305274322" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1177/0739986305274322</a></li><li class="ref-item">ATIXA. (2021). How Title IX coordinators should manage harassment and bias in student evaluations of teaching. <a href="https://www.atixa.org/blog/harassment-in-student-evaluations/" target=&quot;_blank&quot; rel=&quot;noopener">https://www.atixa.org/blog/harassment-in-student-evaluations/</a></li><li class="ref-item">AAUP (Rodriguez, J.). (2019). The weaponization of student evaluations of teaching: Bullying and the undermining of academic freedom. <em>Journal of Academic Freedom, 10.</em> <a href="https://www.aaup.org/JAF10/weaponization-student-evaluations-teaching-bullying-and-undermining-academic-freedom" target=&quot;_blank&quot; rel=&quot;noopener">https://www.aaup.org/JAF10/weaponization-student-evaluations-teaching-bullying-and-undermining-academic-freedom</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-B">
+      <h3 class="ref-letter">B</h3>
+      <ul class="ref-list"><li class="ref-item">Boring, A., Ottoboni, K., &amp; Stark, P. B. (2016). Student evaluations of teaching (mostly) do not measure teaching effectiveness. <em>ScienceOpen Research.</em> <a href="https://doi.org/10.14293/S2199-1006.1.SOR-EDU.AETBZC.v1" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.14293/S2199-1006.1.SOR-EDU.AETBZC.v1</a></li><li class="ref-item">Boston University School of Public Health. (2024). Out LGBTQ+ faculty help students feel seen and accepted. <a href="https://www.bu.edu/sph/news/articles/2024/out-lgbtq-faculty-help-students-feel-seen-and-accepted" target=&quot;_blank&quot; rel=&quot;noopener">https://www.bu.edu/sph/news/articles/2024/out-lgbtq-faculty-help-students-feel-seen-and-accepted</a></li><li class="ref-item">Braga, M., Paccagnella, M., &amp; Pellizzari, M. (2014). Evaluating students' evaluations of professors. <em>Economics of Education Review, 41</em>, 71–88. <a href="https://doi.org/10.1016/j.econedurev.2014.04.002" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1016/j.econedurev.2014.04.002</a></li><li class="ref-item">Burke, L., &amp; Spurgeon, J. (2020). Academic contrapower harassment and student evaluations: The gendered experience of bullying, intimidation, and entitlement. <em>Global Research in Higher Education, 3</em>(2). <a href="https://doi.org/10.22158/grhe.v3n2p1" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.22158/grhe.v3n2p1</a></li><li class="ref-item">Buser, W., Batz-Barbarich, C. L., &amp; Hayter, J. K. (2022). Evaluation of women in economics: Evidence of gender bias following behavioral role violations. <em>Sex Roles, 87</em>, 1–14. <a href="https://doi.org/10.1007/s11199-022-01299-w" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1007/s11199-022-01299-w</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-C">
+      <h3 class="ref-letter">C</h3>
+      <ul class="ref-list"><li class="ref-item">Carrell, S. E., &amp; West, J. E. (2010). Does professor quality matter? Evidence from random assignment of students to professors. <em>Journal of Political Economy, 118</em>(3), 409–432. <a href="https://doi.org/10.1086/653808" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1086/653808</a></li><li class="ref-item">CBE–Life Sciences Education. (2024). Few LGBTQ+ science and engineering instructors come out to students, despite potential benefits. <a href="https://doi.org/10.1187/cbe.23-10-0181" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1187/cbe.23-10-0181</a></li><li class="ref-item">CBE–Life Sciences Education. (2022). Unveiling concealable stigmatized identities in class. <a href="https://doi.org/10.1187/cbe.21-06-0162" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1187/cbe.21-06-0162</a></li><li class="ref-item">Chávez, K., &amp; Mitchell, K. M. (2020). Exploring bias in student evaluations: Gender, race, and ethnicity. <em>PS: Political Science &amp; Politics, 53</em>(2), 270–274. <a href="https://doi.org/10.1017/S1049096519001744" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1017/S1049096519001744</a></li><li class="ref-item">Chronicle of Higher Education. (2024, May 9). Teaching evaluations are racist, sexist, and often useless. <a href="https://www.chronicle.com/article/teaching-evaluations-are-racist-sexist-and-often-useless" target=&quot;_blank&quot; rel=&quot;noopener">https://www.chronicle.com/article/teaching-evaluations-are-racist-sexist-and-often-useless</a></li><li class="ref-item">Chronicle of Higher Education. (2025). Student teaching evaluations are useless. Why do we still rely on them? <a href="https://www.chronicle.com/article/teaching-evaluations-are-undermining-academic-integrity" target=&quot;_blank&quot; rel=&quot;noopener">https://www.chronicle.com/article/teaching-evaluations-are-undermining-academic-integrity</a></li><li class="ref-item">Common Dreams. (2024, September 15). Lies about Haitians reflect America's racist imperialism. <a href="https://www.commondreams.org/opinion/ohio-haiti-migrants-eating-pets" target=&quot;_blank&quot; rel=&quot;noopener">https://www.commondreams.org/opinion/ohio-haiti-migrants-eating-pets</a></li><li class="ref-item">Crenshaw, K. (1989). Demarginalizing the intersection of race and sex: A Black feminist critique of antidiscrimination doctrine, feminist theory and antiracist politics. <em>University of Chicago Legal Forum, 1989</em>(1), 139–167.</li></ul>
+    </div>
+    <div class="ref-group" id="refletter-D">
+      <h3 class="ref-letter">D</h3>
+      <ul class="ref-list"><li class="ref-item">De Souza, E. R. (2018). Coming out in the classroom: Still an occupational hazard? <em>Archives of Sexual Behavior.</em> <a href="https://doi.org/10.1007/s10508-018-1200-0" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1007/s10508-018-1200-0</a></li><li class="ref-item">Deo, M. E. (2015). A better tenure battle: Fighting bias in teaching evaluations. <em>Columbia Journal of Gender and Law, 31</em>(1). <a href="https://doi.org/10.7916/cjgl.v31i1.2739" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.7916/cjgl.v31i1.2739</a></li><li class="ref-item">Deo, M. E. (2019). <em>Unequal profession: Race and gender in legal academia.</em> Stanford University Press.</li></ul>
+    </div>
+    <div class="ref-group" id="refletter-E">
+      <h3 class="ref-letter">E</h3>
+      <ul class="ref-list"><li class="ref-item">Esarey, J., &amp; Valdes, N. (2020). Unbiased, reliable, and valid student evaluations can still be unfair. <em>Assessment &amp; Evaluation in Higher Education, 45</em>(8), 1106–1120. <a href="https://doi.org/10.1080/02602938.2019.1626519" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1080/02602938.2019.1626519</a></li><li class="ref-item">Evans, M., &amp; Carrell, S. E. (2011). Student evaluations and the assessment of teaching. <em>Georgetown University Faculty Working Paper.</em> <a href="https://faculty.georgetown.edu/evansm1/wpapers_files/evalstudy.pdf" target=&quot;_blank&quot; rel=&quot;noopener">https://faculty.georgetown.edu/evansm1/wpapers_files/evalstudy.pdf</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-F">
+      <h3 class="ref-letter">F</h3>
+      <ul class="ref-list"><li class="ref-item">Fan, L., Jiang, X., &amp; Wang, B. (2019). Gender and cultural bias in student evaluations: Why representation matters. <em>PLOS ONE, 14</em>(2), e0209749. <a href="https://doi.org/10.1371/journal.pone.0209749" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1371/journal.pone.0209749</a></li><li class="ref-item">Frontiers in Education. (2024). Experiences of LGBTQ+ graduate students in research-focused doctoral programs: A scoping review. <a href="https://doi.org/10.3389/feduc.2024.1472113" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.3389/feduc.2024.1472113</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-G">
+      <h3 class="ref-letter">G</h3>
+      <ul class="ref-list"><li class="ref-item">Greenwald, A. G., &amp; Gillmore, G. M. (1997). No pain, no gain? The importance of measuring course workload in student ratings of instruction. <em>Journal of Educational Psychology, 89</em>(4), 743–751. <a href="https://doi.org/10.1037/0022-0663.89.4.743" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1037/0022-0663.89.4.743</a></li><li class="ref-item">Gutiérrez y Muhs, G., Niemann, Y. F., González, C. G., &amp; Harris, A. P. (Eds.). (2012). <em>Presumed incompetent: The intersections of race and class for women in academia.</em> Utah State University Press.</li></ul>
+    </div>
+    <div class="ref-group" id="refletter-H">
+      <h3 class="ref-letter">H</h3>
+      <ul class="ref-list"><li class="ref-item">Harlow, R. (2003). &ldquo;Race doesn't matter, but…&rdquo;: The effect of race on professors' experiences and emotion management in the undergraduate college classroom. <em>Social Psychology Quarterly, 66</em>(4), 348–363. <a href="https://doi.org/10.2307/1519834" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.2307/1519834</a></li><li class="ref-item">Harris-Perry, M. V. (2011). <em>Sister citizen: Shame, stereotypes, and Black women in America.</em> Yale University Press.</li><li class="ref-item">Harvard Law Review. (2024, November). Politics of belonging: Anti-Black racism, xenophobia, and disinformation. <a href="https://harvardlawreview.org/blog/2024/11/politics-of-belonging-anti-black-racism-xenophobia-and-disinformation/" target=&quot;_blank&quot; rel=&quot;noopener">https://harvardlawreview.org/blog/2024/11/politics-of-belonging-anti-black-racism-xenophobia-and-disinformation/</a></li><li class="ref-item">Heffernan, T. (2022). Abusive comments in student evaluations of courses and teaching: The attacks women and marginalised academics endure. <em>Higher Education.</em> <a href="https://doi.org/10.1007/s10734-022-00831-x" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1007/s10734-022-00831-x</a></li><li class="ref-item">Heffernan, T. (2022). Sexism, racism, prejudice, and bias: A literature review and synthesis of research surrounding student evaluations of courses and teaching. <em>Assessment &amp; Evaluation in Higher Education, 47</em>(1), 144–154. <a href="https://doi.org/10.1080/02602938.2021.1888075" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1080/02602938.2021.1888075</a></li><li class="ref-item">Hochschild, A. R. (1983). <em>The managed heart: Commercialization of human feeling.</em> University of California Press.</li><li class="ref-item">Hodson, G., Choma, B. L., Boisvert, J., Hafer, C. L., MacInnis, C. C., &amp; Costello, K. (2013). The role of intergroup disgust in predicting negative outgroup evaluations. <em>Journal of Experimental Social Psychology, 49</em>, 195–205. <a href="https://doi.org/10.1016/j.jesp.2012.11.002" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1016/j.jesp.2012.11.002</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-I">
+      <h3 class="ref-letter">I</h3>
+      <ul class="ref-list"><li class="ref-item">Inside Higher Ed. (2018, March 5). 'Contra-power' harassment of professors by students isn't that common, but it's real. <a href="https://www.insidehighered.com/news/2018/03/05/contra-power-harassment-professors-students-isnt-common-its-real" target=&quot;_blank&quot; rel=&quot;noopener">https://www.insidehighered.com/news/2018/03/05/contra-power-harassment-professors-students-isnt-common-its-real</a></li><li class="ref-item">Inside Higher Ed. (2018, May 31). Savannah State professors object to new, unwritten policy linking DFW grades to teaching effectiveness. <a href="https://www.insidehighered.com/news/2018/05/31/savannah-state-professors-object-new-unwritten-policy-linking-dfw-grades-teaching" target=&quot;_blank&quot; rel=&quot;noopener">https://www.insidehighered.com/news/2018/05/31/savannah-state-professors-object-new-unwritten-policy-linking-dfw-grades-teaching</a></li><li class="ref-item">Inside Higher Ed. (2019, June 24). Relying on often-biased student evaluations to assess faculty could lead to lawsuits. <a href="https://www.insidehighered.com/views/2019/06/24/relying-often-biased-student-evaluations-assess-faculty-could-lead-lawsuits-opinion" target=&quot;_blank&quot; rel=&quot;noopener">https://www.insidehighered.com/views/2019/06/24/relying-often-biased-student-evaluations-assess-faculty-could-lead-lawsuits-opinion</a></li><li class="ref-item">Inside Higher Ed. (2021, February 17). What's really going on with respect to bias and teaching evals? <a href="https://www.insidehighered.com/news/2021/02/17/whats-really-going-respect-bias-and-teaching-evals" target=&quot;_blank&quot; rel=&quot;noopener">https://www.insidehighered.com/news/2021/02/17/whats-really-going-respect-bias-and-teaching-evals</a></li><li class="ref-item">Inside Higher Ed. (2022, January 19). Study: Grade satisfaction a major factor in student evals. <a href="https://www.insidehighered.com/news/2022/01/19/study-grade-satisfaction-major-factor-student-evals" target=&quot;_blank&quot; rel=&quot;noopener">https://www.insidehighered.com/news/2022/01/19/study-grade-satisfaction-major-factor-student-evals</a></li><li class="ref-item">Inside Higher Ed. (2022, January 21). Teaching evaluations reflect colleges' commitment to diversity. <a href="https://www.insidehighered.com/advice/2022/01/21/teaching-evaluations-reflect-colleges-commitment-diversity-opinion" target=&quot;_blank&quot; rel=&quot;noopener">https://www.insidehighered.com/advice/2022/01/21/teaching-evaluations-reflect-colleges-commitment-diversity-opinion</a></li><li class="ref-item">Inside Higher Ed. (2022, October 31). Ratings and bias against women, over time. <a href="https://www.insidehighered.com/news/2022/10/31/ratings-and-bias-against-women-over-time" target=&quot;_blank&quot; rel=&quot;noopener">https://www.insidehighered.com/news/2022/10/31/ratings-and-bias-against-women-over-time</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-K">
+      <h3 class="ref-letter">K</h3>
+      <ul class="ref-list"><li class="ref-item">Kamenetz, A. (2018, April 4). Professors are targets in online culture wars; some fight back. <em>NPR.</em> <a href="https://www.npr.org/sections/ed/2018/04/04/590928008/professor-harassment" target=&quot;_blank&quot; rel=&quot;noopener">https://www.npr.org/sections/ed/2018/04/04/590928008/professor-harassment</a></li><li class="ref-item">Kogan, V., Genetin, B., Chen, J., &amp; Kalish, A. (2022). Students' grade satisfaction influences evaluations of teaching: Evidence from individual-level data and an experimental intervention. <em>EdWorkingPaper No. 22-513.</em> Annenberg Institute at Brown University. <a href="https://doi.org/10.26300/spsf-tc23" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.26300/spsf-tc23</a></li><li class="ref-item">Kornell, N., &amp; Hausman, H. (2016). Do the best teachers get the best ratings? <em>Frontiers in Psychology, 7</em>, 570. <a href="https://doi.org/10.3389/fpsyg.2016.00570" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.3389/fpsyg.2016.00570</a></li><li class="ref-item">Kreitzer, R. J., &amp; Sweet-Cushman, J. (2021). Evaluating student evaluations of teaching: A review of measurement and equity bias in SETs and recommendations for ethical reform. <em>Journal of Academic Ethics, 20</em>, 73–84. <a href="https://doi.org/10.1007/s10805-021-09400-w" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1007/s10805-021-09400-w</a></li><li class="ref-item">Kusche, I., &amp; Barker, J. L. (2019). Pathogens and immigrants: A critical appraisal of the behavioral immune system as an explanation of prejudice against ethnic outgroups. <em>Frontiers in Psychology, 10</em>, 2412. <a href="https://doi.org/10.3389/fpsyg.2019.02412" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.3389/fpsyg.2019.02412</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-L">
+      <h3 class="ref-letter">L</h3>
+      <ul class="ref-list"><li class="ref-item">Lampman, C. (2012). Women faculty distressed: Descriptions and consequences of academic contrapower harassment. <em>NASPA Journal About Women in Higher Education, 5</em>(2), 185–206.</li><li class="ref-item">Lampman, C., Phelps, A., Bhatt, S., &amp; Bhatt, M. (2009). Contrapower harassment in academia: A survey of faculty experience with student incivility, bullying, and sexual attention. <em>Sex Roles, 60</em>(5–6), 331–346. <a href="https://doi.org/10.1007/s11199-008-9560-x" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1007/s11199-008-9560-x</a></li><li class="ref-item">Lazos, S. R. (2012). Are student teaching evaluations holding back women and minorities? The perils of &ldquo;doing&rdquo; gender and race in the classroom. In G. Gutiérrez y Muhs, Y. F. Niemann, C. G. González, &amp; A. P. Harris (Eds.), <em>Presumed incompetent: The intersections of race and class for women in academia</em> (pp. 164–185). Utah State University Press.</li><li class="ref-item">LawProfBlawg. (2018, September 25). Weaponizing student evaluations. <em>Above the Law.</em> <a href="https://abovethelaw.com/2018/09/weaponizing-student-evaluations/" target=&quot;_blank&quot; rel=&quot;noopener">https://abovethelaw.com/2018/09/weaponizing-student-evaluations/</a></li><li class="ref-item">Linse, A. R. (2017). Interpreting and using student ratings data: Guidance for faculty serving as administrators and on evaluation committees. <em>Studies in Educational Evaluation, 54</em>, 94–106. <a href="https://doi.org/10.1016/j.stueduc.2016.12.004" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1016/j.stueduc.2016.12.004</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-M">
+      <h3 class="ref-letter">M</h3>
+      <ul class="ref-list"><li class="ref-item">MacNell, L., Driscoll, A., &amp; Hunt, A. N. (2014). What's in a name: Exposing gender bias in student ratings of teaching. <em>Innovative Higher Education, 40</em>(4), 291–303. <a href="https://doi.org/10.1007/s10755-014-9313-4" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1007/s10755-014-9313-4</a></li><li class="ref-item">Marsh, H. W., &amp; Roche, L. A. (2000). Effects of grading leniency and low workload on students' evaluations of teaching: Popular myth, bias, validity, or innocent bystanders? <em>Journal of Educational Psychology, 92</em>(1), 202–228. <a href="https://doi.org/10.1037/0022-0663.92.1.202" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1037/0022-0663.92.1.202</a></li><li class="ref-item">McKay, T., Irwin, A., &amp; Appel, L. (2021). When RateMyProfessor meets the #MeToo movement: Bottom-up bullying in academia. <em>ResearchGate.</em></li><li class="ref-item">Mengel, F., Sauermann, J., &amp; Zölitz, U. (2019). Gender bias in teaching evaluations. <em>Journal of the European Economic Association, 17</em>(2), 535–566. <a href="https://doi.org/10.1093/jeea/jvx057" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1093/jeea/jvx057</a></li><li class="ref-item">Minding the Campus. (2025, May 26). Smile if you hate rigor — scrap student evaluations of professors. <a href="https://www.mindingthecampus.org/2025/05/26/smile-if-you-hate-rigor-scrap-student-evaluations-of-professors/" target=&quot;_blank&quot; rel=&quot;noopener">https://www.mindingthecampus.org/2025/05/26/smile-if-you-hate-rigor-scrap-student-evaluations-of-professors/</a></li><li class="ref-item">Misawa, M. (2015). Cuts and bruises caused by arrows, sticks, and stones in academia: Theorizing three types of racist and homophobic bullying in adult and higher education. <em>Adult Learning, 26</em>(1), 6–13. <a href="https://doi.org/10.1177/1045159514558413" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1177/1045159514558413</a></li><li class="ref-item">Motro, D., Evans, J. B., Ellis, A. P. J., &amp; Benson, L. (2022). Race and reactions to women's expressions of anger at work. <em>Journal of Applied Psychology, 107</em>(3), 484–504. <a href="https://doi.org/10.1037/apl0000884" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1037/apl0000884</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-N">
+      <h3 class="ref-letter">N</h3>
+      <ul class="ref-list"><li class="ref-item">NACUA. (n.d.). Defamation claims in higher education. <em>Journal of College and University Law, 46</em>(1). <a href="https://www.nacua.org/docs/default-source/jcul-articles/volume46/4_defamationclaimshighereducation.pdf" target=&quot;_blank&quot; rel=&quot;noopener">https://www.nacua.org/docs/default-source/jcul-articles/volume46/4_defamationclaimshighereducation.pdf</a></li><li class="ref-item">Nesenoff &amp; Miltenberg LLP. (2020). Faculty accused of misconduct must seek representation by an experienced education attorney immediately. <a href="https://nmllplaw.com/blog/faculty-accused-of-misconduct/" target=&quot;_blank&quot; rel=&quot;noopener">https://nmllplaw.com/blog/faculty-accused-of-misconduct/</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-P">
+      <h3 class="ref-letter">P</h3>
+      <ul class="ref-list"><li class="ref-item">Pascal, E., Holman, A. C., &amp; Miluț, F. M. (2023). Emotional relevance and prejudice: Testing the differentiated effect of incidental disgust on prejudice towards ethnic minorities. <em>Frontiers in Psychology, 14</em>, 1177263. <a href="https://doi.org/10.3389/fpsyg.2023.1177263" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.3389/fpsyg.2023.1177263</a></li><li class="ref-item">Pittman, C. T. (2010). Race and gender oppression in the classroom: The experiences of women faculty of color with white male students. <em>Teaching Sociology, 38</em>(3), 183–196. <a href="https://doi.org/10.1177/0092055X10370120" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1177/0092055X10370120</a></li><li class="ref-item">Preprints.org. (2025). Student evaluations of teaching fail to predict learning: Meta-analysis of bias, grade inflation, and incentive distortion in higher education. <a href="https://www.preprints.org/manuscript/202509.1763" target=&quot;_blank&quot; rel=&quot;noopener">https://www.preprints.org/manuscript/202509.1763</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-R">
+      <h3 class="ref-letter">R</h3>
+      <ul class="ref-list"><li class="ref-item">Reid, L. D. (2010). The role of perceived race and gender in the evaluation of college teaching on RateMyProfessors.com. <em>Journal of Diversity in Higher Education, 3</em>(3), 137–152. <a href="https://doi.org/10.1037/a0019865" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1037/a0019865</a></li><li class="ref-item">Ripley, M., Anderson, E., McCormack, M., &amp; Rockett, B. (2012). Heteronormativity in the university classroom: Novelty attachment and content substitution among mixed-sex groups. <em>Sociology of Education, 85</em>(2), 119–132. <a href="https://doi.org/10.1177/0038040711427315" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1177/0038040711427315</a></li><li class="ref-item">Rollins College Faculty Evaluation. (n.d.). Peer evaluation of teaching. <a href="https://blogs.rollins.edu/facultyevaluation/peer-evaluation-of-teaching/" target=&quot;_blank&quot; rel=&quot;noopener">https://blogs.rollins.edu/facultyevaluation/peer-evaluation-of-teaching/</a></li><li class="ref-item">Rubin, D. L., &amp; Smith, K. A. (1990). Effects of accent, ethnicity, and lecture topic on undergraduates' perceptions of nonnative English-speaking teaching assistants. <em>International Journal of Intercultural Relations, 14</em>(3), 337–353. <a href="https://doi.org/10.1016/0147-1767(90)90019-S" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1016/0147-1767(90)90019-S</a></li><li class="ref-item">Russ, T. L., Simonds, C. J., &amp; Hunt, S. K. (2002). Coming out in the classroom... an occupational hazard?: The influence of sexual orientation on teacher credibility and perceived student learning. <em>Communication Education, 51</em>(3), 311–324. <a href="https://doi.org/10.1080/03634520216516" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1080/03634520216516</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-S">
+      <h3 class="ref-letter">S</h3>
+      <ul class="ref-list"><li class="ref-item">Schmidt, B. (2015). Gendered language in teacher reviews. <em>Bookworm / Sapping Attention</em> [Interactive data visualization]. <a href="http://benschmidt.org/profGender" target=&quot;_blank&quot; rel=&quot;noopener">http://benschmidt.org/profGender</a></li><li class="ref-item">ScienceDirect. (2022). How student evaluations of teaching contribute to hindrance of faculty diversity. <em>Nurse Education in Practice.</em> <a href="https://doi.org/10.1016/j.nepr.2022.103362" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1016/j.nepr.2022.103362</a></li><li class="ref-item">Scholarworks IU. (n.d.). Cruel and usual: The psychological and financial cost of SETs. <em>Journal of the Scholarship of Teaching and Learning.</em> <a href="https://scholarworks.iu.edu/journals/index.php/josotl/article/view/36729" target=&quot;_blank&quot; rel=&quot;noopener">https://scholarworks.iu.edu/journals/index.php/josotl/article/view/36729</a></li><li class="ref-item">SIUE. (n.d.). Myths and facts about DFW rates. <em>Grade Distribution Analytics.</em> <a href="https://www.siue.edu/grade-analytics/facts-myths.shtml" target=&quot;_blank&quot; rel=&quot;noopener">https://www.siue.edu/grade-analytics/facts-myths.shtml</a></li><li class="ref-item">Smith, B. P., &amp; Hawkins, B. (2011). Examining student evaluations of Black college faculty: Does race matter? <em>Journal of Negro Education, 80</em>(2), 149–162.</li><li class="ref-item">Social Work Faculty Perceptions on the Need for Inclusive LGBTQIA+ Policies in Schools of Social Work. (2024). <em>Sexuality Research and Social Policy.</em> <a href="https://doi.org/10.1007/s13178-024-01046-8" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1007/s13178-024-01046-8</a></li><li class="ref-item">Sprague, J., &amp; Massoni, K. (2005). Student evaluations and gendered expectations: What we can't count can hurt us. <em>Sex Roles, 53</em>(11–12), 779–793. <a href="https://doi.org/10.1007/s11199-005-8292-4" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1007/s11199-005-8292-4</a></li><li class="ref-item">Stanford University. (n.d.). Course feedback as a measure of teaching effectiveness. <em>Office of the Registrar.</em> <a href="https://evals.stanford.edu/evaluating-teaching/course-feedback-measure-teaching-effectiveness" target=&quot;_blank&quot; rel=&quot;noopener">https://evals.stanford.edu/evaluating-teaching/course-feedback-measure-teaching-effectiveness</a></li><li class="ref-item">St. Olaf College, Institutional Effectiveness and Assessment. (2025). <em>Bias in course evaluations.</em> <a href="https://wp.stolaf.edu/iea/bias-in-course-evaluations/" target=&quot;_blank&quot; rel=&quot;noopener">https://wp.stolaf.edu/iea/bias-in-course-evaluations/</a></li><li class="ref-item">Stroebe, W. (2020). Student evaluations of teaching encourages poor teaching and contributes to grade inflation: A theoretical and empirical analysis. <em>Basic and Applied Social Psychology, 42</em>(4), 276–294. <a href="https://doi.org/10.1080/01973533.2020.1756817" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1080/01973533.2020.1756817</a></li><li class="ref-item">Subtirelu, N. C. (2015). &ldquo;She does have an accent but...&rdquo;: Race and language ideology in students' evaluations of mathematics instructors on RateMyProfessors.com. <em>Language in Society, 44</em>(1), 35–62. <a href="https://doi.org/10.1017/S0047404514000736" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1017/S0047404514000736</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-T">
+      <h3 class="ref-letter">T</h3>
+      <ul class="ref-list"><li class="ref-item">The Intercept. (2024, September 12). America's racist, xenophobic, and highly specific fear of Haiti. <a href="https://theintercept.com/2024/09/12/trump-springfield-haiti-cats-dogs-racism-immigration/" target=&quot;_blank&quot; rel=&quot;noopener">https://theintercept.com/2024/09/12/trump-springfield-haiti-cats-dogs-racism-immigration/</a></li><li class="ref-item">The Conversation. (2024, September). Trump's anti-Haitian rhetoric reflects America's long-standing racism against Haiti and its people. <a href="https://theconversation.com/trumps-anti-haitian-rhetoric-reflects-americas-long-standing-racism-against-haiti-and-its-people-240975" target=&quot;_blank&quot; rel=&quot;noopener">https://theconversation.com/trumps-anti-haitian-rhetoric-reflects-americas-long-standing-racism-against-haiti-and-its-people-240975</a></li><li class="ref-item">Tuitt, F., Hanna, M., Martinez, L. M., Salazar, M., &amp; Griffin, R. (2009). Teaching in the line of fire: Faculty of color in the academy. <em>Thought &amp; Action, 25</em>, 65–74.</li></ul>
+    </div>
+    <div class="ref-group" id="refletter-U">
+      <h3 class="ref-letter">U</h3>
+      <ul class="ref-list"><li class="ref-item">UCI Equity Advising. (n.d.). Tips on navigating the pathway to tenure/promotion for LGBTQ faculty. <a href="https://www.equity.socsci.uci.edu/pathwaysproject/reflections/tomboellstorff02.php" target=&quot;_blank&quot; rel=&quot;noopener">https://www.equity.socsci.uci.edu/pathwaysproject/reflections/tomboellstorff02.php</a></li><li class="ref-item">UNC Charlotte ADVANCE. (2023). <em>Student teaching evaluation bias.</em> <a href="https://advance.charlotte.edu/wp-content/uploads/sites/261/2023/05/Student-Teaching-Evaluation-Bias.pdf" target=&quot;_blank&quot; rel=&quot;noopener">https://advance.charlotte.edu/wp-content/uploads/sites/261/2023/05/Student-Teaching-Evaluation-Bias.pdf</a></li><li class="ref-item">UUSC. (2025). 3 facts about anti-Haitian racism in the U.S. <a href="https://www.uusc.org/3-facts-about-anti-haitian-racism-in-the-us/" target=&quot;_blank&quot; rel=&quot;noopener">https://www.uusc.org/3-facts-about-anti-haitian-racism-in-the-us/</a></li><li class="ref-item">Uttl, B., White, C. A., &amp; Gonzalez, D. W. (2017). Meta-analysis of faculty's teaching effectiveness: Student evaluation of teaching ratings and student learning are not related. <em>Studies in Educational Evaluation, 54</em>, 22–42. <a href="https://doi.org/10.1016/j.stueduc.2016.08.007" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1016/j.stueduc.2016.08.007</a></li></ul>
+    </div>
+    <div class="ref-group" id="refletter-W">
+      <h3 class="ref-letter">W</h3>
+      <ul class="ref-list"><li class="ref-item">Weiner, B. (1985). An attributional theory of achievement motivation and emotion. <em>Psychological Review, 92</em>(4), 548–573. <a href="https://doi.org/10.1037/0033-295X.92.4.548" target=&quot;_blank&quot; rel=&quot;noopener">https://doi.org/10.1037/0033-295X.92.4.548</a></li><li class="ref-item">West, C. M. (2008). Mammy, Jezebel, Sapphire, and their homegirls: Developing an &ldquo;oppositional gaze&rdquo; toward the images of Black women. In J. C. Chrisler, C. Golden, &amp; P. D. Rozee (Eds.), <em>Lectures on the psychology of women</em> (4th ed., pp. 286–299). McGraw-Hill.</li></ul>
+    </div>
+    </div>
+    <p class="ref-no-results" id="ref-no-results" role="status">No references match your search.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <em>AI Training Source Material: Bias Indicators in Student Evaluations of Minoritized Faculty</em>, Version 3. &nbsp;·&nbsp;
+  All categories should be flagged for qualified human review — this document is a reference aid, not a decision-making instrument.
+  Classification determinations require human reviewers with knowledge of the relevant bias literature and the specific institutional context.
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── CATEGORY CARDS ──────────────────────────────────────────────────────
+  const cards     = Array.from(document.querySelectorAll('.cat-card'));
+  const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
+  const searchInp = document.getElementById('cat-search');
+  const countEl   = document.getElementById('result-count');
+  const noResults = document.getElementById('no-results');
+  const TOTAL     = cards.length;
+  let activeType  = 'all';
+
+  function updateCards() {
+    const q = searchInp.value.trim().toLowerCase();
+    let vis = 0;
+    cards.forEach(function(c) {
+      const typeMatch   = activeType === 'all' || c.dataset.type === activeType;
+      const searchMatch = !q || c.dataset.search.includes(q) || c.textContent.toLowerCase().includes(q);
+      const show = typeMatch && searchMatch;
+      c.classList.toggle('hidden', !show);
+      if (show) vis++;
+    });
+    const label = vis === TOTAL
+      ? 'Showing all ' + TOTAL + ' categories'
+      : 'Showing ' + vis + ' of ' + TOTAL + ' categories';
+    countEl.textContent = label;
+    noResults.style.display = vis === 0 ? 'block' : 'none';
+  }
+
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      activeType = btn.dataset.type;
+      filterBtns.forEach(function(b) { b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', 'true');
+      updateCards();
+    });
+  });
+
+  searchInp.addEventListener('input', updateCards);
+
+  // ── REFERENCE SEARCH ────────────────────────────────────────────────────
+  const refInp    = document.getElementById('ref-search');
+  const refCount  = document.getElementById('ref-count');
+  const refNoRes  = document.getElementById('ref-no-results');
+  const refItems  = Array.from(document.querySelectorAll('.ref-item'));
+  const refGroups = Array.from(document.querySelectorAll('.ref-group'));
+  const REF_TOTAL = refItems.length;
+
+  refItems.forEach(function(el) { el.dataset.orig = el.innerHTML; });
+  refCount.textContent = REF_TOTAL + ' references';
+
+  function escRe(s) { return s.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&'); }
+  function highlight(html, q) {
+    if (!q) return html;
+    return html.replace(new RegExp('(?![^<]*>)(' + escRe(q) + ')', 'gi'), '<mark class="hl">$1</mark>');
+  }
+
+  function updateRefs() {
+    const q = refInp.value.trim().toLowerCase();
+    let vis = 0;
+    refItems.forEach(function(el) {
+      const match = !q || el.textContent.toLowerCase().includes(q);
+      el.classList.toggle('ref-hidden', !match);
+      el.innerHTML = (match && q) ? highlight(el.dataset.orig, q) : el.dataset.orig;
+      if (match) vis++;
+    });
+    refGroups.forEach(function(g) {
+      g.classList.toggle('ref-hidden', !g.querySelector('.ref-item:not(.ref-hidden)'));
+    });
+    refCount.textContent = q
+      ? vis + ' of ' + REF_TOTAL + ' matching'
+      : REF_TOTAL + ' references';
+    refNoRes.style.display = vis === 0 ? 'block' : 'none';
+  }
+
+  refInp.addEventListener('input', updateRefs);
+})();
+</script>
 </body>
 </html>
