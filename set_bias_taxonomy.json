@@ -1,0 +1,498 @@
+{
+  "title": "SET Bias Training Taxonomy for AI Implementation",
+  "version": "3.0-web-format",
+  "source": "SET_Bias_Training_Material_v3.pdf",
+  "purpose": "Detect and contextualize bias indicators in student evaluations of teaching for human review.",
+  "bias_types": [
+    {
+      "id": "T1",
+      "name": "Direct Identity Bias",
+      "definition": "Explicit or coded identity-based language targeting personality, appearance, authority, accent, gender, sexuality, race, culture, or legitimacy.",
+      "default_action": "Flag for human bias review."
+    },
+    {
+      "id": "T2",
+      "name": "Proxy Bias / Pedagogical Dissatisfaction",
+      "definition": "Pedagogically framed complaints that may be valid but can be contaminated by identity bias, grade dissatisfaction, and credibility inversion.",
+      "default_action": "Require context, corroboration, comparator data, and clustering analysis."
+    },
+    {
+      "id": "T3",
+      "name": "Stigmatized Identity Bias",
+      "definition": "Bias rooted in stereotypes attached to a specific national origin, ethnicity, religion, sexual orientation, or gender identity.",
+      "default_action": "Flag for trained human review; use identity-specific training data only when identity context is supplied."
+    },
+    {
+      "id": "T4",
+      "name": "Deliberate Defamation / Harassment",
+      "definition": "Targeted harassment, threats, false factual claims, coordinated reputational attacks, unadjudicated misconduct allegations, or abusive identity content.",
+      "default_action": "Escalate immediately; do not use in personnel summaries pending protective review."
+    }
+  ],
+  "categories": [
+    {
+      "id": "C01",
+      "name": "Personality & Temperament",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias"
+      ],
+      "definition": "Affective or temperamental descriptions that displace attention from pedagogy to the instructor's personality, authority, or emotional presentation.",
+      "signals": [
+        "angry",
+        "aggressive",
+        "hostile",
+        "intimidating",
+        "scary",
+        "threatening",
+        "bossy",
+        "controlling",
+        "mean",
+        "rude",
+        "cold",
+        "harsh",
+        "abrasive",
+        "defensive",
+        "unapproachable",
+        "condescending",
+        "has a chip on their shoulder",
+        "seems angry all the time",
+        "takes things too personally",
+        "has an attitude",
+        "rubs students the wrong way",
+        "went on a rant"
+      ],
+      "ai_action": "Flag for bias review; look for tone-policing, gendered/racialized stereotypes, and clustering with other identity-coded terms."
+    },
+    {
+      "id": "C02",
+      "name": "Authority & Competence Challenges",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias"
+      ],
+      "definition": "Challenges to credentials, expertise, preparedness, or authority that can reflect a presumption of incompetence.",
+      "signals": [
+        "unqualified",
+        "incompetent",
+        "unprepared",
+        "disorganized",
+        "scattered",
+        "confusing",
+        "ineffective",
+        "inexperienced",
+        "lost",
+        "clueless",
+        "doesn't know the material",
+        "not qualified to teach this",
+        "not a real expert",
+        "students knew more than the professor",
+        "not a real professor"
+      ],
+      "ai_action": "Flag and require corroboration from peer review, teaching materials, and credentials before treating as a pedagogical fact."
+    },
+    {
+      "id": "C03",
+      "name": "Accent & Language Bias",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias"
+      ],
+      "definition": "Language that evaluates speech, accent, perceived nativeness, or English ability against an implicit native-English norm.",
+      "signals": [
+        "accent",
+        "hard to understand",
+        "incomprehensible",
+        "unclear speech",
+        "mumbles",
+        "broken English",
+        "foreign",
+        "thick accent",
+        "needs to work on their English",
+        "speaks too fast",
+        "speaks too slow",
+        "English is not their first language"
+      ],
+      "ai_action": "Flag explicit language-bias indicators; separate actual accessibility issues from identity-coded judgments through independent observation."
+    },
+    {
+      "id": "C04",
+      "name": "Relatability & Fit",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias",
+        "Type 3 — Stigmatized Identity Bias"
+      ],
+      "definition": "Comments suggesting the instructor does not belong, does not fit, or fails an unstated norm of what a professor should look or sound like.",
+      "signals": [
+        "unrelatable",
+        "disconnected",
+        "distant",
+        "out of place",
+        "awkward",
+        "weird",
+        "odd",
+        "doesn't connect with students",
+        "not the type of professor I expected",
+        "doesn't seem to belong here",
+        "not like other professors",
+        "feels like they're from a different world"
+      ],
+      "ai_action": "Flag as possible fit/forever-foreigner language, especially when unsupported by specific teaching evidence."
+    },
+    {
+      "id": "C05",
+      "name": "Gendered Language Patterns",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias"
+      ],
+      "definition": "Terms disproportionately applied to women faculty around warmth, assertiveness, appearance, emotion, and professionalism.",
+      "signals": [
+        "bossy",
+        "motherly",
+        "nurturing",
+        "emotional",
+        "hysterical",
+        "dramatic",
+        "sensitive",
+        "shrill",
+        "nagging",
+        "sweet",
+        "bubbly",
+        "ditzy",
+        "scattered",
+        "should smile more",
+        "too strict",
+        "too nice",
+        "too mean",
+        "doesn't command respect",
+        "came across as weak",
+        "too aggressive for a woman"
+      ],
+      "ai_action": "Flag gendered descriptors and double-bind constructions; compare against language used for male peers."
+    },
+    {
+      "id": "C06",
+      "name": "Racialized Language Patterns",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias"
+      ],
+      "definition": "Language that racializes authority, affect, threat, foreignness, or perceived difference.",
+      "signals": [
+        "loud",
+        "intimidating",
+        "aggressive",
+        "angry",
+        "threatening",
+        "foreign",
+        "different",
+        "unexpected",
+        "makes everything about race",
+        "biased against white students",
+        "doesn't like students like me",
+        "not the typical professor",
+        "brings their background into everything",
+        "treated me differently because I'm [identity]"
+      ],
+      "ai_action": "Flag for racialized bias review and check whether discomfort with course content is being displaced onto the instructor."
+    },
+    {
+      "id": "C07",
+      "name": "Bias Claims Turned Outward",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias",
+        "Type 2 — Proxy Bias"
+      ],
+      "definition": "Claims that the instructor is biased, political, or agenda-driven, especially when students' discomfort with material is reframed as instructor misconduct.",
+      "signals": [
+        "biased",
+        "unfair",
+        "discriminatory",
+        "prejudiced",
+        "one-sided",
+        "agenda-driven",
+        "political",
+        "pushes their own views",
+        "too political",
+        "not objective",
+        "doesn't respect other viewpoints",
+        "silences students",
+        "grades based on whether you agree",
+        "punishes conservative views"
+      ],
+      "ai_action": "Flag; distinguish legitimate content-balance issues from majority-discomfort narratives and grade retaliation."
+    },
+    {
+      "id": "C08",
+      "name": "Course Content Complaints as Proxy Bias",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias",
+        "Type 2 — Proxy Bias"
+      ],
+      "definition": "Complaints about course subject matter that implicitly challenge the instructor's legitimacy or the legitimacy of identity-related content.",
+      "signals": [
+        "political",
+        "one-sided",
+        "irrelevant",
+        "unnecessary",
+        "forced",
+        "preachy",
+        "propaganda",
+        "indoctrination",
+        "too much focus on race",
+        "too much focus on gender",
+        "identity politics",
+        "turned every topic into a race/gender issue",
+        "not relevant to the subject matter",
+        "pushed a liberal agenda"
+      ],
+      "ai_action": "Flag when content complaints target equity topics or the instructor's right to teach them; compare syllabus learning objectives."
+    },
+    {
+      "id": "C09",
+      "name": "Pedagogical Complaints as Proxy Bias",
+      "bias_types": [
+        "Type 2 — Proxy Bias"
+      ],
+      "definition": "Neutral-sounding complaints about grading, feedback, workload, rubrics, course structure, LMS use, due dates, and instructional clarity that may be contaminated by identity bias.",
+      "signals": [
+        "grading is unfair",
+        "rubrics are unclear",
+        "I never know what they want",
+        "grading seems arbitrary",
+        "my grade doesn't reflect my effort",
+        "graded too harshly",
+        "exams don't reflect what we studied",
+        "takes forever to return assignments",
+        "feedback is not helpful",
+        "not accessible outside of class",
+        "way too much work",
+        "unreasonable expectations",
+        "the syllabus is confusing",
+        "I never know what's due",
+        "course is all over the place",
+        "hard to follow in class",
+        "lectures aren't useful",
+        "doesn't engage the class"
+      ],
+      "ai_action": "Do not treat as automatically biased or automatically valid; require context, clustering, comparator data, and independent corroboration."
+    },
+    {
+      "id": "C10",
+      "name": "Double-Bind of Rigor",
+      "bias_types": [
+        "Type 2 — Proxy Bias"
+      ],
+      "definition": "A no-win pattern in which high standards are punished as unfair, while accessible courses are dismissed as insufficiently rigorous.",
+      "signals": [
+        "too hard for no reason",
+        "unrealistic expectations",
+        "sets students up to fail",
+        "impossible to do well",
+        "nitpicks everything",
+        "penalizes students for not being perfect",
+        "had to teach myself",
+        "learned despite the poor instruction",
+        "the book was great, the professor not so much",
+        "too strict",
+        "too lenient",
+        "too structured",
+        "too unstructured"
+      ],
+      "ai_action": "Detect contradictory complaint clusters; compare grade distributions and follow-on learning evidence."
+    },
+    {
+      "id": "C11",
+      "name": "Structural & Tonal Tropes",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias",
+        "Type 2 — Proxy Bias"
+      ],
+      "definition": "Common trope families such as tone policing, angry Black woman/Sapphire trope, model-minority inversion, authority challenge, double bind, emotional labor expectations, and guilt narrative.",
+      "signals": [
+        "too harsh",
+        "unnecessarily blunt",
+        "abrasive delivery",
+        "attacked students for asking questions",
+        "condescending tone",
+        "went on a rant",
+        "had an outburst",
+        "more aggressive than I expected",
+        "doesn't seem qualified",
+        "not available enough",
+        "doesn't care about student success",
+        "made me feel bad about being [identity]",
+        "I felt shamed"
+      ],
+      "ai_action": "Classify trope family; evaluate intersectional compounding and specific protected review needs."
+    },
+    {
+      "id": "C12",
+      "name": "Bias Against LGBTQ+ Faculty",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias",
+        "Type 3 — Stigmatized Identity Bias",
+        "Type 4 — Deliberate Defamation"
+      ],
+      "definition": "Bias triggered by LGBTQ+ disclosure or perceived identity, including political-agenda accusations, credibility challenges, heteronormative content distortion, misgendering, and discomfort framed as harm.",
+      "signals": [
+        "has a political agenda",
+        "pushes LGBTQ topics",
+        "made the class about their personal life",
+        "not qualified to teach this objectively",
+        "everything was about gay/transgender people",
+        "the personal stuff didn't belong in class",
+        "misgendering",
+        "kept talking about pronouns",
+        "made me feel judged for being straight/Christian/traditional",
+        "LGBTQ agenda"
+      ],
+      "ai_action": "Flag disclosure-sensitive patterns; treat deliberate misgendering or identity abuse as escalation content."
+    },
+    {
+      "id": "C13",
+      "name": "Stigmatized Ethnic & National Identity Bias",
+      "bias_types": [
+        "Type 3 — Stigmatized Identity Bias"
+      ],
+      "definition": "Bias tied to the specific social meanings attached to a national origin, ethnicity, religion, or cultural group, including disgust-organized stigma and forever-foreigner language.",
+      "signals": [
+        "uncomfortable",
+        "unwelcoming",
+        "hostile without specific pedagogical cause",
+        "wanted to avoid interaction",
+        "disproportionate emotional intensity",
+        "contamination",
+        "doesn't fit here",
+        "very different from what I'm used to",
+        "seems out of place",
+        "not like other professors",
+        "too focused on [specific country/region/culture]",
+        "why are we learning about [place]"
+      ],
+      "ai_action": "Use only human-supplied identity context; train identity-specific stigma detectors and require careful human review."
+    },
+    {
+      "id": "C14",
+      "name": "Deliberate Defamation, Harassment & Weaponization",
+      "bias_types": [
+        "Type 4 — Deliberate Defamation"
+      ],
+      "definition": "Targeted harassment, fabricated accusations, unadjudicated misconduct claims, threats, explicit abuse, coordinated attacks, and grade-retaliation defamation.",
+      "signals": [
+        "sexual comments about instructor",
+        "explicit threats",
+        "personal insults unrelated to pedagogy",
+        "profanity directed personally",
+        "I HATE YOU",
+        "claims of discrimination without investigation",
+        "claims of retaliation",
+        "claims instructor violated policy",
+        "fabricated in-class incidents",
+        "multiple near-identical comments",
+        "explicit reference to grade received"
+      ],
+      "ai_action": "Escalate immediately; exclude from personnel-file summaries pending protective review; do not present as formative feedback."
+    },
+    {
+      "id": "C15",
+      "name": "Absence of Positive Language",
+      "bias_types": [
+        "Type 1 — Direct Identity Bias"
+      ],
+      "definition": "A comparative signal in which positive intellectual descriptors appear less often for minoritized faculty than for comparable peers.",
+      "signals": [
+        "absence of brilliant/genius/expert/inspiring",
+        "absence of knowledgeable/engaging/articulate/confident",
+        "absence of natural teacher/best professor",
+        "comparatively fewer positive descriptors"
+      ],
+      "ai_action": "Use comparative corpus analysis, not single-comment judgment; evaluate positive-term rates across instructors and courses."
+    },
+    {
+      "id": "C16",
+      "name": "Credibility Inversion",
+      "bias_types": [
+        "Type 2 — Proxy Bias",
+        "Type 1 — Direct Identity Bias",
+        "Type 3 — Stigmatized Identity Bias",
+        "Type 4 — Deliberate Defamation"
+      ],
+      "definition": "Negative pedagogical feedback is treated as actionable even when it contradicts documented faculty expertise, years of experience, peer observations, or scholarly record.",
+      "signals": [
+        "disorganized course despite design expertise",
+        "unclear assessments despite assessment expertise",
+        "confusing explanations despite extensive teaching record",
+        "no clear rubric despite documented rubrics",
+        "persistent complaints without peer corroboration",
+        "complaints increase over time despite growing experience"
+      ],
+      "ai_action": "Run corroboration-gap test; weigh credentials, teaching portfolio, peer observation, temporal stability, and comparator data before classification."
+    },
+    {
+      "id": "C17",
+      "name": "Grade Distributions as SET Context",
+      "bias_types": [
+        "Type 2 — Proxy Bias"
+      ],
+      "definition": "Grade distributions contextualize SET credibility because grades and grade satisfaction shape ratings and complaint patterns.",
+      "signals": [
+        "low grades plus negative SETs",
+        "high grades plus negative SETs",
+        "same grades but worse SETs than comparator",
+        "high DFW with poor SETs",
+        "direct grade-retaliation language",
+        "I deserved a better grade",
+        "grade doesn't reflect effort",
+        "the curve wasn't enough"
+      ],
+      "ai_action": "Integrate mean GPA, DFW, withdrawals, departmental norms, comparator sections, and follow-on course outcomes before interpreting SETs."
+    }
+  ],
+  "workflow": [
+    "Normalize comment text, preserve original wording, and assign a stable comment_id.",
+    "Detect explicit Type 4 escalation content first: threats, harassment, unadjudicated misconduct allegations, identity abuse, deliberate misgendering, coordinated attacks, or false factual claims.",
+    "Detect Type 1 and Type 3 identity-coded indicators using the taxonomy and lexicon.",
+    "Detect Type 2 proxy indicators, but mark them as context-dependent rather than automatically biased.",
+    "Cluster indicators within a comment and across comments in the same course, term, instructor, and assessment event.",
+    "Integrate contextual evidence: grade distribution, DFW, expected grade distribution, timing of evaluation, course level, response rate, peer observation, teaching portfolio, rubrics, LMS logs, and comparator sections.",
+    "Apply the grade-distribution matrix and credibility-inversion/corroboration tests.",
+    "Generate a structured JSON finding with evidence spans, category labels, confidence, recommended review pathway, and required corroboration.",
+    "Never infer instructor protected identity. Use only user- or institution-supplied context, and never make a final personnel judgment automatically."
+  ],
+  "grade_set_credibility_matrix": [
+    {
+      "grade_pattern": "Low mean GPA / high DFW",
+      "set_pattern": "Negative SETs",
+      "interpretation": "Possible grade-retaliation bias artifact",
+      "ai_flag": "Require independent corroboration before treating as actionable."
+    },
+    {
+      "grade_pattern": "Low mean GPA / high DFW",
+      "set_pattern": "Positive SETs",
+      "interpretation": "Rigor may be valued or socially protected",
+      "ai_flag": "No automatic bias flag; consider follow-on performance."
+    },
+    {
+      "grade_pattern": "High mean GPA / low DFW",
+      "set_pattern": "Negative SETs",
+      "interpretation": "Identity-based bias not explained by grade dissatisfaction",
+      "ai_flag": "High-probability Type 1 or Type 3 review flag."
+    },
+    {
+      "grade_pattern": "High mean GPA / low DFW",
+      "set_pattern": "Positive SETs",
+      "interpretation": "Possible genuine effectiveness or strategic grade leniency",
+      "ai_flag": "Corroborate with durable learning evidence."
+    },
+    {
+      "grade_pattern": "Same grades as comparator",
+      "set_pattern": "Worse SETs",
+      "interpretation": "Comparative differential bias signal",
+      "ai_flag": "Trigger comparative review."
+    }
+  ],
+  "safeguards": [
+    "Flag for review; do not make final personnel judgments automatically.",
+    "Do not infer protected identities; use authorized supplied metadata only.",
+    "Treat Type 2 pedagogical complaints as context-dependent until corroborated.",
+    "Escalate Type 4 content outside ordinary SET review and do not include in personnel summaries pending protective review.",
+    "Use grade distributions, comparator sections, peer review, teaching portfolios, and follow-on learning where available."
+  ]
+}

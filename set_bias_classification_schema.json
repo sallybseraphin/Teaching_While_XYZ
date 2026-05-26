@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SET Bias Review Output",
+  "type": "object",
+  "required": [
+    "comment_id",
+    "verdict",
+    "flags",
+    "recommended_action",
+    "human_review_required"
+  ],
+  "properties": {
+    "comment_id": {
+      "type": "string"
+    },
+    "course_id": {
+      "type": "string"
+    },
+    "term": {
+      "type": "string"
+    },
+    "normalized_text": {
+      "type": "string"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "no_flag",
+        "context_needed",
+        "probable_bias_artifact",
+        "possible_genuine_pedagogical_signal",
+        "type4_escalation"
+      ]
+    },
+    "flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "category_id",
+          "bias_type",
+          "evidence_span",
+          "confidence"
+        ],
+        "properties": {
+          "category_id": {
+            "type": "string"
+          },
+          "category_name": {
+            "type": "string"
+          },
+          "bias_type": {
+            "type": "string"
+          },
+          "subcategory": {
+            "type": "string"
+          },
+          "evidence_span": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "rationale": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "contextual_checks": {
+      "type": "object",
+      "properties": {
+        "grade_distribution_reviewed": {
+          "type": "boolean"
+        },
+        "peer_observation_reviewed": {
+          "type": "boolean"
+        },
+        "comparator_sections_reviewed": {
+          "type": "boolean"
+        },
+        "course_materials_reviewed": {
+          "type": "boolean"
+        },
+        "timing_reviewed": {
+          "type": "boolean"
+        },
+        "corroboration_status": {
+          "type": "string",
+          "enum": [
+            "not_checked",
+            "uncorroborated",
+            "corroborated",
+            "contradicted_by_independent_evidence"
+          ]
+        }
+      }
+    },
+    "recommended_action": {
+      "type": "string"
+    },
+    "human_review_required": {
+      "type": "boolean"
+    },
+    "exclude_from_personnel_summary_pending_review": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

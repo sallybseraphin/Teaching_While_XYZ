@@ -3,773 +3,588 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Teaching While XYZ: an interactive resource for minoritized educators, with tools for flagging bias in Student Evaluations of Teaching (SETs)." />
-  <title>Teaching While XYZ | Interactive Resources for Minoritized Educators</title>
-
+  <title>SET Bias Training Material v3 — AI Implementation Webpage</title>
   <style>
     :root {
-      --bg: #fbf8f3;
-      --surface: #ffffff;
-      --surface-strong: #f2eadf;
-      --text: #241f1b;
-      --muted: #635a52;
-      --accent: #7a2f4f;
-      --accent-dark: #54213a;
-      --accent-soft: #f3dde6;
-      --gold: #c28b2c;
-      --line: #e3d6ca;
-      --shadow: 0 18px 50px rgba(36, 31, 27, 0.11);
+      --bg: #f7f4ef;
+      --paper: #fffaf2;
+      --ink: #1d232a;
+      --muted: #606a76;
+      --brand: #472d88;
+      --brand2: #116466;
+      --accent: #e0a458;
+      --danger: #9d2c2c;
+      --line: #ded7ca;
+      --shadow: 0 16px 40px rgba(29,35,42,.10);
       --radius: 22px;
-      --max: 1120px;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(122, 47, 79, 0.14), transparent 32rem),
-        radial-gradient(circle at top right, rgba(194, 139, 44, 0.16), transparent 30rem),
-        var(--bg);
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    a:focus-visible,
-    button:focus-visible {
-      outline: 3px solid var(--gold);
-      outline-offset: 4px;
-      border-radius: 8px;
-    }
-
-    .skip-link {
-      position: absolute;
-      left: 1rem;
-      top: -4rem;
-      z-index: 10;
-      padding: 0.75rem 1rem;
-      background: var(--accent-dark);
-      color: #fff;
-      border-radius: 999px;
-      transition: top 0.2s ease;
-    }
-
-    .skip-link:focus {
-      top: 1rem;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      backdrop-filter: blur(16px);
-      background: rgba(251, 248, 243, 0.88);
-      border-bottom: 1px solid rgba(227, 214, 202, 0.85);
-    }
-
-    .header-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 1rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-
-    .brand-mark {
-      width: 2.45rem;
-      height: 2.45rem;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 900;
-      box-shadow: 0 10px 24px rgba(122, 47, 79, 0.25);
-    }
-
-    .nav-toggle {
-      display: none;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      padding: 0.65rem 0.85rem;
-      border-radius: 999px;
-      font: inherit;
-      color: var(--text);
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .site-nav a {
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.94rem;
-      color: var(--muted);
-      padding: 0.55rem 0.85rem;
-      border-radius: 999px;
-    }
-
-    .site-nav a:hover {
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-    }
-
-    .hero {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 6rem 1.25rem 3.25rem;
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      width: fit-content;
-      padding: 0.35rem 0.75rem;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--accent-dark);
-      background: rgba(255, 255, 255, 0.7);
-      font-weight: 800;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .hero h1 {
-      margin: 1rem 0 1rem;
-      font-size: clamp(2.6rem, 7vw, 5.75rem);
-      line-height: 0.95;
-      letter-spacing: -0.08em;
-    }
-
-    .hero .lead {
-      max-width: 61ch;
-      color: var(--muted);
-      font-size: clamp(1.1rem, 2vw, 1.28rem);
-    }
-
-    .hero-actions {
-      margin-top: 1.75rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.85rem;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 3rem;
-      padding: 0.8rem 1.15rem;
-      border-radius: 999px;
-      font-weight: 800;
-      text-decoration: none;
-      border: 1px solid transparent;
-    }
-
-    .button.primary {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 12px 28px rgba(122, 47, 79, 0.26);
-    }
-
-    .button.primary:hover {
-      background: var(--accent-dark);
-    }
-
-    .button.secondary {
-      background: var(--surface);
-      color: var(--accent-dark);
-      border-color: var(--line);
-    }
-
-    .hero-card {
-      background: rgba(255, 255, 255, 0.84);
-      border: 1px solid var(--line);
-      border-radius: calc(var(--radius) + 8px);
-      padding: 1.35rem;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card h2 {
-      margin: 0 0 0.5rem;
-      font-size: 1.25rem;
-    }
-
-    .checklist {
-      display: grid;
-      gap: 0.75rem;
-      margin: 1.15rem 0 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .checklist li {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.65rem;
-      align-items: start;
-      color: var(--muted);
-    }
-
-    .checklist li::before {
-      content: "✓";
-      display: grid;
-      place-items: center;
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 50%;
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-      font-weight: 900;
-      line-height: 1;
-      margin-top: 0.1rem;
-    }
-
-    section {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 3.75rem 1.25rem;
-    }
-
-    .section-heading {
-      max-width: 760px;
-      margin-bottom: 1.75rem;
-    }
-
-    .section-heading h2 {
-      margin: 0 0 0.75rem;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      letter-spacing: -0.055em;
-      line-height: 1.05;
-    }
-
-    .section-heading p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1.08rem;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .resource-card {
-      position: relative;
-      overflow: hidden;
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1.25rem;
-      border-radius: var(--radius);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: 0 10px 28px rgba(36, 31, 27, 0.06);
-    }
-
-    .resource-card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 0.35rem;
-      background: linear-gradient(90deg, var(--accent), var(--gold));
-    }
-
-    .resource-card .tag {
-      width: fit-content;
-      margin-top: 0.25rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      background: var(--surface-strong);
-      color: var(--accent-dark);
-      font-size: 0.78rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-    }
-
-    .resource-card h3 {
-      margin: 0;
-      font-size: 1.35rem;
-      line-height: 1.15;
-      letter-spacing: -0.035em;
-    }
-
-    .resource-card p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .resource-card a {
-      margin-top: auto;
-      color: var(--accent-dark);
-      font-weight: 900;
-      text-decoration: none;
-    }
-
-    .resource-card a:hover {
-      text-decoration: underline;
-      text-underline-offset: 0.25em;
-    }
-
-    .feature-panel {
-      display: grid;
-      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-      gap: 1rem;
-      align-items: stretch;
-      background: var(--accent-dark);
-      color: #fff;
-      border-radius: calc(var(--radius) + 10px);
-      padding: clamp(1.25rem, 4vw, 2.25rem);
-      box-shadow: var(--shadow);
-    }
-
-    .feature-panel p {
-      color: rgba(255, 255, 255, 0.78);
-    }
-
-    .feature-panel h2 {
-      margin-top: 0;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1;
-      letter-spacing: -0.06em;
-    }
-
-    .steps {
-      counter-reset: step;
-      display: grid;
-      gap: 0.8rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .steps li {
-      counter-increment: step;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.8rem;
-      padding: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .steps li::before {
-      content: counter(step);
-      display: grid;
-      place-items: center;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      background: #fff;
-      color: var(--accent-dark);
-      font-weight: 900;
-    }
-
-    .steps strong {
-      display: block;
-      margin-bottom: 0.15rem;
-    }
-
-    .steps span {
-      color: rgba(255, 255, 255, 0.78);
-    }
-
-    .notice {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.85rem;
-      padding: 1rem;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.76);
-      color: var(--muted);
-    }
-
-    .notice strong {
-      color: var(--text);
-    }
-
-    .notice-icon {
-      display: grid;
-      place-items: center;
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 50%;
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-      font-weight: 900;
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 0.75rem;
-    }
-
-    .category-pill {
-      min-height: 8rem;
-      padding: 1rem;
-      border-radius: 18px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-    }
-
-    .category-pill strong {
-      display: block;
-      margin-bottom: 0.35rem;
-      color: var(--accent-dark);
-      line-height: 1.2;
-    }
-
-    .category-pill span {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .cta {
-      text-align: center;
-      padding: 3rem 1.25rem 5rem;
-    }
-
-    .cta-box {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: clamp(1.5rem, 5vw, 3rem);
-      border-radius: calc(var(--radius) + 14px);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-    }
-
-    .cta h2 {
-      margin: 0 0 0.75rem;
-      font-size: clamp(2rem, 5vw, 4rem);
-      letter-spacing: -0.065em;
-      line-height: 1;
-    }
-
-    .cta p {
-      max-width: 720px;
-      margin: 0 auto 1.4rem;
-      color: var(--muted);
-      font-size: 1.1rem;
-    }
-
-    .site-footer {
-      border-top: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.5);
-    }
-
-    .footer-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 1.5rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .footer-inner a {
-      color: var(--accent-dark);
-      font-weight: 800;
-      text-decoration: none;
-    }
-
-    .footer-inner a:hover {
-      text-decoration: underline;
-      text-underline-offset: 0.25em;
-    }
-
-    @media (max-width: 900px) {
-      .hero,
-      .feature-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .category-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 700px) {
-      .header-inner {
-        align-items: flex-start;
-      }
-
-      .nav-toggle {
-        display: inline-flex;
-      }
-
-      .site-nav {
-        position: absolute;
-        left: 1rem;
-        right: 1rem;
-        top: 4.5rem;
-        display: none;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0.75rem;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: var(--surface);
-        box-shadow: var(--shadow);
-      }
-
-      .site-nav.is-open {
-        display: flex;
-      }
-
-      .site-nav a {
-        border-radius: 12px;
-      }
-
-      .hero {
-        padding-top: 4rem;
-      }
-
-      .category-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--ink); background: radial-gradient(circle at top left, #fff4d8, transparent 35%), linear-gradient(180deg, #f8f4ed, #efe9df); line-height: 1.55; }
+    a { color: var(--brand); }
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 34px 0 18px; position: sticky; top: 0; background: rgba(247,244,239,.88); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(222,215,202,.75); z-index: 10; }
+    nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.03em; }
+    .brand-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; background: linear-gradient(135deg, var(--brand), var(--brand2)); color: white; box-shadow: var(--shadow); }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-weight: 650; }
+    .hero { padding: 70px 0 34px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--brand2); font-weight: 700; background: rgba(255,255,255,.5); }
+    h1 { font-size: clamp(38px, 7vw, 78px); line-height: .95; letter-spacing: -.07em; margin: 22px 0; max-width: 960px; }
+    h2 { font-size: clamp(28px, 4vw, 44px); line-height: 1.05; letter-spacing: -.04em; margin: 0 0 18px; }
+    h3 { line-height: 1.15; margin: 0 0 8px; }
+    .hero p { max-width: 760px; color: var(--muted); font-size: 19px; }
+    .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
+    .button { display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px; border-radius: 999px; text-decoration: none; font-weight: 800; border: 1px solid var(--line); background: white; color: var(--ink); box-shadow: 0 6px 18px rgba(29,35,42,.08); }
+    .button.primary { background: linear-gradient(135deg, var(--brand), var(--brand2)); color: white; border: 0; }
+    .button.danger { background: #fff3f3; color: var(--danger); border-color: #f0cbcb; }
+    .section { padding: 44px 0; }
+    .grid { display: grid; gap: 18px; }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel, .type-card, .category-card, .download-card { background: rgba(255,250,242,.86); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; }
+    .type-card span { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 14px; background: #ece5ff; color: var(--brand); font-weight: 900; margin-bottom: 14px; }
+    .type-card strong { color: var(--brand2); font-size: 14px; }
+    .download-card { display: flex; flex-direction: column; justify-content: space-between; min-height: 210px; }
+    .download-card p, .type-card p, .category-card p, .panel p { color: var(--muted); }
+    .downloads { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .kicker { color: var(--brand2); text-transform: uppercase; font-size: 13px; letter-spacing: .12em; font-weight: 900; margin-bottom: 8px; }
+    .notice { border-left: 5px solid var(--danger); background: #fff6f4; }
+    .controls { display: flex; gap: 12px; flex-wrap: wrap; margin: 18px 0 22px; }
+    input[type=search] { min-width: min(100%, 360px); flex: 1; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--line); background: white; font: inherit; }
+    .filter { border: 1px solid var(--line); background: white; border-radius: 16px; padding: 12px 14px; font-weight: 800; cursor: pointer; }
+    .filter.active { background: var(--ink); color: white; }
+    .categories { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .category-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .category-id { flex: none; display: inline-grid; place-items: center; min-width: 54px; padding: 7px 8px; border-radius: 14px; background: #eaf8f8; color: var(--brand2); font-weight: 900; }
+    .type-line { font-size: 13px; margin: 0; color: var(--brand); font-weight: 800; }
+    details { margin-top: 14px; }
+    summary { cursor: pointer; font-weight: 850; color: var(--brand); }
+    .signal-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+    .signal-grid span { padding: 6px 9px; border-radius: 999px; background: #f0ede7; color: #444; font-size: 12px; }
+    .ai-action { border-top: 1px solid var(--line); padding-top: 12px; }
+    ol.workflow { list-style: none; padding: 0; display: grid; gap: 12px; }
+    ol.workflow li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start; }
+    ol.workflow span { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; background: var(--brand); color: white; font-weight: 900; }
+    ol.workflow p { margin: 6px 0 0; color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 18px; background: var(--paper); box-shadow: var(--shadow); }
+    th, td { padding: 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { background: #292a35; color: white; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { background: #1f2330; color: #edf2ff; padding: 18px; border-radius: 18px; overflow: auto; }
+    .footer { padding: 50px 0 70px; color: var(--muted); }
+    .hidden { display: none !important; }
+    @media (max-width: 900px) { .grid.four, .grid.three, .downloads, .categories { grid-template-columns: 1fr; } header { position: static; } .nav-links { display: none; } }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+<header>
+  <div class="shell">
+    <nav>
+      <div class="brand"><div class="brand-mark">AI</div><span>SET Bias Training Material v3</span></div>
+      <div class="nav-links">
+        <a href="#downloads">Downloads</a>
+        <a href="#types">Four Types</a>
+        <a href="#taxonomy">Taxonomy</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#matrix">Grade Matrix</a>
+      </div>
+    </nav>
+  </div>
+</header>
 
-  <header class="site-header" aria-label="Site header">
-    <div class="header-inner">
-      <a class="brand" href="index.html" aria-label="Teaching While XYZ home">
-        <span class="brand-mark" aria-hidden="true">TW</span>
-        <span>Teaching While XYZ</span>
-      </a>
+<main>
+<section class="hero shell">
+  <div class="eyebrow">Implementation-ready training page · Version 3</div>
+  <h1>Bias indicators in student evaluations of minoritized faculty</h1>
+  <p>This web format converts the source training material into an AI implementation hub with a taxonomy, indicator lexicon, classifier prompt, output schema, examples, and the complete extracted source text.</p>
+  <div class="cta-row">
+    <a class="button primary" href="downloads/set_bias_ai_implementation_pack.zip" download>Download complete AI pack</a>
+    <a class="button" href="downloads/set_bias_taxonomy.json" download>Taxonomy JSON</a>
+    <a class="button" href="downloads/set_bias_indicator_lexicon.csv" download>Indicator CSV</a>
+    <a class="button danger" href="downloads/original_SET_Bias_Training_Material_v3.pdf" download>Original PDF</a>
+  </div>
+</section>
 
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        Menu
-      </button>
+<section id="downloads" class="section shell">
+  <div class="kicker">Download center</div>
+  <h2>AI-ready training materials</h2>
+  <div class="grid downloads">
+    <div class="download-card"><div><h3>Complete implementation pack</h3><p>All files, source material, and original PDF bundled for offline use.</p></div><a class="button primary" href="downloads/set_bias_ai_implementation_pack.zip" download>Download ZIP</a></div>
+    <div class="download-card"><div><h3>Taxonomy JSON</h3><p>Four bias types, 17 categories, signals, actions, workflow, and grade-SET matrix.</p></div><a class="button" href="downloads/set_bias_taxonomy.json" download>Download JSON</a></div>
+    <div class="download-card"><div><h3>Indicator lexicon CSV</h3><p>Flat lexicon for rules engines, retrieval, QA, and model evaluation.</p></div><a class="button" href="downloads/set_bias_indicator_lexicon.csv" download>Download CSV</a></div>
+    <div class="download-card"><div><h3>Classifier prompt</h3><p>Operational instructions for a bias-review classifier assistant.</p></div><a class="button" href="downloads/set_bias_classifier_prompt.md" download>Download Markdown</a></div>
+    <div class="download-card"><div><h3>Output schema</h3><p>JSON Schema for standardized model outputs and audit trails.</p></div><a class="button" href="downloads/set_bias_classification_schema.json" download>Download Schema</a></div>
+    <div class="download-card"><div><h3>Starter examples</h3><p>Labeled JSONL examples for tests and prompt tuning.</p></div><a class="button" href="downloads/set_bias_training_examples.jsonl" download>Download JSONL</a></div>
+  </div>
+</section>
 
-      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
-        <a href="#resources">Resources</a>
-        <a href="#set-bias">SET Bias</a>
-        <a href="#categories">Categories</a>
-        <a href="README.md">Blog</a>
-      </nav>
+<section id="types" class="section shell">
+  <div class="kicker">Detection framework</div>
+  <h2>Four bias types</h2>
+  <div class="grid four">
+<div class="type-card">
+  <span>T1</span>
+  <h3>Direct Identity Bias</h3>
+  <p>Explicit or coded identity-based language targeting personality, appearance, authority, accent, gender, sexuality, race, culture, or legitimacy.</p>
+  <strong>Flag for human bias review.</strong>
+</div>
+
+
+<div class="type-card">
+  <span>T2</span>
+  <h3>Proxy Bias / Pedagogical Dissatisfaction</h3>
+  <p>Pedagogically framed complaints that may be valid but can be contaminated by identity bias, grade dissatisfaction, and credibility inversion.</p>
+  <strong>Require context, corroboration, comparator data, and clustering analysis.</strong>
+</div>
+
+
+<div class="type-card">
+  <span>T3</span>
+  <h3>Stigmatized Identity Bias</h3>
+  <p>Bias rooted in stereotypes attached to a specific national origin, ethnicity, religion, sexual orientation, or gender identity.</p>
+  <strong>Flag for trained human review; use identity-specific training data only when identity context is supplied.</strong>
+</div>
+
+
+<div class="type-card">
+  <span>T4</span>
+  <h3>Deliberate Defamation / Harassment</h3>
+  <p>Targeted harassment, threats, false factual claims, coordinated reputational attacks, unadjudicated misconduct allegations, or abusive identity content.</p>
+  <strong>Escalate immediately; do not use in personnel summaries pending protective review.</strong>
+</div>
+</div>
+</section>
+
+<section class="section shell">
+  <div class="panel notice">
+    <h2>Human-review rule</h2>
+    <p>The AI should flag indicators and organize evidence. It should not infer protected identity, make final bias findings, or determine personnel consequences. Type 2 complaints require contextual evidence; Type 4 content requires immediate escalation outside ordinary SET summaries.</p>
+  </div>
+</section>
+
+<section id="taxonomy" class="section shell">
+  <div class="kicker">Taxonomy browser</div>
+  <h2>17 categories, searchable and filterable</h2>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search indicators, categories, or actions…" />
+    <button class="filter active" data-filter="all">All</button>
+    <button class="filter" data-filter="Type1">Type 1</button>
+    <button class="filter" data-filter="Type2">Type 2</button>
+    <button class="filter" data-filter="Type3">Type 3</button>
+    <button class="filter" data-filter="Type4">Type 4</button>
+  </div>
+  <div id="categoryGrid" class="grid categories">
+<article class="category-card" data-types="Type1" data-search="personality &amp; temperament affective or temperamental descriptions that displace attention from pedagogy to the instructor&#x27;s personality, authority, or emotional presentation. angry aggressive hostile intimidating scary threatening bossy controlling mean rude cold harsh abrasive defensive unapproachable condescending has a chip on their shoulder seems angry all the time takes things too personally has an attitude rubs students the wrong way went on a rant">
+  <div class="category-head">
+    <span class="category-id">C01</span>
+    <div>
+      <h3>Personality &amp; Temperament</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias</p>
     </div>
-  </header>
-
-  <main id="main">
-    <section class="hero" aria-labelledby="page-title">
-      <div>
-        <span class="eyebrow">Interactive resource for minoritized educators</span>
-        <h1 id="page-title">Flag bias. Preserve evidence. Protect educators.</h1>
-        <p class="lead">
-          Teaching While XYZ helps faculty, administrators, and equity reviewers recognize patterns of bias in Student Evaluations of Teaching, especially when anonymous comments become tools of harassment, intimidation, or career harm.
-        </p>
-        <div class="hero-actions" aria-label="Featured actions">
-          <a class="button primary" href="Instructions%20for%20Using%20AI%20to%20Assess%20Bias%20in%20Student%20Course%20Evaluations.html">Start the AI guide</a>
-          <a class="button secondary" href="SET_Bias_Category_Summary_Table.html">Open the bias table</a>
-        </div>
-      </div>
-
-      <aside class="hero-card" aria-labelledby="assessment-title">
-        <h2 id="assessment-title">SET Bias Assessment Tool</h2>
-        <p>
-          A practical pathway for turning harmful or biased course evaluation patterns into organized, reviewable evidence.
-        </p>
-        <ul class="checklist">
-          <li>Gather SET scores, open-ended comments, course materials, and comparison data.</li>
-          <li>Use AI to flag patterns, not to make final personnel decisions.</li>
-          <li>Document identity-based, proxy, stigmatized-identity, defamation, and compound bias categories.</li>
-        </ul>
-      </aside>
-    </section>
-
-    <section id="resources" aria-labelledby="resources-title">
-      <div class="section-heading">
-        <h2 id="resources-title">Choose your entry point</h2>
-        <p>
-          Use the site as a narrative resource, a practical guide, or a searchable reference for SET bias indicators.
-        </p>
-      </div>
-
-      <div class="cards">
-        <article class="resource-card">
-          <span class="tag">Blog</span>
-          <h3>Bias is a four-letter word</h3>
-          <p>
-            A first-person framing essay on why biased SETs matter and why educators need tools to name, document, and challenge harm.
-          </p>
-          <a href="README.md" aria-label="Read the blog: Bias is a four-letter word">Read the blog →</a>
-        </article>
-
-        <article class="resource-card">
-          <span class="tag">Guide</span>
-          <h3>Using AI to Assess Bias in SETs</h3>
-          <p>
-            Step-by-step instructions for assembling evidence, prompting AI tools, protecting privacy, and producing a structured report for human review.
-          </p>
-          <a href="Instructions%20for%20Using%20AI%20to%20Assess%20Bias%20in%20Student%20Course%20Evaluations.html" aria-label="Open the AI assessment guide">Open the guide →</a>
-        </article>
-
-        <article class="resource-card">
-          <span class="tag">Reference</span>
-          <h3>Interactive SET Bias Summary Table</h3>
-          <p>
-            A filterable reference of bias categories, mechanisms, example phrases, and key sources for interpreting evaluation comments.
-          </p>
-          <a href="SET_Bias_Category_Summary_Table.html" aria-label="Open the interactive SET bias summary table">Use the table →</a>
-        </article>
-      </div>
-    </section>
-
-    <section id="set-bias" aria-labelledby="set-bias-title">
-      <div class="feature-panel">
-        <div>
-          <h2 id="set-bias-title">A workflow for flagging SET bias</h2>
-          <p>
-            The goal is not to replace judgment. The goal is to surface patterns that deserve careful human review before evaluation data is used in high-stakes personnel decisions.
-          </p>
-          <a class="button secondary" href="Instructions%20for%20Using%20AI%20to%20Assess%20Bias%20in%20Student%20Course%20Evaluations.html">Follow the full workflow</a>
-        </div>
-
-        <ol class="steps">
-          <li>
-            <div>
-              <strong>Assemble the evidence package.</strong>
-              <span>Organize SET scores, comments, course materials, peer reviews, grade distributions, and relevant context.</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <strong>Use AI as a pattern-flagging aid.</strong>
-              <span>Prompt the tool to identify likely bias categories, credibility gaps, grade-retaliation patterns, and defamatory content.</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <strong>Review findings with qualified humans.</strong>
-              <span>Use the output as documentation for administrators, equity reviewers, faculty advocates, or institutional review processes.</span>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <section id="categories" aria-labelledby="categories-title">
-      <div class="section-heading">
-        <h2 id="categories-title">Bias categories at a glance</h2>
-        <p>
-          The reference table organizes SET bias into four primary types plus compound categories that can appear when multiple bias mechanisms operate together.
-        </p>
-      </div>
-
-      <div class="category-grid">
-        <div class="category-pill">
-          <strong>Type 1 — Direct Identity Bias</strong>
-          <span>Explicit or coded language about authority, competence, accent, temperament, race, gender, or belonging.</span>
-        </div>
-        <div class="category-pill">
-          <strong>Type 2 — Proxy Bias</strong>
-          <span>Pedagogical complaints that may mask differential expectations around grading, rigor, clarity, or responsiveness.</span>
-        </div>
-        <div class="category-pill">
-          <strong>Type 3 — Stigmatized Identity Bias</strong>
-          <span>Patterns tied to identities that carry specific social stigma, political targeting, or “forever foreigner” framing.</span>
-        </div>
-        <div class="category-pill">
-          <strong>Type 4 — Deliberate Defamation</strong>
-          <span>Harassment, fabricated accusations, coordinated attacks, grade retaliation, or reputational harm.</span>
-        </div>
-        <div class="category-pill">
-          <strong>Compound Categories</strong>
-          <span>Overlapping patterns that combine identity, pedagogy, course content, institutional context, and power.</span>
-        </div>
-      </div>
-    </section>
-
-    <section aria-labelledby="notice-title">
-      <div class="notice">
-        <span class="notice-icon" aria-hidden="true">!</span>
-        <div>
-          <strong id="notice-title">Important use note:</strong>
-          This site is a decision-support resource. AI can help flag patterns and organize evidence, but final determinations should be made by qualified human reviewers with knowledge of the research literature, institutional context, and specific case materials.
-        </div>
-      </div>
-    </section>
-
-    <section class="cta" aria-labelledby="cta-title">
-      <div class="cta-box">
-        <h2 id="cta-title">When feedback becomes harm, name the pattern.</h2>
-        <p>
-          Start with the guide, compare language against the category table, and build a structured record that helps reviewers distinguish useful feedback from bias, harassment, or intimidation.
-        </p>
-        <div class="hero-actions" style="justify-content: center;">
-          <a class="button primary" href="Instructions%20for%20Using%20AI%20to%20Assess%20Bias%20in%20Student%20Course%20Evaluations.html">Begin assessment</a>
-          <a class="button secondary" href="README.md">Read the project story</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <span>© <span id="year"></span> Teaching While XYZ</span>
-      <span><a href="#main">Back to top</a></span>
+  </div>
+  <p>Affective or temperamental descriptions that displace attention from pedagogy to the instructor&#x27;s personality, authority, or emotional presentation.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>angry</span><span>aggressive</span><span>hostile</span><span>intimidating</span><span>scary</span><span>threatening</span><span>bossy</span><span>controlling</span><span>mean</span><span>rude</span><span>cold</span><span>harsh</span><span>abrasive</span><span>defensive</span><span>unapproachable</span><span>condescending</span>
     </div>
-  </footer>
+    <p class="ai-action"><strong>AI action:</strong> Flag for bias review; look for tone-policing, gendered/racialized stereotypes, and clustering with other identity-coded terms.</p>
+  </details>
+</article>
 
-  <script>
-    const navToggle = document.querySelector('.nav-toggle');
-    const siteNav = document.querySelector('#site-nav');
 
-    navToggle?.addEventListener('click', () => {
-      const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-      navToggle.setAttribute('aria-expanded', String(!expanded));
-      siteNav.classList.toggle('is-open');
-    });
+<article class="category-card" data-types="Type1" data-search="authority &amp; competence challenges challenges to credentials, expertise, preparedness, or authority that can reflect a presumption of incompetence. unqualified incompetent unprepared disorganized scattered confusing ineffective inexperienced lost clueless doesn&#x27;t know the material not qualified to teach this not a real expert students knew more than the professor not a real professor">
+  <div class="category-head">
+    <span class="category-id">C02</span>
+    <div>
+      <h3>Authority &amp; Competence Challenges</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias</p>
+    </div>
+  </div>
+  <p>Challenges to credentials, expertise, preparedness, or authority that can reflect a presumption of incompetence.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>unqualified</span><span>incompetent</span><span>unprepared</span><span>disorganized</span><span>scattered</span><span>confusing</span><span>ineffective</span><span>inexperienced</span><span>lost</span><span>clueless</span><span>doesn&#x27;t know the material</span><span>not qualified to teach this</span><span>not a real expert</span><span>students knew more than the professor</span><span>not a real professor</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Flag and require corroboration from peer review, teaching materials, and credentials before treating as a pedagogical fact.</p>
+  </details>
+</article>
 
-    document.querySelector('#year').textContent = new Date().getFullYear();
-  </script>
+
+<article class="category-card" data-types="Type1" data-search="accent &amp; language bias language that evaluates speech, accent, perceived nativeness, or english ability against an implicit native-english norm. accent hard to understand incomprehensible unclear speech mumbles broken english foreign thick accent needs to work on their english speaks too fast speaks too slow english is not their first language">
+  <div class="category-head">
+    <span class="category-id">C03</span>
+    <div>
+      <h3>Accent &amp; Language Bias</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias</p>
+    </div>
+  </div>
+  <p>Language that evaluates speech, accent, perceived nativeness, or English ability against an implicit native-English norm.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>accent</span><span>hard to understand</span><span>incomprehensible</span><span>unclear speech</span><span>mumbles</span><span>broken English</span><span>foreign</span><span>thick accent</span><span>needs to work on their English</span><span>speaks too fast</span><span>speaks too slow</span><span>English is not their first language</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Flag explicit language-bias indicators; separate actual accessibility issues from identity-coded judgments through independent observation.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type1 Type3" data-search="relatability &amp; fit comments suggesting the instructor does not belong, does not fit, or fails an unstated norm of what a professor should look or sound like. unrelatable disconnected distant out of place awkward weird odd doesn&#x27;t connect with students not the type of professor i expected doesn&#x27;t seem to belong here not like other professors feels like they&#x27;re from a different world">
+  <div class="category-head">
+    <span class="category-id">C04</span>
+    <div>
+      <h3>Relatability &amp; Fit</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias · Type 3 — Stigmatized Identity Bias</p>
+    </div>
+  </div>
+  <p>Comments suggesting the instructor does not belong, does not fit, or fails an unstated norm of what a professor should look or sound like.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>unrelatable</span><span>disconnected</span><span>distant</span><span>out of place</span><span>awkward</span><span>weird</span><span>odd</span><span>doesn&#x27;t connect with students</span><span>not the type of professor I expected</span><span>doesn&#x27;t seem to belong here</span><span>not like other professors</span><span>feels like they&#x27;re from a different world</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Flag as possible fit/forever-foreigner language, especially when unsupported by specific teaching evidence.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type1" data-search="gendered language patterns terms disproportionately applied to women faculty around warmth, assertiveness, appearance, emotion, and professionalism. bossy motherly nurturing emotional hysterical dramatic sensitive shrill nagging sweet bubbly ditzy scattered should smile more too strict too nice too mean doesn&#x27;t command respect came across as weak too aggressive for a woman">
+  <div class="category-head">
+    <span class="category-id">C05</span>
+    <div>
+      <h3>Gendered Language Patterns</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias</p>
+    </div>
+  </div>
+  <p>Terms disproportionately applied to women faculty around warmth, assertiveness, appearance, emotion, and professionalism.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>bossy</span><span>motherly</span><span>nurturing</span><span>emotional</span><span>hysterical</span><span>dramatic</span><span>sensitive</span><span>shrill</span><span>nagging</span><span>sweet</span><span>bubbly</span><span>ditzy</span><span>scattered</span><span>should smile more</span><span>too strict</span><span>too nice</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Flag gendered descriptors and double-bind constructions; compare against language used for male peers.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type1" data-search="racialized language patterns language that racializes authority, affect, threat, foreignness, or perceived difference. loud intimidating aggressive angry threatening foreign different unexpected makes everything about race biased against white students doesn&#x27;t like students like me not the typical professor brings their background into everything treated me differently because i&#x27;m [identity]">
+  <div class="category-head">
+    <span class="category-id">C06</span>
+    <div>
+      <h3>Racialized Language Patterns</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias</p>
+    </div>
+  </div>
+  <p>Language that racializes authority, affect, threat, foreignness, or perceived difference.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>loud</span><span>intimidating</span><span>aggressive</span><span>angry</span><span>threatening</span><span>foreign</span><span>different</span><span>unexpected</span><span>makes everything about race</span><span>biased against white students</span><span>doesn&#x27;t like students like me</span><span>not the typical professor</span><span>brings their background into everything</span><span>treated me differently because I&#x27;m [identity]</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Flag for racialized bias review and check whether discomfort with course content is being displaced onto the instructor.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type1 Type2" data-search="bias claims turned outward claims that the instructor is biased, political, or agenda-driven, especially when students&#x27; discomfort with material is reframed as instructor misconduct. biased unfair discriminatory prejudiced one-sided agenda-driven political pushes their own views too political not objective doesn&#x27;t respect other viewpoints silences students grades based on whether you agree punishes conservative views">
+  <div class="category-head">
+    <span class="category-id">C07</span>
+    <div>
+      <h3>Bias Claims Turned Outward</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias · Type 2 — Proxy Bias</p>
+    </div>
+  </div>
+  <p>Claims that the instructor is biased, political, or agenda-driven, especially when students&#x27; discomfort with material is reframed as instructor misconduct.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>biased</span><span>unfair</span><span>discriminatory</span><span>prejudiced</span><span>one-sided</span><span>agenda-driven</span><span>political</span><span>pushes their own views</span><span>too political</span><span>not objective</span><span>doesn&#x27;t respect other viewpoints</span><span>silences students</span><span>grades based on whether you agree</span><span>punishes conservative views</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Flag; distinguish legitimate content-balance issues from majority-discomfort narratives and grade retaliation.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type1 Type2" data-search="course content complaints as proxy bias complaints about course subject matter that implicitly challenge the instructor&#x27;s legitimacy or the legitimacy of identity-related content. political one-sided irrelevant unnecessary forced preachy propaganda indoctrination too much focus on race too much focus on gender identity politics turned every topic into a race/gender issue not relevant to the subject matter pushed a liberal agenda">
+  <div class="category-head">
+    <span class="category-id">C08</span>
+    <div>
+      <h3>Course Content Complaints as Proxy Bias</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias · Type 2 — Proxy Bias</p>
+    </div>
+  </div>
+  <p>Complaints about course subject matter that implicitly challenge the instructor&#x27;s legitimacy or the legitimacy of identity-related content.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>political</span><span>one-sided</span><span>irrelevant</span><span>unnecessary</span><span>forced</span><span>preachy</span><span>propaganda</span><span>indoctrination</span><span>too much focus on race</span><span>too much focus on gender</span><span>identity politics</span><span>turned every topic into a race/gender issue</span><span>not relevant to the subject matter</span><span>pushed a liberal agenda</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Flag when content complaints target equity topics or the instructor&#x27;s right to teach them; compare syllabus learning objectives.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type2" data-search="pedagogical complaints as proxy bias neutral-sounding complaints about grading, feedback, workload, rubrics, course structure, lms use, due dates, and instructional clarity that may be contaminated by identity bias. grading is unfair rubrics are unclear i never know what they want grading seems arbitrary my grade doesn&#x27;t reflect my effort graded too harshly exams don&#x27;t reflect what we studied takes forever to return assignments feedback is not helpful not accessible outside of class way too much work unreasonable expectations the syllabus is confusing i never know what&#x27;s due course is all over the place hard to follow in class lectures aren&#x27;t useful doesn&#x27;t engage the class">
+  <div class="category-head">
+    <span class="category-id">C09</span>
+    <div>
+      <h3>Pedagogical Complaints as Proxy Bias</h3>
+      <p class="type-line">Type 2 — Proxy Bias</p>
+    </div>
+  </div>
+  <p>Neutral-sounding complaints about grading, feedback, workload, rubrics, course structure, LMS use, due dates, and instructional clarity that may be contaminated by identity bias.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>grading is unfair</span><span>rubrics are unclear</span><span>I never know what they want</span><span>grading seems arbitrary</span><span>my grade doesn&#x27;t reflect my effort</span><span>graded too harshly</span><span>exams don&#x27;t reflect what we studied</span><span>takes forever to return assignments</span><span>feedback is not helpful</span><span>not accessible outside of class</span><span>way too much work</span><span>unreasonable expectations</span><span>the syllabus is confusing</span><span>I never know what&#x27;s due</span><span>course is all over the place</span><span>hard to follow in class</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Do not treat as automatically biased or automatically valid; require context, clustering, comparator data, and independent corroboration.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type2" data-search="double-bind of rigor a no-win pattern in which high standards are punished as unfair, while accessible courses are dismissed as insufficiently rigorous. too hard for no reason unrealistic expectations sets students up to fail impossible to do well nitpicks everything penalizes students for not being perfect had to teach myself learned despite the poor instruction the book was great, the professor not so much too strict too lenient too structured too unstructured">
+  <div class="category-head">
+    <span class="category-id">C10</span>
+    <div>
+      <h3>Double-Bind of Rigor</h3>
+      <p class="type-line">Type 2 — Proxy Bias</p>
+    </div>
+  </div>
+  <p>A no-win pattern in which high standards are punished as unfair, while accessible courses are dismissed as insufficiently rigorous.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>too hard for no reason</span><span>unrealistic expectations</span><span>sets students up to fail</span><span>impossible to do well</span><span>nitpicks everything</span><span>penalizes students for not being perfect</span><span>had to teach myself</span><span>learned despite the poor instruction</span><span>the book was great, the professor not so much</span><span>too strict</span><span>too lenient</span><span>too structured</span><span>too unstructured</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Detect contradictory complaint clusters; compare grade distributions and follow-on learning evidence.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type1 Type2" data-search="structural &amp; tonal tropes common trope families such as tone policing, angry black woman/sapphire trope, model-minority inversion, authority challenge, double bind, emotional labor expectations, and guilt narrative. too harsh unnecessarily blunt abrasive delivery attacked students for asking questions condescending tone went on a rant had an outburst more aggressive than i expected doesn&#x27;t seem qualified not available enough doesn&#x27;t care about student success made me feel bad about being [identity] i felt shamed">
+  <div class="category-head">
+    <span class="category-id">C11</span>
+    <div>
+      <h3>Structural &amp; Tonal Tropes</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias · Type 2 — Proxy Bias</p>
+    </div>
+  </div>
+  <p>Common trope families such as tone policing, angry Black woman/Sapphire trope, model-minority inversion, authority challenge, double bind, emotional labor expectations, and guilt narrative.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>too harsh</span><span>unnecessarily blunt</span><span>abrasive delivery</span><span>attacked students for asking questions</span><span>condescending tone</span><span>went on a rant</span><span>had an outburst</span><span>more aggressive than I expected</span><span>doesn&#x27;t seem qualified</span><span>not available enough</span><span>doesn&#x27;t care about student success</span><span>made me feel bad about being [identity]</span><span>I felt shamed</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Classify trope family; evaluate intersectional compounding and specific protected review needs.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type1 Type3 Type4" data-search="bias against lgbtq+ faculty bias triggered by lgbtq+ disclosure or perceived identity, including political-agenda accusations, credibility challenges, heteronormative content distortion, misgendering, and discomfort framed as harm. has a political agenda pushes lgbtq topics made the class about their personal life not qualified to teach this objectively everything was about gay/transgender people the personal stuff didn&#x27;t belong in class misgendering kept talking about pronouns made me feel judged for being straight/christian/traditional lgbtq agenda">
+  <div class="category-head">
+    <span class="category-id">C12</span>
+    <div>
+      <h3>Bias Against LGBTQ+ Faculty</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias · Type 3 — Stigmatized Identity Bias · Type 4 — Deliberate Defamation</p>
+    </div>
+  </div>
+  <p>Bias triggered by LGBTQ+ disclosure or perceived identity, including political-agenda accusations, credibility challenges, heteronormative content distortion, misgendering, and discomfort framed as harm.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>has a political agenda</span><span>pushes LGBTQ topics</span><span>made the class about their personal life</span><span>not qualified to teach this objectively</span><span>everything was about gay/transgender people</span><span>the personal stuff didn&#x27;t belong in class</span><span>misgendering</span><span>kept talking about pronouns</span><span>made me feel judged for being straight/Christian/traditional</span><span>LGBTQ agenda</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Flag disclosure-sensitive patterns; treat deliberate misgendering or identity abuse as escalation content.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type3" data-search="stigmatized ethnic &amp; national identity bias bias tied to the specific social meanings attached to a national origin, ethnicity, religion, or cultural group, including disgust-organized stigma and forever-foreigner language. uncomfortable unwelcoming hostile without specific pedagogical cause wanted to avoid interaction disproportionate emotional intensity contamination doesn&#x27;t fit here very different from what i&#x27;m used to seems out of place not like other professors too focused on [specific country/region/culture] why are we learning about [place]">
+  <div class="category-head">
+    <span class="category-id">C13</span>
+    <div>
+      <h3>Stigmatized Ethnic &amp; National Identity Bias</h3>
+      <p class="type-line">Type 3 — Stigmatized Identity Bias</p>
+    </div>
+  </div>
+  <p>Bias tied to the specific social meanings attached to a national origin, ethnicity, religion, or cultural group, including disgust-organized stigma and forever-foreigner language.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>uncomfortable</span><span>unwelcoming</span><span>hostile without specific pedagogical cause</span><span>wanted to avoid interaction</span><span>disproportionate emotional intensity</span><span>contamination</span><span>doesn&#x27;t fit here</span><span>very different from what I&#x27;m used to</span><span>seems out of place</span><span>not like other professors</span><span>too focused on [specific country/region/culture]</span><span>why are we learning about [place]</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Use only human-supplied identity context; train identity-specific stigma detectors and require careful human review.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type4" data-search="deliberate defamation, harassment &amp; weaponization targeted harassment, fabricated accusations, unadjudicated misconduct claims, threats, explicit abuse, coordinated attacks, and grade-retaliation defamation. sexual comments about instructor explicit threats personal insults unrelated to pedagogy profanity directed personally i hate you claims of discrimination without investigation claims of retaliation claims instructor violated policy fabricated in-class incidents multiple near-identical comments explicit reference to grade received">
+  <div class="category-head">
+    <span class="category-id">C14</span>
+    <div>
+      <h3>Deliberate Defamation, Harassment &amp; Weaponization</h3>
+      <p class="type-line">Type 4 — Deliberate Defamation</p>
+    </div>
+  </div>
+  <p>Targeted harassment, fabricated accusations, unadjudicated misconduct claims, threats, explicit abuse, coordinated attacks, and grade-retaliation defamation.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>sexual comments about instructor</span><span>explicit threats</span><span>personal insults unrelated to pedagogy</span><span>profanity directed personally</span><span>I HATE YOU</span><span>claims of discrimination without investigation</span><span>claims of retaliation</span><span>claims instructor violated policy</span><span>fabricated in-class incidents</span><span>multiple near-identical comments</span><span>explicit reference to grade received</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Escalate immediately; exclude from personnel-file summaries pending protective review; do not present as formative feedback.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type1" data-search="absence of positive language a comparative signal in which positive intellectual descriptors appear less often for minoritized faculty than for comparable peers. absence of brilliant/genius/expert/inspiring absence of knowledgeable/engaging/articulate/confident absence of natural teacher/best professor comparatively fewer positive descriptors">
+  <div class="category-head">
+    <span class="category-id">C15</span>
+    <div>
+      <h3>Absence of Positive Language</h3>
+      <p class="type-line">Type 1 — Direct Identity Bias</p>
+    </div>
+  </div>
+  <p>A comparative signal in which positive intellectual descriptors appear less often for minoritized faculty than for comparable peers.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>absence of brilliant/genius/expert/inspiring</span><span>absence of knowledgeable/engaging/articulate/confident</span><span>absence of natural teacher/best professor</span><span>comparatively fewer positive descriptors</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Use comparative corpus analysis, not single-comment judgment; evaluate positive-term rates across instructors and courses.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type2 Type1 Type3 Type4" data-search="credibility inversion negative pedagogical feedback is treated as actionable even when it contradicts documented faculty expertise, years of experience, peer observations, or scholarly record. disorganized course despite design expertise unclear assessments despite assessment expertise confusing explanations despite extensive teaching record no clear rubric despite documented rubrics persistent complaints without peer corroboration complaints increase over time despite growing experience">
+  <div class="category-head">
+    <span class="category-id">C16</span>
+    <div>
+      <h3>Credibility Inversion</h3>
+      <p class="type-line">Type 2 — Proxy Bias · Type 1 — Direct Identity Bias · Type 3 — Stigmatized Identity Bias · Type 4 — Deliberate Defamation</p>
+    </div>
+  </div>
+  <p>Negative pedagogical feedback is treated as actionable even when it contradicts documented faculty expertise, years of experience, peer observations, or scholarly record.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>disorganized course despite design expertise</span><span>unclear assessments despite assessment expertise</span><span>confusing explanations despite extensive teaching record</span><span>no clear rubric despite documented rubrics</span><span>persistent complaints without peer corroboration</span><span>complaints increase over time despite growing experience</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Run corroboration-gap test; weigh credentials, teaching portfolio, peer observation, temporal stability, and comparator data before classification.</p>
+  </details>
+</article>
+
+
+<article class="category-card" data-types="Type2" data-search="grade distributions as set context grade distributions contextualize set credibility because grades and grade satisfaction shape ratings and complaint patterns. low grades plus negative sets high grades plus negative sets same grades but worse sets than comparator high dfw with poor sets direct grade-retaliation language i deserved a better grade grade doesn&#x27;t reflect effort the curve wasn&#x27;t enough">
+  <div class="category-head">
+    <span class="category-id">C17</span>
+    <div>
+      <h3>Grade Distributions as SET Context</h3>
+      <p class="type-line">Type 2 — Proxy Bias</p>
+    </div>
+  </div>
+  <p>Grade distributions contextualize SET credibility because grades and grade satisfaction shape ratings and complaint patterns.</p>
+  <details>
+    <summary>Training signals and AI action</summary>
+    <div class="signal-grid">
+      <span>low grades plus negative SETs</span><span>high grades plus negative SETs</span><span>same grades but worse SETs than comparator</span><span>high DFW with poor SETs</span><span>direct grade-retaliation language</span><span>I deserved a better grade</span><span>grade doesn&#x27;t reflect effort</span><span>the curve wasn&#x27;t enough</span>
+    </div>
+    <p class="ai-action"><strong>AI action:</strong> Integrate mean GPA, DFW, withdrawals, departmental norms, comparator sections, and follow-on course outcomes before interpreting SETs.</p>
+  </details>
+</article>
+</div>
+</section>
+
+<section id="workflow" class="section shell">
+  <div class="kicker">Implementation workflow</div>
+  <h2>Recommended AI review pipeline</h2>
+  <div class="panel"><ol class="workflow"><li><span>1</span><p>Normalize comment text, preserve original wording, and assign a stable comment_id.</p></li>
+<li><span>2</span><p>Detect explicit Type 4 escalation content first: threats, harassment, unadjudicated misconduct allegations, identity abuse, deliberate misgendering, coordinated attacks, or false factual claims.</p></li>
+<li><span>3</span><p>Detect Type 1 and Type 3 identity-coded indicators using the taxonomy and lexicon.</p></li>
+<li><span>4</span><p>Detect Type 2 proxy indicators, but mark them as context-dependent rather than automatically biased.</p></li>
+<li><span>5</span><p>Cluster indicators within a comment and across comments in the same course, term, instructor, and assessment event.</p></li>
+<li><span>6</span><p>Integrate contextual evidence: grade distribution, DFW, expected grade distribution, timing of evaluation, course level, response rate, peer observation, teaching portfolio, rubrics, LMS logs, and comparator sections.</p></li>
+<li><span>7</span><p>Apply the grade-distribution matrix and credibility-inversion/corroboration tests.</p></li>
+<li><span>8</span><p>Generate a structured JSON finding with evidence spans, category labels, confidence, recommended review pathway, and required corroboration.</p></li>
+<li><span>9</span><p>Never infer instructor protected identity. Use only user- or institution-supplied context, and never make a final personnel judgment automatically.</p></li></ol></div>
+</section>
+
+<section id="matrix" class="section shell">
+  <div class="kicker">Contextual evidence</div>
+  <h2>Grade-distribution / SET credibility matrix</h2>
+  <table>
+    <thead><tr><th>Grade pattern</th><th>SET pattern</th><th>Most probable interpretation</th><th>AI flag</th></tr></thead>
+    <tbody><tr><td>Low mean GPA / high DFW</td><td>Negative SETs</td><td>Possible grade-retaliation bias artifact</td><td>Require independent corroboration before treating as actionable.</td></tr>
+<tr><td>Low mean GPA / high DFW</td><td>Positive SETs</td><td>Rigor may be valued or socially protected</td><td>No automatic bias flag; consider follow-on performance.</td></tr>
+<tr><td>High mean GPA / low DFW</td><td>Negative SETs</td><td>Identity-based bias not explained by grade dissatisfaction</td><td>High-probability Type 1 or Type 3 review flag.</td></tr>
+<tr><td>High mean GPA / low DFW</td><td>Positive SETs</td><td>Possible genuine effectiveness or strategic grade leniency</td><td>Corroborate with durable learning evidence.</td></tr>
+<tr><td>Same grades as comparator</td><td>Worse SETs</td><td>Comparative differential bias signal</td><td>Trigger comparative review.</td></tr></tbody>
+  </table>
+</section>
+
+<section class="section shell">
+  <div class="kicker">Structured output</div>
+  <h2>Example classifier JSON</h2>
+  <pre>{
+  &quot;comment_id&quot;: &quot;string&quot;,
+  &quot;verdict&quot;: &quot;context_needed | probable_bias_artifact | possible_genuine_pedagogical_signal | type4_escalation&quot;,
+  &quot;flags&quot;: [
+    {
+      &quot;category_id&quot;: &quot;C09&quot;,
+      &quot;bias_type&quot;: &quot;Type 2&quot;,
+      &quot;evidence_span&quot;: &quot;rubrics were unclear&quot;,
+      &quot;confidence&quot;: 0.72
+    }
+  ],
+  &quot;contextual_checks&quot;: {
+    &quot;grade_distribution_reviewed&quot;: true,
+    &quot;corroboration_status&quot;: &quot;uncorroborated&quot;
+  },
+  &quot;recommended_action&quot;: &quot;Require materials review before use in personnel decisions&quot;,
+  &quot;human_review_required&quot;: true
+}</pre>
+</section>
+
+<section class="section shell">
+  <div class="panel">
+    <div class="kicker">Source text</div>
+    <h2>Full extracted source available</h2>
+    <p>The complete extracted text is included as <code>source_material_cleaned.md</code>, with page markers for traceability. Use it for retrieval-augmented generation, fine-grained taxonomy review, or institutional customization.</p>
+    <div class="cta-row"><a class="button" href="downloads/source_material_cleaned.md" download>Download source Markdown</a><a class="button danger" href="downloads/original_SET_Bias_Training_Material_v3.pdf" download>Download original PDF</a></div>
+  </div>
+</section>
+</main>
+
+<footer class="footer shell">
+  <p>Formatted as a static, offline-friendly webpage for AI implementation. Keep the HTML file and <code>downloads/</code> folder together after extraction.</p>
+</footer>
+
+<script>
+const search = document.getElementById('search');
+const filters = Array.from(document.querySelectorAll('.filter'));
+const cards = Array.from(document.querySelectorAll('.category-card'));
+let active = 'all';
+function applyFilters() {
+  const q = (search.value || '').trim().toLowerCase();
+  cards.forEach(card => {
+    const hay = card.dataset.search || '';
+    const types = card.dataset.types || '';
+    const okSearch = !q || hay.includes(q);
+    const okType = active === 'all' || types.includes(active);
+    card.classList.toggle('hidden', !(okSearch && okType));
+  });
+}
+filters.forEach(btn => btn.addEventListener('click', () => {
+  filters.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  active = btn.dataset.filter;
+  applyFilters();
+}));
+search.addEventListener('input', applyFilters);
+</script>
 </body>
 </html>
