@@ -12,7 +12,7 @@
 
 <ol>
     <li>
-      Students burst into laughter and exchange glances with one another,
+      Students burst into laughter and exchange knowing glances with one another,
       when you are trying to explain something important (in all seriousness) to the class.
     </li>
 
